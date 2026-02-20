@@ -3,7 +3,36 @@
  * cities.php — Manage Cities Page
  * Healthcare Admin Panel — UI Only
  */
+session_start();
+if (!isset($_SESSION["admin_email"])) {
+    header("Location: login.php");
+    exit();
+}
 include("..//connect.php");
+//delete city row
+if (isset($_POST["btn-delete-row"])) {
+    $get_city_id = $_POST['city_id'];
+    $delete_city = "delete  from cities where city_id='$get_city_id'";
+    mysqli_query($connect, $delete_city);
+    header("location:cities.php");
+} else {
+    echo "";
+}
+
+//edit city row 
+if (isset($_POST['btn-edit-row'])) {
+    $get_city_id = $_POST['city_id'];
+    $update_city_name = $_POST['update_city_name'];
+    $update_city_Status = $_POST['update_city_status'];
+    $update_city = "UPDATE cities
+SET city_name = '$update_city_name',
+    city_status = '$update_city_Status'
+WHERE city_id = '$get_city_id'";
+    $update_query = mysqli_query($connect, $update_city);
+        header("location:cities.php");
+} else {
+    echo '';
+}
 $pageTitle = 'Manage Cities';
 include('includes/header.php');
 include('includes/sidebar.php');
@@ -36,30 +65,8 @@ if (isset($_POST['save_city_btn'])) {
 
 }
 
-//delete city row
-if (isset($_POST["btn-delete-row"])) {
-    $get_city_id = $_POST['city_id'];
-    $delete_city = "delete  from cities where city_id='$get_city_id'";
-    mysqli_query($connect, $delete_city);
-    header("location:cities.php");
-} else {
-    echo "";
-}
 
-//edit city row 
-if (isset($_POST['btn-edit-row'])) {
-    $get_city_id = $_POST['city_id'];
-    $update_city_name = $_POST['update_city_name'];
-    $update_city_Status = $_POST['update_city_status'];
-    $update_city = "UPDATE cities
-SET city_name = '$update_city_name',
-    city_status = '$update_city_Status'
-WHERE city_id = '$get_city_id'";
-    $update_query = mysqli_query($connect, $update_city);
-        header("location:cities.php");
-} else {
-    echo '';
-}
+
 ?>
 <div class="page-wrapper">
 

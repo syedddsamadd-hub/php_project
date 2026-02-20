@@ -90,9 +90,9 @@
     <div class="sidebar-logout">
         <ul class="sidebar-nav" style="padding:0;">
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="logout.php" class="nav-link">
                     <i class="bi bi-box-arrow-left"></i>
-                    <span>Logout</span>
+                    <span class="btn btn-primary">Logout</span>
                 </a>
             </li>
         </ul>

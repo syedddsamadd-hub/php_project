@@ -1,10 +1,59 @@
 <?php
+session_start();
+if (!isset($_SESSION["admin_email"])) {
+    header("Location: login.php");
+    exit();
+}
 include "..//connect.php";
+
+//delete city row
+if (isset($_POST["btn-delete-doc"])) {
+    $get_doctor_id = $_POST['doctor_id'];
+    $delete_doctor = "delete  from doctors where doctor_id='$get_doctor_id'";
+    mysqli_query($connect, $delete_doctor);
+    header("location:doctors.php");
+} else {
+    echo "";
+}
+//edit city row 
+if (isset($_POST['btn-edit-doc'])) {
+
+    $doctor_id  = intval($_POST['doctor_id']);
+
+    $first_name = mysqli_real_escape_string($connect, trim($_POST['doctor_name_update']));
+    $email      = mysqli_real_escape_string($connect, trim($_POST['doctor_email_update']));
+    $phone      = intval($_POST['doctor_phone_update']);
+    $experience = intval($_POST['doctor_experience']);
+    $status     = intval($_POST['doctor_status_update']);
+    $city_id    = intval($_POST['city_id_update']);
+    $specialize_id = intval($_POST['specialize_id_update']);
+
+    if (empty($first_name) || empty($email)) {
+        echo "Name and Email required.";
+        exit;
+    }
+
+    $update_query = "UPDATE doctors SET
+        first_name = '$first_name',
+        email = '$email',
+        phone = $phone,
+        experience = $experience,
+        doctor_status = $status,
+        city_id = $city_id,
+        specialize_id = $specialize_id
+        WHERE doctor_id = $doctor_id";
+
+    if (mysqli_query($connect, $update_query)) {
+        header("Location: doctors.php");
+        // exit;
+    } else {
+        echo "Update failed: " . mysqli_error($connect);
+    }
+}
 $pageTitle = 'Manage Doctors';
 include('includes/header.php');
 include('includes/sidebar.php');
 ?>
-
 <!-- ╔══════════════════════════════════════════════════════╗
      ║  MANAGE DOCTORS PAGE                                 ║
      ╚══════════════════════════════════════════════════════╝ -->
@@ -73,6 +122,7 @@ include('includes/sidebar.php');
                     <tr>
                         <th>ID</th>
                         <th>Doctor</th>
+                        <th>email</th>
                         <th>Phone</th>
                         <th>City</th>
                         <th>Specialization</th>
@@ -85,7 +135,7 @@ include('includes/sidebar.php');
                     <?php
                     ?>
                     <?php
-                    $select_doctors = "select * from doctors";
+                    $select_doctors = "select * from doctors where doctor_status= 0";
                     $select_doctors_query = mysqli_query($connect, $select_doctors);
                     if (mysqli_num_rows($select_doctors_query) > 0) {
                         while ($doctors_table_row = mysqli_fetch_assoc($select_doctors_query)) {
@@ -113,27 +163,52 @@ include('includes/sidebar.php');
                                             ?>
                                             <tr>
                                                 <form action="" method="POST">
+                                                    <input type="hidden" name="doctor_id" value="<?= $doctor_id ?>">
                                                     <td class="fw-600 text-primary-custom"><?= $doctor_id ?></td>
                                                     <td>
                                                         <div class="user-cell">
                                                             <!-- <div class="user-avatar"> $d[1] </div> -->
                                                             <div>
-                                                                <div class="user-name"><?= $first_name . $last_name ?></div>
-                                                                <div class="user-email"><?= $doctor_email ?></div>
+                                                                <b class="user-name"><input type="text" name="doctor_name_update"
+                                                                        class="form-control" value="<?= $first_name ?>"></b>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td><?= $doctor_phone ?></td>
-                                                    <td><i class="bi bi-geo-alt text-primary me-1"></i><?= $city_name ?></td>
-                                                    <td><?= $specialize ?></td>
-                                                    <td><?= $doctor_experience ?></td>
-                                                    <td><span class="badge-status"><?= $doctor_status ?></span></td>
+                                                    <td><input type="text" class="form-control" name="doctor_email_update"
+                                                            value="<?= $doctor_email ?>"></td>
+                                                    <td><input type="text" class="form-control" name="doctor_phone_update"
+                                                            value="<?= $doctor_phone ?>"></td>
+                                                    <td><select name="city_id_update" class="form-control">
+                                                            <?php
+                                                            $city_query = mysqli_query($connect, "SELECT city_id, city_name FROM cities");
+                                                            while ($city = mysqli_fetch_assoc($city_query)) {
+                                                                $selected = ($city['city_id'] == $doctor_city_id) ? "selected" : "";
+                                                                echo "<option value='{$city['city_id']}' $selected>{$city['city_name']}</option>";
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </td>
+                                                    <td><select name="specialize_id_update" class="form-control">
+                                                            <?php
+                                                            $sp_query = mysqli_query($connect, "SELECT specialize_id, specialize FROM specialization");
+                                                            while ($sp = mysqli_fetch_assoc($sp_query)) {
+                                                                $selected = ($sp['specialize_id'] == $specialize_id) ? "selected" : "";
+                                                                echo "<option value='{$sp['specialize_id']}' $selected>{$sp['specialize']}</option>";
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" class="form-control" name="doctor_experience"
+                                                            value="<?= $doctor_experience ?>"></td>
+                                                    <td><span class="badge-status"><input type="text" class="form-control"
+                                                                name="doctor_status_update" value="<?= $doctor_status ?>"></span></td>
                                                     <td>
                                                         <div class="d-flex gap-1 flex-wrap">
-                                                            <button class="btn-action btn-edit">
+                                                            <button class="btn-action btn-edit" name="btn-edit-doc">
                                                                 <i class="bi bi-pencil-fill"></i> Edit
                                                             </button>
-                                                            <button class="btn-action btn-delete btn-delete-row">
+                                                            <button onclick="return confirm('are you sure to delete this this row.')"
+                                                                class="btn-action btn-delete btn-delete-row" name="btn-delete-doc">
                                                                 <i class="bi bi-trash-fill"></i> Del
                                                             </button>
                                                         </div>
@@ -271,23 +346,11 @@ include('includes/sidebar.php');
             </div>
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-            <div class="form-group-custom">
-                <label>Doctor_status</label>
-                <select name="doctor_status" class="form-control-custom filter-select"
-                    style="width:100%;border-radius:9px;">
-                    <option value="">Select status</option>
-                    <option value="1">active</option>
-                    <option value="0">not active</option>
-                </select>
-            </div>
-        </div>
-
         <!-- Profile Photo -->
         <div class="col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="form-group-custom">
                 <label>Profile Photo</label>
-                <input type="file" name="profile_photo" class="form-control-custom" accept="image/*"
+                <input type="file" name="profile_photo" class="form-control-custom form-control" accept="image/*"
                     style="padding:7px 14px;">
             </div>
         </div>
@@ -311,10 +374,27 @@ include('includes/sidebar.php');
         </div>
 
         <!-- Address -->
-        <div class="col-12">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="form-group-custom">
                 <label>Addres</label>
                 <textarea name="doctor_address" minlength="10" maxlength="300" class="form-control-custom" rows="3"
+                    placeholder="Addres" style="resize:vertical;"></textarea>
+            </div>
+        </div>
+        <!-- password -->
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="form-group-custom">
+                <label>password</label>
+                <textarea name="password" class="form-control-custom" rows="3" minlength="" maxlength="500"
+                    placeholder="password" style="resize:vertical;"></textarea>
+            </div>
+        </div>
+
+        <!-- confirm password -->
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="form-group-custom">
+                <label>confirm password</label>
+                <textarea name="confirmPassword" minlength="10" maxlength="300" class="form-control-custom" rows="3"
                     placeholder="Addres" style="resize:vertical;"></textarea>
             </div>
         </div>
@@ -322,7 +402,8 @@ include('includes/sidebar.php');
     </div>
     <!-- </div> -->
 
-    <button type="submit" name="add_doc_btn" class="btn bg-primary text-light btn-lg d-block mx-auto w-75">
+    <button type="submit" name="add_doc_btn"
+        class="btn text-capitalize bg-primary text-light btn-lg d-block mx-auto w-75">
         add doctor
     </button>
     <?php
@@ -362,7 +443,6 @@ function addDoctor()
         $doctor_specialization = trim($_POST['specialization']);
         $profile_photo = $_FILES['profile_photo']['name'];
         $tmp_name = $_FILES['profile_photo']['tmp_name'];
-        $doctor_status = trim($_POST['doctor_status']);
         $doctor_bio = trim($_POST['doctor_bio']);
         $doctor_address = trim($_POST['doctor_address']);
         $allowed_types = ['image/jpeg', 'image/png', 'image/webp'];
@@ -409,8 +489,6 @@ function addDoctor()
             $error_message = "Enter your City.";
         } elseif (empty($doctor_specialization)) {
             $error_message = "Enter specialization.";
-        } elseif (empty($doctor_status)) {
-            $error_message = "Enter status.";
         } elseif (empty($profile_photo)) {
             $error_message = "choose profile pic";
         } elseif (empty($qualification)) {
@@ -435,11 +513,11 @@ function addDoctor()
             $insert_doctor = "INSERT INTO doctors 
 (first_name,last_name,email,phone,address,
 qualification,experience,consultation_fee,
-city_id,specialize_id,doctor_image,doctor_status)
+city_id,specialize_id,doctor_image)
 VALUES
 ('$first_name','$last_name','$doctor_email',$phone_number,'$doctor_address',
 '$qualification',$experience,$doctor_fees,
-$doctor_city,$doctor_specialization,'$profile_photo',$doctor_status)";
+$doctor_city,$doctor_specialization,'$profile_photo')";
 
             $insert_doctor_query = mysqli_query($connect, $insert_doctor);
             $error_message = "doctor added sucessfully";
@@ -450,5 +528,6 @@ $doctor_city,$doctor_specialization,'$profile_photo',$doctor_status)";
 
     return $error_message;
 }
+
 ?>
 <?php include('includes/footer.php'); ?>

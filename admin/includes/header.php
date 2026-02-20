@@ -83,7 +83,7 @@ $pageTitle = isset($pageTitle) ? $pageTitle : 'Dashboard';
         </li>
         <li><hr class="dropdown-divider my-1" /></li>
         <li>
-            <a class="dropdown-item rounded-3 py-2 text-danger" href="#">
+            <a class="dropdown-item rounded-3 py-2 text-danger" href="logout.php">
                 <i class="bi bi-box-arrow-right me-2"></i> Logout
             </a>
         </li>

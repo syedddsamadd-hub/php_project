@@ -3,7 +3,11 @@
  * patients.php — Manage Patients Page
  * Healthcare Admin Panel — UI Only
  */
-
+session_start();
+if (!isset($_SESSION["admin_email"])) {
+    header("Location: login.php");
+    exit();
+}
 $pageTitle = 'Manage Patients';
 include('includes/header.php');
 include('includes/sidebar.php');

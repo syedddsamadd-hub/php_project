@@ -2,26 +2,26 @@
 $page_title = 'Book Appointment';
 
 // // Get doctor info from URL params
-// $doctor_name = isset($_GET['doctor']) ? htmlspecialchars(urldecode($_GET['doctor'])) : 'Dr. Sarah Ahmed';
-// $doctor_spec = isset($_GET['spec'])   ? htmlspecialchars(urldecode($_GET['spec']))   : 'Cardiologist';
-// $doctor_fee  = isset($_GET['fee'])    ? (int)$_GET['fee']                            : 2000;
+$doctor_name = isset($_GET['doctor']) ? htmlspecialchars(urldecode($_GET['doctor'])) : 'Dr. Sarah Ahmed';
+$doctor_spec = isset($_GET['spec'])   ? htmlspecialchars(urldecode($_GET['spec']))   : 'Cardiologist';
+$doctor_fee  = isset($_GET['fee'])    ? (int)$_GET['fee']                            : 2000;
 
-// // Morning and evening slots
-// $morning_slots = ['09:00 AM','09:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM','12:00 PM','12:30 PM'];
-// $evening_slots = ['04:00 PM','04:30 PM','05:00 PM','05:30 PM','06:00 PM','06:30 PM','07:00 PM','07:30 PM'];
-// // Unavailable slots (sample)
-// $unavailable = ['10:00 AM','11:30 AM','05:00 PM','07:00 PM'];
+// Morning and evening slots
+$morning_slots = ['09:00 AM','09:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM','12:00 PM','12:30 PM'];
+$evening_slots = ['04:00 PM','04:30 PM','05:00 PM','05:30 PM','06:00 PM','06:30 PM','07:00 PM','07:30 PM'];
+// Unavailable slots (sample)
+$unavailable = ['10:00 AM','11:30 AM','05:00 PM','07:00 PM'];
 
-// // Next 6 days
-// $days = [];
-// for ($i = 0; $i < 6; $i++) {
-//     $ts = strtotime("+$i day");
-//     $days[] = [
-//         'label' => date('D', $ts),
-//         'full'  => date('d M', $ts),
-//         'ts'    => $ts,
-//     ];
-// }
+// Next 6 days
+$days = [];
+for ($i = 0; $i < 6; $i++) {
+    $ts = strtotime("+$i day");
+    $days[] = [
+        'label' => date('D', $ts),
+        'full'  => date('d M', $ts),
+        'ts'    => $ts,
+    ];
+}
 include 'includes/head.php';
 ?>
 

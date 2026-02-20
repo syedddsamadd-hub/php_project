@@ -70,15 +70,6 @@ include 'includes/head.php';
                 </span>
               </div>
             </div>
-
-            <!-- Remember & Forgot -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember" />
-                <label class="form-check-label" for="rememberMe" style="font-size:0.85rem;color:var(--text-muted);">Remember me</label>
-              </div>
-                   </div>
-
             <!-- Submit -->
             <button type="submit" class="btn-primary-care w-100 justify-content-center mb-3" style="padding:14px;">
               <i class="fas fa-sign-in-alt"></i> Sign In

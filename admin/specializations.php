@@ -3,6 +3,11 @@
  * specializations.php — Manage Specializations Page
  * Healthcare Admin Panel — UI Only
  */
+session_start();
+if (!isset($_SESSION["admin_email"])) {
+    header("Location: login.php");
+    exit();
+}
 include("..//connect.php");
 $pageTitle = 'Manage Specializations';
 include('includes/header.php');

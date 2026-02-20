@@ -19,13 +19,103 @@ include 'includes/head.php';
 
 <?php include 'includes/navbar.php'; ?>
 
-  <section style="background:linear-gradient(135deg,#1565C0,#0D47A1);padding:60px 0;color:white;">
+  <!-- <section style="background:linear-gradient(135deg,#1565C0,#0D47A1);padding:60px 0;color:white;">
     <div class="container text-center">
       <span class="badge-accent" style="background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3);">Health Guide</span>
       <h1 class="hero-title mt-2" style="font-size:2.4rem;">Disease Information Center</h1>
       <p style="color:rgba(255,255,255,0.8);max-width:500px;margin:0 auto;">Learn about common diseases – symptoms, causes, prevention, and treatments.</p>
     </div>
-  </section>
+  </section> -->
+  <script>
+    (function() {
+  let current = 0;
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dots = document.querySelectorAll('.dot');
+  let autoTimer;
+
+  function goToSlide(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    resetAuto();
+  }
+
+  function moveSlide(dir) { goToSlide(current + dir); }
+
+  function resetAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => moveSlide(1), 4000);
+  }
+
+  // Make functions global for onclick
+  window.moveSlide = moveSlide;
+  window.goToSlide = goToSlide;
+
+  resetAuto();
+})();
+  </script>
+<section class="disease-carousel-section">
+  <div class="carousel-slides">
+
+    <!-- Slide 1 -->
+    <div class="carousel-slide active" style="background: linear-gradient(135deg, rgba(21,101,192,0.92), rgba(13,71,161,0.88)), url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600') center/cover no-repeat;">
+      <div class="slide-icon"><i class="fas fa-heartbeat"></i></div>
+      <span class="slide-tag">Cardiovascular</span>
+      <h2>Heart Disease</h2>
+      <p>Learn about symptoms, risk factors, and prevention of heart-related conditions.</p>
+      <a href="#heart" class="slide-btn">Explore <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-slide" style="background: linear-gradient(135deg, rgba(0,105,92,0.92), rgba(0,77,64,0.88)), url('https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1600') center/cover no-repeat;">
+      <div class="slide-icon"><i class="fas fa-lungs"></i></div>
+      <span class="slide-tag">Respiratory</span>
+      <h2>Lung & Breathing</h2>
+      <p>Understand asthma, pneumonia, COPD and other respiratory diseases.</p>
+      <a href="#lung" class="slide-btn">Explore <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-slide" style="background: linear-gradient(135deg,
+     rgba(123,31,162,0.92), rgba(74,20,140,0.88)),
+      url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1600') center/cover no-repeat;">
+      <div class="slide-icon"><i class="fas fa-brain"></i></div>
+      <span class="slide-tag">Neurological</span>
+      <h2>Brain & Nervous System</h2>
+      <p>Discover info on migraines, epilepsy, Alzheimer's and neurological disorders.</p>
+      <a href="#neuro" class="slide-btn">Explore <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="carousel-slide" style="background: linear-gradient(135deg, rgba(183,28,28,0.92), rgba(136,14,79,0.88)), url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1600') center/cover no-repeat;">
+      <div class="slide-icon"><i class="fas fa-tint"></i></div>
+      <span class="slide-tag">Endocrine</span>
+      <h2>Diabetes & Blood Sugar</h2>
+      <p>Know the types, causes, diet tips and management of diabetes.</p>
+      <a href="#diabetes" class="slide-btn">Explore <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+  </div>
+
+  <!-- Controls -->
+  <button class="carousel-btn prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+  <button class="carousel-btn next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+
+  <!-- Dots -->
+  <div class="carousel-dots">
+    <span class="dot active" onclick="goToSlide(0)"></span>
+    <span class="dot" onclick="goToSlide(1)"></span>
+    <span class="dot" onclick="goToSlide(2)"></span>
+    <span class="dot" onclick="goToSlide(3)"></span>
+  </div>
+
+  <!-- Bottom Badge -->
+  <div class="carousel-bottom-badge">
+    <i class="fas fa-book-medical"></i> Disease Information Center &nbsp;|&nbsp; <i class="fas fa-map-marker-alt"></i> Pakistan
+  </div>
+</section>
 
   <!-- Filters -->
   <div style="background:var(--off-white);border-bottom:1px solid rgba(21,101,192,0.1);padding:20px 0;">
@@ -33,7 +123,11 @@ include 'includes/head.php';
       <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between">
         <div class="d-flex flex-wrap gap-2">
           <?php foreach ($categories as $key=>$label): ?>
-          <a href="diseases.php?cat=<?php echo $key; ?>" class="<?php echo $filter===$key ? 'btn-primary-care' : 'btn btn-outline-secondary rounded-pill'; ?>" style="<?php echo $filter===$key ? 'padding:8px 20px;font-size:0.83rem;' : 'font-size:0.83rem;'; ?> text-decoration:none;">
+          <a href="diseases.php?cat=<?php echo $key; ?>"
+           class="<?php echo $filter===$key ? 
+           'btn-primary-care' : 'btn btn-outline-secondary rounded-pill'; ?>" 
+           style="<?php echo $filter===$key ? 'padding:8px 20px;font-size:0.83rem;':
+            'font-size:0.83rem;'; ?> text-decoration:none;">
             <?php echo htmlspecialchars($label); ?>
           </a>
           <?php endforeach; ?>
