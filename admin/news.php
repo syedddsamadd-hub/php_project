@@ -3,6 +3,57 @@
  * news.php — Manage News Page
  * Healthcare Admin Panel — UI Only
  */
+include "..//connect.php";
+
+// DELETE
+if (isset($_POST["btn-delete-article"])) {
+
+    $delete_id = intval($_POST['article_id']);
+
+    // get image first
+    $get_img = mysqli_query($connect,"SELECT article_img FROM news WHERE article_id=$delete_id");
+    $img_row = mysqli_fetch_assoc($get_img);
+
+    if($img_row){
+        $img_path = "uploads/".$img_row['article_img'];
+        if(file_exists($img_path)){
+            unlink($img_path);
+        }
+    }
+
+    mysqli_query($connect,"DELETE FROM news WHERE article_id=$delete_id");
+    header("location:news.php");
+    exit;
+}
+
+
+// UPDATE
+if (isset($_POST['btn-edit-article'])) {
+
+    $article_id  = intval($_POST['article_id']);
+    $title       = mysqli_real_escape_string($connect, trim($_POST['article_title_update']));
+    $description = mysqli_real_escape_string($connect, trim($_POST['article_description_update']));
+    $detail      = mysqli_real_escape_string($connect, trim($_POST['article_detail_update']));
+    $badge       = mysqli_real_escape_string($connect, trim($_POST['article_badge_update']));
+
+    if (empty($title) || empty($description) || empty($detail) || empty($badge)) {
+        echo "All fields are required.";
+        exit;
+    }
+
+    $update_query = "UPDATE news SET
+        article_title = '$title',
+        article_description = '$description',
+        article_detail_description = '$detail',
+        article_badge = '$badge'
+        WHERE article_id = $article_id";
+
+    mysqli_query($connect,$update_query);
+    header("Location: news.php");
+    exit;
+}
+
+
 session_start();
 if (!isset($_SESSION["admin_email"])) {
     header("Location: login.php");
@@ -46,170 +97,253 @@ include('includes/sidebar.php');
         </select>
     </div>
 
-    <!-- News Table -->
-    <div class="section-card page-fade-in stagger-2">
-        <div class="section-card-header">
-            <h5><i class="bi bi-table"></i> News Posts
-                <span class="info-chip ms-2">58 Records</span>
-            </h5>
-        </div>
-        <div class="section-card-body table-responsive-custom">
-            <table class="admin-table table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Category</th>
-                        <th>Published Date</th>
-                        <th>Views</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $news = [
-                        [1,'New Cardiac Surgery Wing Inaugurated at City Hospital','Dr. Ayesha Khan','Hospital News','Jan 10, 2025',2430,'published'],
-                        [2,'Breakthrough in Diabetes Treatment: Local Research Team','Dr. Raza Ahmed','Medical Research','Jan 15, 2025',1890,'published'],
-                        [3,'Free Medical Camp Scheduled for Feb 2025 in Karachi','Admin','Events','Jan 20, 2025',3210,'published'],
-                        [4,'Understanding Mental Health: Awareness Drive 2025','Dr. Nadia Zubair','General Health','Jan 25, 2025',1240,'published'],
-                        [5,'COVID-19 Booster Guidelines Updated by Health Ministry','Admin','General Health','Feb 01, 2025',890,'draft'],
-                        [6,'Annual Healthcare Conference — Registration Open','Dr. Omar Baig','Events','Feb 05, 2025',650,'published'],
-                        [7,'New Pediatric Ward Opens at Children\'s Hospital Lahore','Dr. Sara Malik','Hospital News','Feb 08, 2025',1120,'archived'],
-                        [8,'Advances in Orthopedic Surgery Techniques','Dr. Omar Baig','Medical Research','Feb 10, 2025',780,'published'],
-                    ];
-                    $statusClass = [
-                        'published'=>'badge-active',
-                        'draft'=>'badge-pending',
-                        'archived'=>'badge-inactive'
-                    ];
-                    $avatarClasses = ['av1','av2','av3','av4','av5'];
-                    foreach ($news as $i => $n):
-                        $sc = $statusClass[$n[6]] ?? 'badge-pending';
-                        $ic = $avatarClasses[$i % 5];
-                    ?>
-                    <tr>
-                        <td class="fw-600 text-primary-custom"><?= str_pad($n[0],2,'0',STR_PAD_LEFT) ?></td>
-                        <td style="max-width:280px;">
-                            <div class="user-cell">
-                                <div class="user-avatar <?= $ic ?>">
-                                    <i class="bi bi-file-text" style="font-size:14px;"></i>
-                                </div>
-                                <div>
-                                    <div class="user-name" style="font-size:13px;line-height:1.3;"><?= $n[1] ?></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><?= $n[2] ?></td>
-                        <td><span class="info-chip"><?= $n[3] ?></span></td>
-                        <td><i class="bi bi-calendar3 text-primary me-1"></i><?= $n[4] ?></td>
-                        <td><i class="bi bi-eye text-primary me-1"></i><?= number_format($n[5]) ?></td>
-                        <td><span class="badge-status <?= $sc ?>"><?= ucfirst($n[6]) ?></span></td>
-                        <td>
-                            <div class="d-flex gap-1">
-                                <button class="btn-action btn-view" data-bs-toggle="modal" data-bs-target="#newsModal">
-                                    <i class="bi bi-eye-fill"></i>
-                                </button>
-                                <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#newsModal">
-                                    <i class="bi bi-pencil-fill"></i> Edit
-                                </button>
-                                <button class="btn-action btn-delete btn-delete-row">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-        <div class="d-flex align-items-center justify-content-between px-4 py-3 border-top">
-            <p class="mb-0" style="font-size:13px;color:#7f8fa6;">Showing 1–8 of 58 records</p>
-            <nav>
-                <ul class="pagination pagination-sm mb-0">
-                    <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">…</a></li>
-                    <li class="page-item"><a class="page-link" href="#">7</a></li>
-                    <li class="page-item"><a class="page-link" href="#">»</a></li>
-                </ul>
-            </nav>
+<!-- News Cards -->
+<div class="section-card page-fade-in stagger-2">
+    <div class="section-card-header">
+        <h5><i class="bi bi-newspaper"></i> News Posts</h5>
+        <h6 class="text-capitalize">total news <?php
+              $result_news = $connect->query("SELECT COUNT(*) AS total FROM news");
+              $row_news = $result_news->fetch_assoc();
+              $total_news = $row_news['total'];
+              echo $total_news;
+              ?></h6>
+    </div>
+
+    <div class="section-card-body">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+
+<?php
+$select_news = "SELECT * FROM news ORDER BY article_id DESC";
+$select_news_query = mysqli_query($connect, $select_news);
+
+while ($row = mysqli_fetch_assoc($select_news_query)) {
+
+    $article_id     = $row["article_id"];
+    $title          = $row["article_title"];
+    $desc           = $row["article_description"];
+    $detail         = $row["article_detail_description"];
+    $badge          = $row["article_badge"];
+    $date           = $row["article_date"];
+    $img            = $row["article_img"];
+    $article_status = $row["articles_status"];
+?>
+
+<div class="col-10 my-4">
+    <div class="card shadow-sm p-4">
+
+        <form method="POST">
+
+            <input type="hidden" name="article_id" value="<?= $article_id ?>">
+
+            <div class="row">
+
+                <!-- Image -->
+                <div class="col-md-3 h-100">
+
+    <img src="src/<?= $img ?>"
+         class="img-fluid rounded mb-2"
+         style="height: 300px; width:100%; align-items: center; trans">
+<!-- 
+    <label class="btn btn-outline-primary btn-sm w-100">
+        Change Image
+        <input type="file" name="article_img_update" hidden>
+    </label> -->
+</div>
+                
+                <!-- Content -->
+                <div class="col-md-9">
+                    <div class="mb-2">
+                        <label class="fw-bold form-label">Title</label>
+                        <input type="text" name="article_title_update"
+                               value="<?= $title ?>"
+                               class="form-control">
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="fw-bold">Description</label>
+                        <textarea name="article_description_update"
+                                  class="form-control"
+                                  rows="2"><?= $desc ?></textarea>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="fw-bold">Detail Description</label>
+                        <textarea name="article_detail_update"
+                                  class="form-control"
+                                  rows="3"><?= $detail ?></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <label class="fw-bold">Badge</label>
+                            <input type="text" name="article_badge_update"
+                                   value="<?= $badge ?>"
+                                   class="form-control">
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label class="fw-bold">Date</label>
+                            <input type="date"
+                                   value="<?= $date ?>"
+                                   class="form-control"
+                                   readonly>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label class="fw-bold">Status</label>
+                            <input type="text"
+                                   value="<?= $article_status ?>"
+                                   class="form-control"
+                                   readonly>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <button class="btn btn-primary"
+                                name="btn-edit-article">
+                            Update
+                        </button>
+
+                        <button class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this post?')"
+                                name="btn-delete-article">
+                            Delete
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<?php } ?>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- News Modal -->
-<div class="modal fade" id="newsModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-newspaper me-2"></i>Add News Post</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row g-3">
-                    <div class="col-12">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Post Title <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control-custom" placeholder="Enter news post title" required />
-                        </div>
+<div class="conteiner-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-primary p-5 m-3">
+                <h2>Article Information Form</h2>
+
+                <form method="POST" id="diseaseForm" action="" enctype="multipart/form-data">
+
+                    <!-- Image -->
+                    <div class="form-group">
+                        <label>Article Image</label>
+                        <input type="file" name="article_img" class="form-control">
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Category <span class="text-danger">*</span></label>
-                            <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;" required>
-                                <option value="">Select Category</option>
-                                <option>General Health</option><option>Medical Research</option>
-                                <option>Hospital News</option><option>Events</option>
-                            </select>
-                        </div>
+
+                    <!-- Title -->
+                    <div class="form-group">
+                        <label>Article Title</label>
+                        <input type="text" name="article_title" class="form-control"
+                            placeholder="Enter article title">
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Author</label>
-                            <input type="text" class="form-control-custom" placeholder="Author name" />
-                        </div>
+
+                    <!-- Short Description -->
+                    <div class="form-group">
+                        <label>Article Description</label>
+                        <textarea name="article_description" class="form-control" rows="3"
+                            placeholder="Enter short description"></textarea>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Status <span class="text-danger">*</span></label>
-                            <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;" required>
-                                <option>Published</option><option>Draft</option><option>Archived</option>
-                            </select>
-                        </div>
+
+                    <!-- Detail Description -->
+                    <div class="form-group">
+                        <label>Article Detail Description</label>
+                        <textarea name="article_detail_description" class="form-control" rows="4"
+                            placeholder="Enter detailed description"></textarea>
                     </div>
-                    <div class="col-12">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Featured Image</label>
-                            <input type="file" class="form-control-custom" accept="image/*" style="padding:7px 14px;" />
-                        </div>
+
+                    <!-- Badge -->
+                    <div class="form-group">
+                        <label>Article Badge</label>
+                        <input type="text" name="article_badge" class="form-control"
+                            placeholder="Enter badge name">
                     </div>
-                    <div class="col-12">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Short Summary</label>
-                            <textarea class="form-control-custom" rows="2" placeholder="Brief summary or excerpt of the post…" style="resize:vertical;"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Full Content <span class="text-danger">*</span></label>
-                            <textarea class="form-control-custom" rows="6" placeholder="Write your full news article here…" style="resize:vertical;" required></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-outline-custom" data-bs-dismiss="modal">
-                    <i class="bi bi-x-circle"></i> Cancel
-                </button>
-                <button type="button" class="btn-primary-custom modal-save-btn">
-                    <i class="bi bi-check-circle-fill"></i> Publish Post
-                </button>
+
+                    <button type="submit" name="submit"
+                        class="btn btn-primary d-block btn-lg mx-auto w-75 mt-5">
+                        Submit
+                    </button>
+
+                    <?php
+                    $error = addArticle();
+
+                    if (!empty($error)) {
+                        echo "<h6 style='color:red;' class='text-center text-capitalize my-2'>$error</h6>";
+                    }
+                    ?>
+
+                </form>
             </div>
         </div>
     </div>
 </div>
+<?php
+function addArticle()
+{
+    global $connect;
+    $error = "";
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+
+        $title  = mysqli_real_escape_string($connect, trim($_POST['article_title'] ?? ''));
+        $desc   = mysqli_real_escape_string($connect, trim($_POST['article_description'] ?? ''));
+        $detail = mysqli_real_escape_string($connect, trim($_POST['article_detail_description'] ?? ''));
+        $badge  = mysqli_real_escape_string($connect, trim($_POST['article_badge'] ?? ''));
+
+        if ($title == "" || $desc == "" || $detail == "" || $badge == "") {
+            $error = "All fields are required.";
+        }
+
+        // IMAGE
+        elseif (empty($_FILES['article_img']['name'])) {
+            $error = "Image required.";
+        }
+
+        else {
+
+            $img_name = $_FILES['article_img']['name'];
+            $tmp      = $_FILES['article_img']['tmp_name'];
+            $size     = $_FILES['article_img']['size'];
+
+            $ext = strtolower(pathinfo($img_name, PATHINFO_EXTENSION));
+
+            if (!in_array($ext, ['jpg','jpeg','png','webp'])) {
+                $error = "Only JPG, JPEG, PNG and webp allowed.";
+            }
+            elseif ($size > 2000000) {
+                $error = "Image must be under 2MB.";
+            }
+            else {
+
+                $new_name = time().".".$ext;
+                move_uploaded_file($tmp, "src/".$new_name);
+
+                $insert = "INSERT INTO news 
+                (article_title,article_description,
+                article_detail_description,article_badge,
+                article_date,article_img)
+                VALUES
+                ('$title','$desc','$detail','$badge',
+                CURDATE(),'$new_name')";
+
+                mysqli_query($connect,$insert);
+                header("Location: news.php");
+                exit;
+            }
+        }
+    }
+
+    return $error;
+}
+?>
 
 <?php include('includes/footer.php'); ?>

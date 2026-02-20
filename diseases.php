@@ -1,4 +1,5 @@
 <?php
+include "connect.php";
 $page_title = 'Diseases Guide';
 $filter = isset($_GET['cat']) ? $_GET['cat'] : 'all';
 
@@ -151,34 +152,53 @@ include 'includes/head.php';
       </div>
       <?php else: ?>
       <div class="row g-4">
-        <?php $i=0; foreach ($filtered as $d): $i++; ?>
+        <?php
+ $select_diseases = "select * from disease where status=1";
+                        $select_diseases_query = mysqli_query($connect, $select_diseases);
+                        if (mysqli_num_rows($select_diseases_query) > 0) {
+                            while ($disease_table_row = mysqli_fetch_assoc($select_diseases_query)) {
+                                $disease_id = $disease_table_row["Disease_id"];
+                                $disease_name = $disease_table_row["disease_name"];
+                                $symptoms = $disease_table_row["symptoms"];
+                                $causes = $disease_table_row["causes"];
+                                $prevention = $disease_table_row["prevention"];
+                                $treatment = $disease_table_row["treatment"];
+                                $status = $disease_table_row["status"];
+                                $specialize_id = $disease_table_row["specialize_id"];
+
+                                        $select_specialization = "select * from specialization where specialize_id='$specialize_id' and specialization_status='active'";
+                                        $select_specialize_query = mysqli_query($connect, $select_specialization);
+                                        if (mysqli_num_rows($select_specialize_query) > 0) {
+                                            while ($specialize_table_row = mysqli_fetch_assoc($select_specialize_query)) {
+                                                $specialize = $specialize_table_row["specialize"];
+        ?>
         <div class="col-md-6 col-lg-4 animate-on-scroll" style="transition-delay:<?php echo (($i-1)%3)*0.07; ?>s">
           <div class="disease-card">
-            <div class="disease-card-img" style="background:<?php echo $d['bg']; ?>">
-              <i class="fas fa-<?php echo $d['icon']; ?>" style="color:<?php echo $d['ic_color']; ?>"></i>
-            </div>
+            <img src="https://media.istockphoto.com/id/1435498034/photo/heart-attack-and-heart-disease-3d-illustration.jpg?s=612x612&w=0&k=20&c=peIJNOEj2YYzbLVEcgesNYpty4X51oI0Q1V1WqdWja8=" width="100%" height="200px" alt="">
             <div class="disease-card-body">
-              <h5><?php echo htmlspecialchars($d['name']); ?></h5>
-              <div class="mb-2">
-                <?php foreach ($d['tags'] as $tag): ?>
-                <span class="disease-tag"><?php echo htmlspecialchars($tag); ?></span>
-                <?php endforeach; ?>
+              <h5><?= $disease_name ?></h5>
+              <div class="mb-2">  
               </div>
               <div class="disease-info-label">Symptoms</div>
-              <p class="disease-info-text"><?php echo htmlspecialchars($d['symptoms']); ?></p>
+              <p class="disease-info-text"><?= $symptoms ?></p>
               <div class="disease-info-label">Causes</div>
-              <p class="disease-info-text"><?php echo htmlspecialchars($d['causes']); ?></p>
+              <p class="disease-info-text"><?= $causes?></p>
               <div class="disease-info-label">Prevention</div>
-              <p class="disease-info-text"><?php echo htmlspecialchars($d['prevention']); ?></p>
+              <p class="disease-info-text"><?=$prevention?></p>
               <div class="disease-info-label">Treatment</div>
-              <p class="disease-info-text"><?php echo htmlspecialchars($d['treatment']); ?></p>
-              <a href="search-doctor.php?spec=<?php echo urlencode($d['spec']); ?>" class="btn-primary-care mt-3" style="padding:9px 20px;font-size:0.83rem;">
-                <i class="fas fa-user-md"></i> Find <?php echo htmlspecialchars($d['spec']); ?>
+              <p class="disease-info-text"><?= $treatment ?></p>
+              <a href="search-doctor.php" class="btn-primary-care mt-3" style="padding:9px 20px;font-size:0.83rem;">
+                <i class="fas fa-user-md"></i> Find <?= $specialize  ?>
               </a>
             </div>
           </div>
         </div>
-        <?php endforeach; ?>
+                       <?php
+                                            }
+                                        }
+                                    }
+                                }
+                        ?>
       </div>
       <?php endif; ?>
     </div>

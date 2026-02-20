@@ -14,21 +14,20 @@ include('includes/header.php');
 include('includes/sidebar.php');
 
 //adding specialization
-       $select_doctor = "SELECT specialize FROM specialization";
-    $select_check = mysqli_query($connect, $select_doctor);
-    $specialize_name_check = [];
-    while ($row_checking = mysqli_fetch_assoc($select_check)) {
-        $specialize_name_check[] = $row_checking['specialize'];
-    }
+$select_doctor = "SELECT specialize FROM specialization";
+$select_check = mysqli_query($connect, $select_doctor);
+$specialize_name_check = [];
+while ($row_checking = mysqli_fetch_assoc($select_check)) {
+    $specialize_name_check[] = $row_checking['specialize'];
+}
 if (isset($_POST['save_city_btn'])) {
     $specialize_name = $_POST["specialize_name"];
     $specialize_status = $_POST["specialize_status"];
     if ($specialize_name === '') {
         $specialize_table_message = "<h6 class='alert alert-danger'>First Select specialization.";
     } elseif (in_array($specialize_name, $specialize_name_check)) {
-            $specialize_table_message  = "specialize is already there";
-        }
-     elseif ($specialize_status === '') {
+        $specialize_table_message = "specialize is already there";
+    } elseif ($specialize_status === '') {
         $specialize_table_message = "<h6 class='alert alert-danger'>Select status.</h6>";
     } else {
         $insert_specialization = "insert into specialization (specialize,specialization_status)
@@ -61,7 +60,7 @@ SET specialize = '$update_specialize_name',
     specialization_status = '$update_specialize_Status'
 WHERE specialize_id = '$get_specialization_id'";
     $update_specialize_query = mysqli_query($connect, $update_specialize);
-            // header("location:specializations.php");
+    // header("location:specializations.php");
 } else {
     echo '';
 }
@@ -80,17 +79,10 @@ WHERE specialize_id = '$get_specialization_id'";
         </div>
     </div>
 
-        <div class="form-wrapper">
+    <div class="form-wrapper">
         <form method="POST" action="" class="city-form">
             <h1>Add New specialization</h1>
-            <select name="specialize_name" class="city-select">
-                <option value="">Select specialize passion</option>
-                <option value="cardiologist">cardiologist</option>
-                <option value="neurologist">neurologist</option>
-                <option value="General Physician">General Physician</option>
-                <option value="Gynecologist">Gynecologist</option>
-                <option value="Eye Specialist">Eye Specialist</option>
-            </select>
+            <input type="text" name="specialize_name" class="form-control">
 
             <select name="specialize_status" class="city-select">
                 <option value="active">Active</option>
@@ -127,7 +119,14 @@ WHERE specialize_id = '$get_specialization_id'";
     <div class="section-card page-fade-in stagger-2">
         <div class="section-card-header">
             <h5><i class="bi bi-table"></i> Specializations List
-                <span class="info-chip ms-2">32 Records</span>
+                <span class="info-chip ms-2">
+                    <?php
+                    $result = $connect->query("SELECT COUNT(*) AS total FROM specialization");
+                    $row = $result->fetch_assoc();
+                    $totalSpecialists = $row['total'];
+                    echo $totalSpecialists;
+                    ?>
+                </span>
             </h5>
         </div>
         <div class="section-card-body table-responsive-custom">
@@ -142,7 +141,7 @@ WHERE specialize_id = '$get_specialization_id'";
                     </tr>
                 </thead>
                 <tbody>
-                                        <?php
+                    <?php
                     $select_specialization = "select * from specialization";
                     $select_specialize_query = mysqli_query($connect, $select_specialization);
                     if (mysqli_num_rows($select_specialize_query) > 0) {
@@ -152,12 +151,12 @@ WHERE specialize_id = '$get_specialization_id'";
                             $specialization_status = $specialize_table_row["specialization_status"];
                             ?>
                             <tr>
-                                
-                                    <form method="POST" action="">
-                                <td class="fw-600 text-primary-custom">#<?= $specialize_id ?></td>
-                                
-                                        <input type="hidden" name="specialization_id" value="<?= $specialize_id ?>">
-                                <td>
+
+                                <form method="POST" action="">
+                                    <td class="fw-600 text-primary-custom">#<?= $specialize_id ?></td>
+
+                                    <input type="hidden" name="specialization_id" value="<?= $specialize_id ?>">
+                                    <td>
                                         <div class="user-cell">
                                             <div class="user-avatar av1"
                                                 style="border-radius:9px;background:linear-gradient(135deg,#0d6efd,#6610f2);">
@@ -166,23 +165,23 @@ WHERE specialize_id = '$get_specialization_id'";
                                             <span class="user-name"><input class="form-control" name="update_specialize_name"
                                                     type="text" value="<?= $specialize ?>"></span>
                                         </div>
-                                </td>
-                                <td><span class=""><input class="form-control" name="update_specialize_status" type="text"
-                                            value="<?= $specialization_status ?>"></span>
-                                
-                                </td>
-                                <td>
+                                    </td>
+                                    <td><span class=""><input class="form-control" name="update_specialize_status" type="text"
+                                                value="<?= $specialization_status ?>"></span>
+
+                                    </td>
+                                    <td>
                                         <button type="submit" class="btn-action alert alert-warning" name="btn-edit-rows">
                                             <i class="bi bi-pencil-fill"></i>Edit
                                         </button>
-                                </td>
-                                <td>
-                                    <button type="submit" class="btn-action alert alert-danger"
-                                        onclick="return confirm('Are you sure to delete this this row.')"
-                                         name="btn-delete-rows">
-                                        <i class="bi bi-trash-fill"></i>Delete
-                                    </button>
-                                </td>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn-action alert alert-danger"
+                                            onclick="return confirm('Are you sure to delete this this row.')"
+                                            name="btn-delete-rows">
+                                            <i class="bi bi-trash-fill"></i>Delete
+                                        </button>
+                                    </td>
                                 </form>
                             </tr>
                             <?php

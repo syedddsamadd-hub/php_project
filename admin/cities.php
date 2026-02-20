@@ -81,30 +81,11 @@ if (isset($_POST['save_city_btn'])) {
         </div>
     </div>
 
-    <!-- Search Bar -->
-    <!-- <div class="search-filter-bar page-fade-in">
-        <div class="search-input-wrap">
-            <i class="bi bi-search"></i>
-            <input type="text" id="tableSearch" placeholder="Search cities…" />
-        </div>
-        <select class="filter-select" style="min-width:120px;">
-            <option value="">All Status</option>
-            <option>Active</option>
-            <option>Inactive</option>
-        </select>
-    </div> -->
 
     <div class="form-wrapper">
         <form method="POST" action="#" class="city-form">
             <h1>Add New City</h1>
-            <select name="city_name" class="city-select">
-                <option value="">Select City</option>
-                <option value="karachi">Karachi</option>
-                <option value="faisalabad">Faisalabad</option>
-                <option value="hyderabad">Hyderabad</option>
-                <option value="quetta">Quetta</option>
-                <option value="peshawar">Peshawar</option>
-            </select>
+            <input type="text" class="form-control" placeholder="add new city" name="city_name" > 
 
             <select name="select_status" class="city-select">
                 <option value="" disabled>select city</option>
@@ -132,7 +113,14 @@ if (isset($_POST['save_city_btn'])) {
     <div class="section-card page-fade-in stagger-2">
         <div class="section-card-header">
             <h5><i class="bi bi-table"></i> Cities List
-                <span class="info-chip ms-2">3</span>
+                <span class="info-chip ms-2">
+                    <?php
+              $result2 = $connect->query("SELECT COUNT(*) AS total FROM cities");
+              $row2 = $result2->fetch_assoc();
+              $totalcities = $row2['total'];
+              echo $totalcities;
+              ?>
+                </span>
             </h5>
         </div>
         <div class="section-card-body table-responsive-custom">

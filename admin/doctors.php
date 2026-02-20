@@ -108,7 +108,14 @@ include('includes/sidebar.php');
     <div class="section-card page-fade-in stagger-2">
         <div class="section-card-header">
             <h5><i class="bi bi-table"></i> Doctors List
-                <span class="info-chip ms-2">187 Records</span>
+                <span class="info-chip ms-2">
+                    <?php
+                    $result_doctor = $connect->query("SELECT COUNT(*) AS total FROM doctors");
+                    $row_doctor = $result_doctor->fetch_assoc();
+                    $total_doctor = $row_doctor['total'];
+                    echo $total_doctor;
+                    ?>
+                </span>
             </h5>
             <div class="d-flex gap-2">
                 <button class="btn-outline-custom" onclick="showToast('success','Exported','Doctors list exported.')">
@@ -135,7 +142,7 @@ include('includes/sidebar.php');
                     <?php
                     ?>
                     <?php
-                    $select_doctors = "select * from doctors where doctor_status= 0";
+                    $select_doctors = "select * from doctors";
                     $select_doctors_query = mysqli_query($connect, $select_doctors);
                     if (mysqli_num_rows($select_doctors_query) > 0) {
                         while ($doctors_table_row = mysqli_fetch_assoc($select_doctors_query)) {

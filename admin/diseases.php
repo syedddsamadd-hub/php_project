@@ -1,8 +1,4 @@
 <?php
-/**
- * diseases.php — Manage Diseases Page
- * Healthcare Admin Panel — UI Only
- */
 include "..//connect.php";
 //delete city row
 if (isset($_POST["btn-delete-disease"])) {
@@ -155,7 +151,14 @@ include('includes/sidebar.php');
         <div class="section-card page-fade-in stagger-2">
             <div class="section-card-header">
                 <h5><i class="bi bi-table"></i> Disease List
-                    <span class="info-chip ms-2">187 Records</span>
+                    <span class="info-chip ms-2">
+                        <?php
+              $result_disease = $connect->query("SELECT COUNT(*) AS total FROM disease");
+              $row_disease = $result_disease->fetch_assoc();
+              $total_disease = $row_disease['total'];
+              echo $total_disease;
+              ?>
+                    </span>
                 </h5>
                 <div class="d-flex gap-2">
                     <button class="btn-outline-custom"
@@ -180,7 +183,7 @@ include('includes/sidebar.php');
                         <?php
                         ?>
                         <?php
-                        $select_diseases = "select * from disease where status= 0";
+                        $select_diseases = "select * from disease";
                         $select_diseases_query = mysqli_query($connect, $select_diseases);
                         if (mysqli_num_rows($select_diseases_query) > 0) {
                             while ($disease_table_row = mysqli_fetch_assoc($select_diseases_query)) {
@@ -211,7 +214,8 @@ include('includes/sidebar.php');
 
                                                         <td><select name="specialize_id_update" class="form-control">
                                                                 <?php
-                                                                $sp_query = mysqli_query($connect, "SELECT specialize_id, specialize FROM specialization");
+                                                                $sp_query = mysqli_query($connect, "SELECT specialize_id, specialize
+                                                                 FROM specialization where specialization_status='active'");
                                                                 while ($sp = mysqli_fetch_assoc($sp_query)) {
                                                                     $selected = ($sp['specialize_id'] == $specialize_id) ? "selected" : "";
                                                                     echo "<option value='{$sp['specialize_id']}' $selected>{$sp['specialize']}</option>";
@@ -239,8 +243,6 @@ include('includes/sidebar.php');
                                         }
                                     }
                                 }
-                        
-                        
                         ?>
                     </tbody>
                 </table>
@@ -289,9 +291,9 @@ include('includes/sidebar.php');
                         <select name="specialist" id="specialist" class="form-control">
                             <option value="">Select Specialist</option>
                             <?php
-                            $specialize_query = mysqli_query($connect, "SELECT specialize_id, specialize FROM specialization");
+                            $specialize_query = mysqli_query($connect, "SELECT specialize_id, specialize FROM specialization where specialization_status='active'");
                             while ($row2 = mysqli_fetch_assoc($specialize_query)) {
-                                echo "<option value='" . $row2['specialize_id'] . "'>" . $row2['specialize'] . "</option>";
+                                echo "<option value='" . $row2['specialize_id'] . "'>" . $row2['specialize']. "</option>";
                             }
                             ?>
                         </select>
@@ -376,12 +378,13 @@ function addDisease()
         elseif ($specialist_id === "") {
             $error_disease = "Please select a specialist.";
         } else {
-            $success = "Form submitted successfully!";
+            $error_disease = "Form submitted successfully!";
 
             // Yahan database insert kar sakte ho
             $insert_disease = "insert into disease (disease_name,symptoms,causes,prevention,treatment,
             specialize_id) values('$disease_title','$symptoms','$causes','$prevention','$treatment',
             $specialist_id)";
+            
             $insert_disease_query = mysqli_query($connect, $insert_disease);
             // Clear form after success
             $disease_title = "";
