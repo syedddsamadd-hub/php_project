@@ -3,6 +3,7 @@
  * dashboard.php — Main Dashboard Page
  * Healthcare Admin Panel — UI Only
  */
+include "..//connect.php";
 session_start();
 if (!isset($_SESSION["admin_email"])) {
     header("Location: login.php");
@@ -28,7 +29,8 @@ include('includes/sidebar.php');
             </ul>
         </div>
         <div class="d-flex gap-2">
-            <button class="btn-outline-custom" onclick="window.showToast && showToast('info','Refreshed','Data has been refreshed.')">
+            <button class="btn-outline-custom"
+                onclick="window.showToast && showToast('info','Refreshed','Data has been refreshed.')">
                 <i class="bi bi-arrow-clockwise"></i> Refresh
             </button>
             <button class="btn-primary-custom">
@@ -47,7 +49,14 @@ include('includes/sidebar.php');
                     <i class="bi bi-geo-alt-fill"></i>
                 </div>
                 <div class="stat-info">
-                    <div class="number" data-target="24">0</div>
+                    <div class="number">
+                        <?php
+                        $result2 = $connect->query("SELECT COUNT(*) AS total FROM cities");
+                        $row2 = $result2->fetch_assoc();
+                        $totalcities = $row2['total'];
+                        echo $totalcities;
+                        ?>
+                    </div>
                     <div class="label">Total Cities</div>
                 </div>
             </div>
@@ -60,7 +69,14 @@ include('includes/sidebar.php');
                     <i class="bi bi-person-badge-fill"></i>
                 </div>
                 <div class="stat-info">
-                    <div class="number" data-target="187">0</div>
+                    <div class="number">
+                        <?php
+                        $result_doctor = $connect->query("SELECT COUNT(*) AS total FROM doctors");
+                        $row_doctor = $result_doctor->fetch_assoc();
+                        $total_doctor = $row_doctor['total'];
+                        echo $total_doctor;
+                        ?>
+                    </div>
                     <div class="label">Total Doctors</div>
                 </div>
             </div>
@@ -73,7 +89,14 @@ include('includes/sidebar.php');
                     <i class="bi bi-people-fill"></i>
                 </div>
                 <div class="stat-info">
-                    <div class="number" data-target="3452">0</div>
+                    <div class="number">
+                        <?php
+                        $result_patient = $connect->query("SELECT COUNT(*) AS total FROM patients");
+                        $row_patient = $result_patient->fetch_assoc();
+                        $total_patient = $row_patient['total'];
+                        echo $total_patient;
+                        ?>
+                    </div>
                     <div class="label">Total Patients</div>
                 </div>
             </div>
@@ -86,7 +109,14 @@ include('includes/sidebar.php');
                     <i class="bi bi-award-fill"></i>
                 </div>
                 <div class="stat-info">
-                    <div class="number" data-target="32">0</div>
+                    <div class="number">
+                        <?php
+                        $result = $connect->query("SELECT COUNT(*) AS total FROM specialization");
+                        $row = $result->fetch_assoc();
+                        $totalSpecialists = $row['total'];
+                        echo $totalSpecialists;
+                        ?>
+                    </div>
                     <div class="label">Specializations</div>
                 </div>
             </div>
@@ -99,7 +129,14 @@ include('includes/sidebar.php');
                     <i class="bi bi-virus2"></i>
                 </div>
                 <div class="stat-info">
-                    <div class="number" data-target="94">0</div>
+                    <div class="number">
+                        <?php
+                        $result_disease = $connect->query("SELECT COUNT(*) AS total FROM disease");
+                        $row_disease = $result_disease->fetch_assoc();
+                        $total_disease = $row_disease['total'];
+                        echo $total_disease;
+                        ?>
+                    </div>
                     <div class="label">Total Diseases</div>
                 </div>
             </div>
@@ -112,7 +149,14 @@ include('includes/sidebar.php');
                     <i class="bi bi-newspaper"></i>
                 </div>
                 <div class="stat-info">
-                    <div class="number" data-target="58">0</div>
+                    <div class="number">
+                        <?php
+                        $result_news = $connect->query("SELECT COUNT(*) AS total FROM news");
+                        $row_news = $result_news->fetch_assoc();
+                        $total_news = $row_news['total'];
+                        echo $total_news;
+                        ?>
+                    </div>
                     <div class="label">News Posts</div>
                 </div>
             </div>

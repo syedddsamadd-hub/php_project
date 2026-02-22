@@ -75,8 +75,9 @@ include('includes/sidebar.php');
                 <li>Manage News</li>
             </ul>
         </div>
-        <button class="btn-primary-custom" id="addNewBtn" data-bs-toggle="modal" data-bs-target="#newsModal">
-            <i class="bi bi-plus-lg"></i> Add News Post
+         <button class="btn-primary-custom" id="addNewBtn">
+            <i class="bi bi-plus-lg"></i><a href="#news_id" class="btn text-decoration-none text-light btn-sm"> Add New
+                Doctor </a>
         </button>
     </div>
 
@@ -226,7 +227,7 @@ while ($row = mysqli_fetch_assoc($select_news_query)) {
     </div>
 </div>
 
-<div class="conteiner-fluid">
+<div id="news_id" class="conteiner-fluid">
     <div class="row">
         <div class="col-12">
             <div class="alert alert-primary p-5 m-3">
