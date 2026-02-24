@@ -169,7 +169,7 @@ include('includes/sidebar.php');
     <div class="row g-3">
 
         <!-- Recent Doctors Table -->
-        <div class="col-xl-7 col-lg-7 page-fade-in stagger-2">
+        <div class="col-xl-12 col-lg-12 page-fade-in stagger-2">
             <div class="section-card">
                 <div class="section-card-header">
                     <h5><i class="bi bi-person-badge-fill"></i> Recent Doctors</h5>
@@ -269,9 +269,10 @@ include('includes/sidebar.php');
                 </div>
             </div>
         </div>
+        
 
         <!-- Recent Patients Table -->
-        <div class="col-xl-5 col-lg-5 page-fade-in stagger-3">
+        <div class="col-xl-12 col-lg-12 page-fade-in stagger-3">
             <div class="section-card">
                 <div class="section-card-header">
                     <h5><i class="bi bi-people-fill"></i> Recent Patients</h5>

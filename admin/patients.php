@@ -3,6 +3,7 @@
  * patients.php — Manage Patients Page
  * Healthcare Admin Panel — UI Only
  */
+include "..//connect.php";
 session_start();
 if (!isset($_SESSION["admin_email"])) {
     header("Location: login.php");
@@ -37,12 +38,15 @@ include('includes/sidebar.php');
         </div>
         <select class="filter-select">
             <option value="">All Cities</option>
-            <option>Karachi</option><option>Lahore</option>
-            <option>Islamabad</option><option>Rawalpindi</option>
+            <option>Karachi</option>
+            <option>Lahore</option>
+            <option>Islamabad</option>
+            <option>Rawalpindi</option>
         </select>
         <select class="filter-select" style="min-width:120px;">
             <option value="">All Status</option>
-            <option>Active</option><option>Inactive</option>
+            <option>Active</option>
+            <option>Inactive</option>
         </select>
     </div>
 
@@ -50,7 +54,14 @@ include('includes/sidebar.php');
     <div class="section-card page-fade-in stagger-2">
         <div class="section-card-header">
             <h5><i class="bi bi-table"></i> Patients List
-                <span class="info-chip ms-2">3,452 Records</span>
+                <span class="info-chip ms-2">
+                     <?php
+                    $result_patient= $connect->query("SELECT COUNT(*) AS total FROM patients");
+                    $row_patient = $result_patient->fetch_assoc();
+                    $total_patient = $row_patient['total'];
+                    echo $total_patient;
+                    ?>
+                </span>
             </h5>
             <button class="btn-outline-custom" onclick="showToast('success','Exported','Patients list exported.')">
                 <i class="bi bi-file-earmark-excel"></i> Export
@@ -60,76 +71,77 @@ include('includes/sidebar.php');
             <table class="admin-table table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Patient</th>
-                        <th>Age / Gender</th>
+                        <th>Patients ID</th>
+                        <th>Name</th>
+                        <th>Gender</th>
                         <th>Phone</th>
                         <th>City</th>
-                        <th>Blood Group</th>
-                        <th>Assigned Doctor</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $patients = [
-                        ['P001','MH','Muhammad Hassan','hassan@gmail.com','av1',34,'Male','0312-1122334','Karachi','B+','Dr. Ayesha Khan','active'],
-                        ['P002','FA','Fatima Ali','fatima@gmail.com','av2',27,'Female','0333-5566778','Lahore','O+','Dr. Raza Ahmed','active'],
-                        ['P003','BK','Bilal Khan','bilal@gmail.com','av3',52,'Male','0300-9900112','Islamabad','A-','Dr. Sara Malik','inactive'],
-                        ['P004','ZR','Zara Rehman','zara@gmail.com','av5',19,'Female','0321-3344556','Rawalpindi','AB+','Dr. Omar Baig','pending'],
-                        ['P005','IQ','Imran Qureshi','imran@gmail.com','av4',45,'Male','0345-7788990','Faisalabad','O-','Dr. Nadia Zubair','active'],
-                        ['P006','MA','Mahnoor Anwar','mahnoor@gmail.com','av2',31,'Female','0311-2233445','Karachi','B-','Dr. Tariq Hussain','active'],
-                        ['P007','SK','Sohail Karim','sohail@gmail.com','av1',65,'Male','0333-6677889','Multan','A+','Dr. Zara Iqbal','inactive'],
-                        ['P008','HN','Hira Naseer','hira@gmail.com','av3',23,'Female','0312-0011223','Lahore','AB-','Dr. Ali Raza','active'],
-                    ];
-                    foreach ($patients as $p):
-                        $badgeClass = $p[11]==='active' ? 'badge-active' : ($p[11]==='inactive' ? 'badge-inactive' : 'badge-pending');
+                    $select_patients = "select * from patients";
+                    $select_patients_query = mysqli_query($connect, $select_patients);
+                    if (mysqli_num_rows($select_patients_query) > 0) {
+                        while ($patients_table_row = mysqli_fetch_assoc($select_patients_query)) {
+                            $patients_id = $patients_table_row["patient_id"];
+                            $patients_name = $patients_table_row["name"];
+                            $patients_gender = $patients_table_row["gender"];
+                            $patients_email = $patients_table_row["email"];
+                            $patients_number = $patients_table_row["phone"];
+                            $patients_status = $patients_table_row["status"];
+                            $city_id = $patients_table_row["city_id"];
+
+                            $select_city_patients = "select * from cities where city_id='$city_id'";
+                            $select_city_patients_query = mysqli_query($connect, $select_city_patients);
+                            if (mysqli_num_rows($select_city_patients_query) > 0) {
+                                while ($city_patients_table_row = mysqli_fetch_assoc($select_city_patients_query)) {
+                                    $city_patients = $city_patients_table_row["city_name"];
+                                    ?>
+                                    <tr>
+                                        <td class="fw-600 text-primary-custom"><?= $patients_id ?></td>
+                                        <td>
+                                            <div class="user-cell">
+                                                <div class="user-avatar av2">
+                                                    <?php
+                                                    $query = "SELECT name, UPPER(LEFT(name,2)) AS initials FROM patients";
+                                                    $result = mysqli_query($connect, $query);
+
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                        echo  $row['initials'] . $row['name'];
+                                                        
+                                                    }
+                                                    ?>
+                                                </div>
+                                                <div class="user-name"><?= $patients_name ?></div>
+                                            </div>
+                                        </td>
+                                        <td><?= $patients_gender ?></td>
+                                        <td><?= $patients_number ?></td>
+                                        <td><?= $city_patients ?></td>
+                                        <td><span class="badge-status badge-active"><?= $patients_status?></span></td>
+                                        <td>
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                <button class="btn-action btn-edit" name="btn-edit-disease">
+                                                    <i class="bi bi-pencil-fill"></i> Edit
+                                                </button>
+                                                <button onclick="return confirm('are you sure to delete this this row.')"
+                                                    class="btn-action btn-delete btn-delete-row" name="btn-delete-disease">
+                                                    <i class="bi bi-trash-fill"></i> Del
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                        }
+                    }
                     ?>
-                    <tr>
-                        <td class="fw-600 text-primary-custom"><?= $p[0] ?></td>
-                        <td>
-                            <div class="user-cell">
-                                <div class="user-avatar <?= $p[4] ?>"><?= $p[1] ?></div>
-                                <div>
-                                    <div class="user-name"><?= $p[2] ?></div>
-                                    <div class="user-email"><?= $p[3] ?></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><?= $p[5] ?> / <span class="fw-600"><?= $p[6] ?></span></td>
-                        <td><?= $p[7] ?></td>
-                        <td><i class="bi bi-geo-alt text-primary me-1"></i><?= $p[8] ?></td>
-                        <td><span class="info-chip"><?= $p[9] ?></span></td>
-                        <td><?= $p[10] ?></td>
-                        <td><span class="badge-status <?= $badgeClass ?>"><?= ucfirst($p[11]) ?></span></td>
-                        <td>
-                            <div class="d-flex gap-1 flex-wrap">
-                                <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#patientModal">
-                                    <i class="bi bi-pencil-fill"></i> Edit
-                                </button>
-                                <button class="btn-action btn-delete btn-delete-row">
-                                    <i class="bi bi-trash-fill"></i> Del
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
                 </tbody>
             </table>
-        </div>
-        <div class="d-flex align-items-center justify-content-between px-4 py-3 border-top">
-            <p class="mb-0" style="font-size:13px;color:#7f8fa6;">Showing 1–8 of 3,452 records</p>
-            <nav>
-                <ul class="pagination pagination-sm mb-0">
-                    <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">…</a></li>
-                    <li class="page-item"><a class="page-link" href="#">»</a></li>
-                </ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -159,15 +171,19 @@ include('includes/sidebar.php');
                     <div class="col-md-4">
                         <div class="form-group-custom">
                             <label class="form-label-custom">Age <span class="text-danger">*</span></label>
-                            <input type="number" class="form-control-custom" placeholder="Age" min="0" max="120" required />
+                            <input type="number" class="form-control-custom" placeholder="Age" min="0" max="120"
+                                required />
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group-custom">
                             <label class="form-label-custom">Gender <span class="text-danger">*</span></label>
-                            <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;" required>
+                            <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;"
+                                required>
                                 <option value="">Select</option>
-                                <option>Male</option><option>Female</option><option>Other</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
                             </select>
                         </div>
                     </div>
@@ -176,10 +192,14 @@ include('includes/sidebar.php');
                             <label class="form-label-custom">Blood Group</label>
                             <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;">
                                 <option value="">Select</option>
-                                <option>A+</option><option>A-</option>
-                                <option>B+</option><option>B-</option>
-                                <option>O+</option><option>O-</option>
-                                <option>AB+</option><option>AB-</option>
+                                <option>A+</option>
+                                <option>A-</option>
+                                <option>B+</option>
+                                <option>B-</option>
+                                <option>O+</option>
+                                <option>O-</option>
+                                <option>AB+</option>
+                                <option>AB-</option>
                             </select>
                         </div>
                     </div>
@@ -194,8 +214,11 @@ include('includes/sidebar.php');
                             <label class="form-label-custom">City</label>
                             <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;">
                                 <option value="">Select City</option>
-                                <option>Karachi</option><option>Lahore</option>
-                                <option>Islamabad</option><option>Rawalpindi</option><option>Multan</option>
+                                <option>Karachi</option>
+                                <option>Lahore</option>
+                                <option>Islamabad</option>
+                                <option>Rawalpindi</option>
+                                <option>Multan</option>
                             </select>
                         </div>
                     </div>
@@ -204,8 +227,10 @@ include('includes/sidebar.php');
                             <label class="form-label-custom">Assign Doctor</label>
                             <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;">
                                 <option value="">Select Doctor</option>
-                                <option>Dr. Ayesha Khan</option><option>Dr. Raza Ahmed</option>
-                                <option>Dr. Sara Malik</option><option>Dr. Omar Baig</option>
+                                <option>Dr. Ayesha Khan</option>
+                                <option>Dr. Raza Ahmed</option>
+                                <option>Dr. Sara Malik</option>
+                                <option>Dr. Omar Baig</option>
                             </select>
                         </div>
                     </div>
@@ -213,14 +238,18 @@ include('includes/sidebar.php');
                         <div class="form-group-custom">
                             <label class="form-label-custom">Status</label>
                             <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;">
-                                <option>Active</option><option>Inactive</option><option>Pending</option>
+                                <option>Active</option>
+                                <option>Inactive</option>
+                                <option>Pending</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-group-custom">
                             <label class="form-label-custom">Medical Notes</label>
-                            <textarea class="form-control-custom" rows="3" placeholder="Any relevant medical history or notes…" style="resize:vertical;"></textarea>
+                            <textarea class="form-control-custom" rows="3"
+                                placeholder="Any relevant medical history or notes…"
+                                style="resize:vertical;"></textarea>
                         </div>
                     </div>
                 </div>

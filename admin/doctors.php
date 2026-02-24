@@ -18,14 +18,14 @@ if (isset($_POST["btn-delete-doc"])) {
 //edit city row 
 if (isset($_POST['btn-edit-doc'])) {
 
-    $doctor_id  = intval($_POST['doctor_id']);
+    $doctor_id = intval($_POST['doctor_id']);
 
     $first_name = mysqli_real_escape_string($connect, trim($_POST['doctor_name_update']));
-    $email      = mysqli_real_escape_string($connect, trim($_POST['doctor_email_update']));
-    $phone      = intval($_POST['doctor_phone_update']);
+    $email = mysqli_real_escape_string($connect, trim($_POST['doctor_email_update']));
+    $phone = intval($_POST['doctor_phone_update']);
     $experience = intval($_POST['doctor_experience']);
-    $status     = intval($_POST['doctor_status_update']);
-    $city_id    = intval($_POST['city_id_update']);
+    $status = intval($_POST['doctor_status_update']);
+    $city_id = intval($_POST['city_id_update']);
     $specialize_id = intval($_POST['specialize_id_update']);
 
     if (empty($first_name) || empty($email)) {
@@ -483,7 +483,7 @@ function addDoctor()
         } elseif (!empty($phone_number) && !preg_match("/^03[0-9]{9}$/", $phone_number)) {
             $error_message = "Invalid Phone Number";
         } elseif (in_array($phone_number, $phones_check)) {
-            $error_message = "Your phone number is already there. Try a different email.";
+            $error_message = "Your phone number is already there. Try a different number.";
         } elseif (empty($experience)) {
             $error_message = "Enter your experiecnce.";
         } elseif (!is_numeric($experience) || $experience < 1 || $experience > 60) {

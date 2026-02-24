@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'message' => trim($_POST['message'] ?? ''),
     ];
     if (empty($form['name']))    $errors[] = 'Full name is required.';
-    if (empty($form['email']) || !filter_var($form['email'], FILTER_VALIDATE_EMAIL)) $errors[] = 'A valid email address is required.';
+    if (empty($form['email']) || !filter_var($form['email'], FILTER_VALIDATE_EMAIL))
+       $errors[] = 'A valid email address is required.';
     if (empty($form['subject'])) $errors[] = 'Please select a subject.';
     if (empty($form['message'])) $errors[] = 'Message cannot be empty.';
     if (!isset($_POST['consent'])) $errors[] = 'You must agree to the privacy policy.';
