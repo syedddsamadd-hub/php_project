@@ -204,17 +204,21 @@ include 'includes/head.php';
                 </div>
                 <div class="col-12">
                   <div class="form-floating">
-                    <textarea class="form-control" name="address" placeholder="Address" style="height:80px;"></textarea>
+                    <textarea class="form-control" name="address" placeholder="Address"
+                     style="height:80px;"></textarea>
                     <label><i class="fas fa-map-marker-alt me-1"></i>Full Address</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="input-group">
                     <div class="form-floating flex-grow-1">
-                      <input type="password" class="form-control" name="password" placeholder="Password" />
+                      <input type="password" class="form-control" name="password"
+                       placeholder="Password" />
                       <label><i class="fas fa-lock me-1"></i>Password</label>
                     </div>
-                    <span class="input-group-text toggle-password"><i class="fas fa-eye-slash"></i></span>
+                    <span class="input-group-text toggle-password">
+                      <i class="fas fa-eye-slash"></i>
+                    </span>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -228,7 +232,8 @@ include 'includes/head.php';
                 </div>
                 <div class="col-12">
                   <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="agreePatient" name="agree" />
+                    <input type="checkbox" class="form-check-input"
+                     id="agreePatient" name="agree" />
                     <label class="form-check-label" for="agreePatient"
                       style="font-size:0.85rem;color:var(--text-muted);">
                       I agree to the terms and conditions.

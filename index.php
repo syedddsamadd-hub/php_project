@@ -231,22 +231,49 @@ $specs = [
       <h2 class="section-title">Patient Testimonials</h2>
       <p class="section-subtitle mt-2">Hear from thousands of patients who found the right care through CARE Group.</p>
     </div>
-    <!-- <div class="row g-4">
+    
+    <div class="row g-4">
+    <?php
+    $feedback_query = "SELECT feedback_id, full_name, LEFT(full_name,1) AS initials, message, rating, created_at 
+          FROM feedback 
+          ORDER BY feedback_id DESC 
+          LIMIT 5";
+$feedback_result = mysqli_query($connect, $feedback_query);
+
+// -------------------------- STARS FUNCTION --------------------------
+function showStars($rating) {
+    $output = "";
+    for ($i = 1; $i <= 5; $i++) {
+        if ($i <= $rating) {
+            $output .= "<span class='star filled'>★</span>";
+        } else {
+            $output .= "<span class='star'>★</span>";
+        }
+    }
+    return $output;
+}
+ while($row = mysqli_fetch_assoc($feedback_result)) {
+ ?>
         <div class="col-md-4 animate-on-scroll" style="">
           <div class="testimonial-card">
             <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-          description  <p></p>
+            <p style="overflow-x: hidden;"><?= $row['message']?></p>
             <div class="testimonial-author">
-        shuru ke do alfaaz  (avatar) <div class="testimonial-avatar"></div>
+            <div class="testimonial-avatar"><?= $row['initials']?></div>
               <div>
-              name  <strong></strong>
-               location <span></span>
-               rating <div class="stars mt-1"></div>
+              <strong><?= $row['full_name'] ?></strong>
+              <i><?= $row['created_at']?></i>
+               <div class="stars mt-1" style="color: yellow;"><?= showStars($row['rating']) ?></div>
               </div>
             </div>
           </div>
         </div>
-      </div> -->
+        <?php
+}
+        ?>
+      </div>  
+      </div>
+      </div>
   </div>
 </section>
 

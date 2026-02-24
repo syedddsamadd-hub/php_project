@@ -180,6 +180,7 @@ include('includes/sidebar.php');
                 <div class="section-card-body table-responsive-custom">
                     <table class="admin-table table">
                         <thead>
+
                             <tr>
                                 <th>#</th>
                                 <th>Doctor</th>
@@ -189,87 +190,60 @@ include('includes/sidebar.php');
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="fw-600 text-primary-custom">001</td>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar av1">AK</div>
-                                        <div>
-                                            <div class="user-name">Dr. Ayesha Khan</div>
-                                            <div class="user-email">ayesha@mediadmin.pk</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Cardiologist</td>
-                                <td>Karachi</td>
-                                <td><span class="badge-status badge-active">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-600 text-primary-custom">002</td>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar av2">RA</div>
-                                        <div>
-                                            <div class="user-name">Dr. Raza Ahmed</div>
-                                            <div class="user-email">raza@mediadmin.pk</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Neurologist</td>
-                                <td>Lahore</td>
-                                <td><span class="badge-status badge-active">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-600 text-primary-custom">003</td>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar av3">SM</div>
-                                        <div>
-                                            <div class="user-name">Dr. Sara Malik</div>
-                                            <div class="user-email">sara@mediadmin.pk</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Pediatrician</td>
-                                <td>Islamabad</td>
-                                <td><span class="badge-status badge-inactive">Inactive</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-600 text-primary-custom">004</td>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar av4">OB</div>
-                                        <div>
-                                            <div class="user-name">Dr. Omar Baig</div>
-                                            <div class="user-email">omar@mediadmin.pk</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Orthopedic</td>
-                                <td>Rawalpindi</td>
-                                <td><span class="badge-status badge-active">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-600 text-primary-custom">005</td>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar av5">NZ</div>
-                                        <div>
-                                            <div class="user-name">Dr. Nadia Zubair</div>
-                                            <div class="user-email">nadia@mediadmin.pk</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Dermatologist</td>
-                                <td>Faisalabad</td>
-                                <td><span class="badge-status badge-pending">Pending</span></td>
-                            </tr>
+                            <?php
+                            $select_doctors = "SELECT * FROM doctors ORDER BY created_at DESC LIMIT 5;";
+                            $select_doctors_query = mysqli_query($connect, $select_doctors);
+                            if (mysqli_num_rows($select_doctors_query) > 0) {
+                                while ($doctors_table_row = mysqli_fetch_assoc($select_doctors_query)) {
+                                    $doctor_id = $doctors_table_row["doctor_id"];
+                                    $first_name = $doctors_table_row["first_name"];
+                                    $last_name = $doctors_table_row["last_name"];
+                                    $doctor_email = $doctors_table_row["email"];
+                                    $doctor_status = $doctors_table_row["doctor_status"];
+                                    $doctor_city_id = $doctors_table_row["city_id"];
+                                    $specialize_id = $doctors_table_row["specialize_id"];
+
+                                    $select_city = "select * from cities where city_id='$doctor_city_id'";
+                                    $select_city_query = mysqli_query($connect, $select_city);
+                                    if (mysqli_num_rows($select_city_query) > 0) {
+                                        while ($city_table_row = mysqli_fetch_assoc($select_city_query)) {
+                                            $city_name = $city_table_row["city_name"];
+
+                                            $select_specialization = "select * from specialization where specialize_id='$specialize_id'";
+                                            $select_specialize_query = mysqli_query($connect, $select_specialization);
+                                            if (mysqli_num_rows($select_specialize_query) > 0) {
+                                                while ($specialize_table_row = mysqli_fetch_assoc($select_specialize_query)) {
+                                                    $specialize = $specialize_table_row["specialize"];
+                                                    ?>
+                                                    <tr>
+                                                        <td class="fw-600 text-primary-custom"><?= $doctor_id ?></td>
+                                                        <td>
+                                                            <div class="user-cell">
+                                                                <div class="user-avatar av1">AK</div>
+                                                                <div>
+                                                                    <div class="user-name"><?= $first_name .$last_name?></div>
+                                                                    <div class="user-email"><?= $doctor_email ?></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><?= $specialize ?></td>
+                                                        <td><?= $city_name ?></td>
+                                                        <td><span class="badge-status badge-active"><?= $doctor_status?></span></td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        
+
 
         <!-- Recent Patients Table -->
         <div class="col-xl-12 col-lg-12 page-fade-in stagger-3">

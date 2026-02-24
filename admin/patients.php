@@ -108,11 +108,6 @@ include('includes/sidebar.php');
                                                     <?php
                                                     $query = "SELECT name, UPPER(LEFT(name,2)) AS initials FROM patients";
                                                     $result = mysqli_query($connect, $query);
-
-                                                    while ($row = mysqli_fetch_assoc($result)) {
-                                                        echo  $row['initials'] . $row['name'];
-                                                        
-                                                    }
                                                     ?>
                                                 </div>
                                                 <div class="user-name"><?= $patients_name ?></div>
