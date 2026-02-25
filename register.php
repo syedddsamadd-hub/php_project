@@ -4,6 +4,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 session_start();
 $page_title = 'Register';
 $message = "";
+function generatePatientID() {
+    return uniqid('PAT_', true); // true ke saath fractional microseconds bhi include
+}
+
 function validatePatient()
 {
   global $connect;
@@ -24,7 +28,7 @@ function validatePatient()
     $address = trim($_POST['address'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm = $_POST['confirm_password'] ?? '';
-
+     $patient_id = generatePatientID();
     // Sabse upar, sanitize karne ke baad yeh check lagao
     if (
       $full_name === "" && $email === "" && $phone === "" &&
@@ -87,9 +91,9 @@ function validatePatient()
       $errors = "<h6 class='alert alert-success text-capitalize'>sucessfully register</h6>";
       $insert = "
         INSERT INTO patients 
-        (name, email, phone, gender, city_id, address, password)
+        (patient_id,name, email, phone, gender, city_id, address, password)
         VALUES
-        ('$safe_name', '$safe_email', '$safe_phone',
+        ('$patient_id','$safe_name', '$safe_email', '$safe_phone',
          '$safe_gender', '$city', '$safe_address', '$hashed_password');
       ";
       mysqli_query($connect, $insert);
