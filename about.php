@@ -10,7 +10,7 @@ include 'includes/head.php'; ?>
     ),
   url('https://img.freepik.com/free-photo/team-doctors-standing-together-hospital-premises_107420-84769.jpg?semt=ais_user_personalization&w=740&q=80') center/cover no-repeat;
     padding: 80px 0;
-    height: 600px;
+    height: 550px;
     object-fit: cover;
   }
     .about-hero .badge-accent {

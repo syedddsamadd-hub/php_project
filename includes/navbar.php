@@ -46,7 +46,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
       </ul>
       <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
         <a href="login.php" class="nav-link btn-nav-login">Login</a>
-        <a href="register.php" class="nav-link btn-nav-register">Register</a>
+        <a href="register.php" class="nav-link btn-nav-register text-light">Register</a>
       </div>
     </div>
   </div>

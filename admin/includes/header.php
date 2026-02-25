@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 /**
  * header.php — Top Navbar + CSS includes
  * Include at the top of every admin page.

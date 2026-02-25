@@ -281,7 +281,7 @@ include('includes/sidebar.php');
             <option>Inactive</option>
         </select>
     </div>
-
+ <div class="container-fluid">
     <div class="row">
         <?php
         $select_doctors = "select * from doctors";
@@ -311,12 +311,12 @@ include('includes/sidebar.php');
                             while ($specialize_table_row = mysqli_fetch_assoc($select_specialize_query)) {
                                 $specialize = $specialize_table_row["specialize"];
                                 ?>
-                                <div class="col-12 col-sm-6 col-xl-3">
+                                <div class="col-12 col-sm-6 col-xl-3 m-3">
                                     <div class="card">
                                         <div class="card-top">
                                             <div class="avatar"> <?= strtoupper(substr($first_name . $last_name, 0, 1)); ?></div>
                                             <div class="info">
-                                                <h2><?= $first_name . "" . $last_name ?></h2>
+                                                <h2><?= $first_name . " " . $last_name ?></h2>
                                                 <div class="badge"><?= $specialize ?></div>
                                                 <div class="stars">
                                                     <span class="stars-icons">★★★★★</span>
@@ -348,7 +348,6 @@ include('includes/sidebar.php');
                                             <button class="book-btn">📅 Book</button>
                                         </div>
                                     </div>
-
                                 </div>
                                 <?php
                             }
@@ -359,8 +358,7 @@ include('includes/sidebar.php');
         }
         ?>
     </div>
-    <!-- </div> -->
-
+    </div>
     <form id="form_id" action="" style="height: auto;" class="m-5 alert alert-primary" method="POST"
         enctype="multipart/form-data">
         <div class="d-flex justify-content-center">
@@ -638,7 +636,7 @@ $doctor_city,$doctor_specialization,'$profile_photo')";
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
                 $mail->Username = 'syedddsamadd@gmail.com';
-                $mail->Password = 'jjpc paeo hwqu dkzn';
+                $mail->Password = 'cjij xsvl yfhr dafo';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
