@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * header.php — Top Navbar + CSS includes
  * Include at the top of every admin page.
@@ -63,24 +64,14 @@ $pageTitle = isset($pageTitle) ? $pageTitle : 'Dashboard';
 
     <!-- Admin profile dropdown -->
     <div class="navbar-admin dropdown" data-bs-toggle="dropdown" role="button">
-        <div class="navbar-admin-avatar">AD</div>
+        <div class="navbar-admin-avatar">A</div>
         <div class="navbar-admin-info d-none d-md-block">
-            <div class="name">Admin User</div>
-            <div class="role">Super Admin</div>
+            <div class="name">Abdul samad</div>
+            <div class="role"><?=$_SESSION['admin_email']?></div>
         </div>
         <iz class="bi bi-chevron-down ms-1" style="font-size:11px;color:#7f8fa6;"></iz>
     </div>
     <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius:12px;padding:8px;min-width:200px;">
-        <li>
-            <a class="dropdown-item rounded-3 py-2" href="#">
-                <i class="bi bi-person me-2 text-primary"></i> My Profile
-            </a>
-        </li>
-        <li>
-            <a class="dropdown-item rounded-3 py-2" href="#">
-                <i class="bi bi-gear me-2 text-primary"></i> Settings
-            </a>
-        </li>
         <li><hr class="dropdown-divider my-1" /></li>
         <li>
             <a class="dropdown-item rounded-3 py-2 text-danger" href="logout.php">

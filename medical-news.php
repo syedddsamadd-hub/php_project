@@ -247,7 +247,7 @@ $news = [
 
       <div class="row g-4">
         <?php
-        $select_news = "SELECT * FROM news ORDER BY article_id DESC";
+        $select_news = "SELECT * FROM news where articles_status='published' ORDER BY article_id DESC";
         $select_news_query = mysqli_query($connect, $select_news);
 
         while ($row = mysqli_fetch_assoc($select_news_query)) {

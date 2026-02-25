@@ -1,12 +1,16 @@
 <?php
 include "connect.php";
 use PHPMailer\PHPMailer\PHPMailer;
-
+session_start();
 $page_title = 'Register';
 $message = "";
 function validatePatient()
 {
   global $connect;
+  $check_patient = "select * from patients";
+  $check_patient_query = mysqli_query($connect, $check_patient);
+  $row = mysqli_fetch_assoc($check_patient_query);
+  $check_email = $row['email'];
   $errors = "";
 
   if (isset($_POST['submit_patient'])) {
@@ -44,6 +48,8 @@ function validatePatient()
       !preg_match("/@yahoo\.com$/", $email)
     ) {
       $errors = "Enter email in ( @gmail.com OR @aptechsite.net OR yahoo.com ).";
+    } elseif ($email === $check_email) {
+      $errors = "this email is alreasdy register try with different one.";
     } elseif ($phone === "") {
       $errors = "Phone number is required.";
     } elseif (!preg_match("/^[0-9]{11}$/", $phone)) {
@@ -78,7 +84,7 @@ function validatePatient()
       $safe_gender = mysqli_real_escape_string($connect, $gender);
       $safe_address = mysqli_real_escape_string($connect, $address);
       $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
+      $errors = "<h6 class='alert alert-success text-capitalize'>sucessfully register</h6>";
       $insert = "
         INSERT INTO patients 
         (name, email, phone, gender, city_id, address, password)
@@ -87,35 +93,37 @@ function validatePatient()
          '$safe_gender', '$city', '$safe_address', '$hashed_password');
       ";
       mysqli_query($connect, $insert);
+      $_SESSION['patient_email'] = $safe_email;
+      // header("location:index.php");
+
+      require 'PHPMailer-master/PHPMailer-master/src/PHPMailer.php';
+      require 'PHPMailer-master/PHPMailer-master/src/SMTP.php';
+      require 'PHPMailer-master/PHPMailer-master/src/Exception.php';
+
+      $mail = new PHPMailer();
+      $mail->isSMTP();
+      $mail->Host = 'smtp.gmail.com';
+      $mail->SMTPAuth = true;
+      $mail->Username = 'syedddsamadd@gmail.com';
+      $mail->Password = 'jjpc paeo hwqu dkzn';
+      $mail->SMTPSecure = 'tls';
+      $mail->Port = 587;
+
+      $mail->setFrom("syedddsamadd@gmail.com", "CARE Group");
+      $mail->addAddress($email);
+      $mail->Subject = "Welcome to Our Service";
+      $mail->Body = "Assalamualaikum,\n\n"
+        . "Aapka account successfully create ho gaya hai. "
+        . "Aap ab login karke apni services use kar sakte hain.\n\n"
+        . "Shukriya,\n"
+        . "Team XYZ";
+
+      if ($mail->send()) {
+        echo "Message Sent!";
+      } else {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+      }
     }
-    require 'PHPMailer-master/PHPMailer-master/src/PHPMailer.php';
-    require 'PHPMailer-master/PHPMailer-master/src/SMTP.php';
-    require 'PHPMailer-master/PHPMailer-master/src/Exception.php';
-
-    $mail = new PHPMailer();
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'syedddsamadd@gmail.com';
-    $mail->Password = 'jjpc paeo hwqu dkzn';
-    $mail->SMTPSecure = 'tls';
-    $mail->Port = 587;
-
-    $mail->setFrom("syedddsamadd@gmail.com", "CARE Group");
-    $mail->addAddress($email);
-    $mail->Subject = "Welcome to Our Service";
-    $mail->Body = "Assalamualaikum,\n\n"
-                . "Aapka account successfully create ho gaya hai. "
-                . "Aap ab login karke apni services use kar sakte hain.\n\n"
-                . "Shukriya,\n"
-                . "Team XYZ";
-
-    if ($mail->send()) {
-      echo "Message Sent!";
-    } else {
-      echo "Mailer Error: " . $mail->ErrorInfo;
-    }
-
 
 
   } else {
@@ -204,16 +212,14 @@ include 'includes/head.php';
                 </div>
                 <div class="col-12">
                   <div class="form-floating">
-                    <textarea class="form-control" name="address" placeholder="Address"
-                     style="height:80px;"></textarea>
+                    <textarea class="form-control" name="address" placeholder="Address" style="height:80px;"></textarea>
                     <label><i class="fas fa-map-marker-alt me-1"></i>Full Address</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="input-group">
                     <div class="form-floating flex-grow-1">
-                      <input type="password" class="form-control" name="password"
-                       placeholder="Password" />
+                      <input type="password" class="form-control" name="password" placeholder="Password" />
                       <label><i class="fas fa-lock me-1"></i>Password</label>
                     </div>
                     <span class="input-group-text toggle-password">
@@ -232,8 +238,7 @@ include 'includes/head.php';
                 </div>
                 <div class="col-12">
                   <div class="form-check">
-                    <input type="checkbox" class="form-check-input"
-                     id="agreePatient" name="agree" />
+                    <input type="checkbox" class="form-check-input" id="agreePatient" name="agree" />
                     <label class="form-check-label" for="agreePatient"
                       style="font-size:0.85rem;color:var(--text-muted);">
                       I agree to the terms and conditions.

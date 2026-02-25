@@ -9,6 +9,27 @@ if (!isset($_SESSION["admin_email"])) {
     header("Location: login.php");
     exit();
 }
+//delete specialize row
+if (isset($_POST["btn-delete-patient"])) {
+    $patients_update_id = $_POST['patients_update_id'];
+    $delete_patients = "delete  from patients where patient_id='$patients_update_id'";
+    mysqli_query($connect, $delete_patients);
+    // header("location:specializations.php");
+} else {
+    echo "<h1>not clxicked</h1>";
+}
+//edit specialize row 
+if (isset($_POST['btn-edit-patient'])) {
+    $patients_update_id = $_POST['patients_update_id'];
+    $update_patient_status = $_POST['update_patient_status'];
+    $update_status = "UPDATE patients set 
+    status ='$update_patient_status'
+WHERE patient_id = '$patients_update_id'";
+    $update_patient_query = mysqli_query($connect, $update_status);
+    // header("location:specializations.php");
+} else {
+    echo 'not clicked';
+}
 $pageTitle = 'Manage Patients';
 include('includes/header.php');
 include('includes/sidebar.php');
@@ -55,8 +76,8 @@ include('includes/sidebar.php');
         <div class="section-card-header">
             <h5><i class="bi bi-table"></i> Patients List
                 <span class="info-chip ms-2">
-                     <?php
-                    $result_patient= $connect->query("SELECT COUNT(*) AS total FROM patients");
+                    <?php
+                    $result_patient = $connect->query("SELECT COUNT(*) AS total FROM patients");
                     $row_patient = $result_patient->fetch_assoc();
                     $total_patient = $row_patient['total'];
                     echo $total_patient;
@@ -101,14 +122,13 @@ include('includes/sidebar.php');
                                     $city_patients = $city_patients_table_row["city_name"];
                                     ?>
                                     <tr>
+                                        <form method="POST">
+                                        <input type="hidden" name="patients_update_id" value="<?= $patients_id ?>">
                                         <td class="fw-600 text-primary-custom"><?= $patients_id ?></td>
                                         <td>
                                             <div class="user-cell">
                                                 <div class="user-avatar av2">
-                                                    <?php
-                                                    $query = "SELECT name, UPPER(LEFT(name,2)) AS initials FROM patients";
-                                                    $result = mysqli_query($connect, $query);
-                                                    ?>
+                                                    <?= strtoupper(substr($patients_name, 0, 1)); ?>
                                                 </div>
                                                 <div class="user-name"><?= $patients_name ?></div>
                                             </div>
@@ -116,18 +136,22 @@ include('includes/sidebar.php');
                                         <td><?= $patients_gender ?></td>
                                         <td><?= $patients_number ?></td>
                                         <td><?= $city_patients ?></td>
-                                        <td><span class="badge-status badge-active"><?= $patients_status?></span></td>
+                                        <td><input type="text" class="form-control" name="update_patient_status"
+                                                value="<?= $patients_status ?>"></td>
                                         <td>
                                             <div class="d-flex gap-1 flex-wrap">
-                                                <button class="btn-action btn-edit" name="btn-edit-disease">
+                                                <button type="submit" class="btn-action btn-edit"
+                                                 name="btn-edit-patient">
                                                     <i class="bi bi-pencil-fill"></i> Edit
                                                 </button>
-                                                <button onclick="return confirm('are you sure to delete this this row.')"
-                                                    class="btn-action btn-delete btn-delete-row" name="btn-delete-disease">
+                                                <button type="submit" name="btn-delete-patient"
+                                                 onclick="return confirm('Are you sure to delete this row?')"
+                                                    class="btn-action btn-delete">
                                                     <i class="bi bi-trash-fill"></i> Del
                                                 </button>
                                             </div>
                                         </td>
+                                        </form>
                                     </tr>
                                     <?php
                                 }
@@ -140,125 +164,4 @@ include('includes/sidebar.php');
         </div>
     </div>
 </div>
-
-<!-- Add/Edit Patient Modal -->
-<div class="modal fade" id="patientModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-person-plus-fill me-2"></i>Add New Patient</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Full Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control-custom" placeholder="Patient full name" required />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Email Address</label>
-                            <input type="email" class="form-control-custom" placeholder="patient@email.com" />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Age <span class="text-danger">*</span></label>
-                            <input type="number" class="form-control-custom" placeholder="Age" min="0" max="120"
-                                required />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Gender <span class="text-danger">*</span></label>
-                            <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;"
-                                required>
-                                <option value="">Select</option>
-                                <option>Male</option>
-                                <option>Female</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Blood Group</label>
-                            <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;">
-                                <option value="">Select</option>
-                                <option>A+</option>
-                                <option>A-</option>
-                                <option>B+</option>
-                                <option>B-</option>
-                                <option>O+</option>
-                                <option>O-</option>
-                                <option>AB+</option>
-                                <option>AB-</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Phone Number</label>
-                            <input type="tel" class="form-control-custom" placeholder="03XX-XXXXXXX" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">City</label>
-                            <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;">
-                                <option value="">Select City</option>
-                                <option>Karachi</option>
-                                <option>Lahore</option>
-                                <option>Islamabad</option>
-                                <option>Rawalpindi</option>
-                                <option>Multan</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Assign Doctor</label>
-                            <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;">
-                                <option value="">Select Doctor</option>
-                                <option>Dr. Ayesha Khan</option>
-                                <option>Dr. Raza Ahmed</option>
-                                <option>Dr. Sara Malik</option>
-                                <option>Dr. Omar Baig</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Status</label>
-                            <select class="form-control-custom filter-select" style="width:100%;border-radius:9px;">
-                                <option>Active</option>
-                                <option>Inactive</option>
-                                <option>Pending</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group-custom">
-                            <label class="form-label-custom">Medical Notes</label>
-                            <textarea class="form-control-custom" rows="3"
-                                placeholder="Any relevant medical history or notes…"
-                                style="resize:vertical;"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-outline-custom" data-bs-dismiss="modal">
-                    <i class="bi bi-x-circle"></i> Cancel
-                </button>
-                <button type="button" class="btn-primary-custom modal-save-btn">
-                    <i class="bi bi-check-circle-fill"></i> Save Patient
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <?php include('includes/footer.php'); ?>

@@ -40,7 +40,14 @@ include 'includes/head.php'; ?>
             <div class="hero-stat-label">Specialists</div>
           </div>
           <div class="hero-stat">
-            <div class="hero-stat-num" data-count="50000" data-suffix="+">50K+</div>
+            <div class="hero-stat-num" data-suffix="+">
+              <?php
+              $result_patient = $connect->query("SELECT COUNT(*) AS total FROM patients");
+              $row_patient = $result_patient->fetch_assoc();
+              $total_patient = $row_patient['total'];
+              echo $total_patient;
+              ?>
+            </div>
             <div class="hero-stat-label">Patients Served</div>
           </div>
           <div class="hero-stat">
@@ -55,8 +62,8 @@ include 'includes/head.php'; ?>
             <div class="hero-stat-label">Specializations</div>
           </div>
           <div class="hero-stat">
-            <div class="hero-stat-num"  data-suffix="">
-               <?php
+            <div class="hero-stat-num" data-suffix="">
+              <?php
               $result2 = $connect->query("SELECT COUNT(*) AS total FROM cities");
               $row2 = $result2->fetch_assoc();
               $totalcities = $row2['total'];
@@ -67,28 +74,6 @@ include 'includes/head.php'; ?>
           </div>
         </div>
       </div>
-      <!-- <div class="col-lg-6 mt-5 mt-lg-0 hero-visual text-center">
-          <div class="hero-img-wrap position-relative d-inline-block">
-            <div class="hero-img-placeholder">
-              <i class="fas fa-hospital-user"></i>
-              <p>Healthcare Professionals</p>
-            </div>
-            <div class="hero-card-float card-1">
-              <div class="hero-card-icon blue"><i class="fas fa-calendar-check"></i></div>
-              <div class="hero-card-text">
-                <strong>Appointment Booked</strong>
-                <span>Dr. Arif – Cardiologist</span>
-              </div>
-            </div>
-            <div class="hero-card-float card-2">
-              <div class="hero-card-icon teal"><i class="fas fa-star"></i></div>
-              <div class="hero-card-text">
-                <strong>4.9 Rating</strong>
-                <span>12,000+ Reviews</span>
-              </div>
-            </div>
-          </div>
-        </div> -->
     </div>
   </div>
 </section>
@@ -198,8 +183,8 @@ $doctors = [
 <!-- ====== SPECIALIZATIONS ====== -->
 <?php
 $specs = [
-  ['icon' => 'heartbeat', 'name' => 'Cardiology', 'count' => '24'],
-  ['icon' => 'brain', 'name' => 'Neurology', 'count' => '18'],
+  ['icon' => 'heartbeat'],
+  ['icon' => 'brain'],
 ];
 ?>
 <section class="spec-section section-padding">
@@ -210,16 +195,26 @@ $specs = [
       <p class="section-subtitle mt-2">Find specialists across 30+ medical disciplines, ready to help you.</p>
     </div>
     <div class="row g-3">
-      <?php foreach ($specs as $i => $spec): ?>
-        <div class="col-6 col-md-4 col-lg-2 animate-on-scroll" style="transition-delay:<?php echo $i * 0.05; ?>s">
-          <a href="search-doctor.php?spec=<?php echo urlencode($spec['name']); ?>"
-            class="spec-card d-block text-decoration-none">
-            <div class="spec-icon"><i class="fas fa-<?php echo $spec['icon']; ?>"></i></div>
-            <h6><?php echo htmlspecialchars($spec['name']); ?></h6>
-            <span> Doctors</span>
-          </a>
-        </div>
-      <?php endforeach; ?>
+      <?php
+      $select_specialization = "select * from specialization";
+      $select_specialize_query = mysqli_query($connect, $select_specialization);
+      if (mysqli_num_rows($select_specialize_query) > 0) {
+        while (
+          $specialize_table_row = mysqli_fetch_assoc($select_specialize_query)) {
+          $specialize_id = $specialize_table_row["specialize_id"];
+          $specialize = $specialize_table_row["specialize"];
+            ?>
+            <div class="col-6 col-md-4 col-lg-2 animate-on-scroll" style="transition-delay:<?php echo $i * 0.05; ?>s">
+              <a href="search-doctor.php" class="spec-card d-block text-decoration-none">
+                <div class="spec-icon"><i class="fas fa-<?php echo $space['icon']; ?>"></i></div>
+                <h6><?= $specialize ?></h6>
+                <span>Doctors</span>
+              </a>
+            </div>
+            <?php
+        }
+      }
+      ?>
     </div>
   </div>
 </section>
@@ -231,49 +226,50 @@ $specs = [
       <h2 class="section-title">Patient Testimonials</h2>
       <p class="section-subtitle mt-2">Hear from thousands of patients who found the right care through CARE Group.</p>
     </div>
-    
+
     <div class="row g-4">
-    <?php
-    $feedback_query = "SELECT feedback_id, full_name, LEFT(full_name,1) AS initials, message, rating, created_at 
-          FROM feedback 
+      <?php
+      $feedback_query = "SELECT feedback_id, full_name, LEFT(full_name,1) AS initials, message, rating, created_at 
+          FROM feedback where feedback_status=1
           ORDER BY feedback_id DESC 
           LIMIT 5";
-$feedback_result = mysqli_query($connect, $feedback_query);
+      $feedback_result = mysqli_query($connect, $feedback_query);
 
-// -------------------------- STARS FUNCTION --------------------------
-function showStars($rating) {
-    $output = "";
-    for ($i = 1; $i <= 5; $i++) {
-        if ($i <= $rating) {
-            $output .= "<span class='star filled'>★</span>";
-        } else {
-            $output .= "<span class='star'>★</span>";
+      // -------------------------- STARS FUNCTION --------------------------
+      function showStars($rating)
+      {
+        $output = "";
+        for ($i = 1; $i <= 5; $i++) {
+          if ($i <= $rating) {
+            $output .= "<span class='star filled text-warning'>★</span>";
+          } else {
+            $output .= "<span class='star text-warning'>★</span>";
+          }
         }
-    }
-    return $output;
-}
- while($row = mysqli_fetch_assoc($feedback_result)) {
- ?>
+        return $output;
+      }
+      while ($row = mysqli_fetch_assoc($feedback_result)) {
+        ?>
         <div class="col-md-4 animate-on-scroll" style="">
           <div class="testimonial-card">
             <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-            <p style="overflow-x: hidden;"><?= $row['message']?></p>
+            <p style="overflow-x: hidden;"><?= $row['message'] ?></p>
             <div class="testimonial-author">
-            <div class="testimonial-avatar"><?= $row['initials']?></div>
+              <div class="testimonial-avatar"><?= $row['initials'] ?></div>
               <div>
-              <strong><?= $row['full_name'] ?></strong>
-              <i><?= $row['created_at']?></i>
-               <div class="stars mt-1" style="color: yellow;"><?= showStars($row['rating']) ?></div>
+                <strong><?= $row['full_name'] ?></strong>
+                <i><?= $row['created_at'] ?></i>
+                <div class="stars mt-1 text-warning"><?= showStars($row['rating']) ?></div>
               </div>
             </div>
           </div>
         </div>
         <?php
-}
-        ?>
-      </div>  
-      </div>
-      </div>
+      }
+      ?>
+    </div>
+  </div>
+  </div>
   </div>
 </section>
 

@@ -82,7 +82,7 @@ WHERE specialize_id = '$get_specialization_id'";
     <div class="form-wrapper">
         <form method="POST" action="" class="city-form">
             <h1>Add New specialization</h1>
-            <input type="text" name="specialize_name" class="form-control">
+            <input type="text" name="specialize_name" placeholder="add new specialists" class="form-control">
 
             <select name="specialize_status" class="city-select">
                 <option value="active">Active</option>

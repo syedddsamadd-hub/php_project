@@ -9,6 +9,28 @@ if (!isset($_SESSION["admin_email"])) {
     header("Location: login.php");
     exit();
 }
+if (isset($_POST["btn-delete-feedback"])) {
+    $get_feedback_id = $_POST['get_feedback_id'];
+    $delete_feedback = "delete  from feedback where feedback_id='$get_feedback_id'";
+    mysqli_query($connect, $delete_feedback);
+    header("location:dashboard.php");
+} else {
+    echo "";
+}
+
+//edit city row 
+if (isset($_POST['btn-edit-feedback'])) {
+    $get_feedback_id = $_POST['get_feedback_id'];
+    $update_feedback_Status = $_POST['update_feedback_status'];
+    $update_feedback = "UPDATE feedback
+SET full_name = '$update_feedback_name',
+    feedback_status =$update_feedback_Status
+WHERE feedback_id = '$get_feedback_id'";
+    $update_query = mysqli_query($connect, $update_feedback);
+    header("location:dashboard.php");
+} else {
+    echo '';
+}
 $pageTitle = 'Dashboard';
 include('includes/header.php');
 include('includes/sidebar.php');
@@ -169,7 +191,7 @@ include('includes/sidebar.php');
     <div class="row g-3">
 
         <!-- Recent Doctors Table -->
-        <div class="col-xl-12 col-lg-12 page-fade-in stagger-2">
+        <div class="col-xl-6 col-lg-6 page-fade-in stagger-2">
             <div class="section-card">
                 <div class="section-card-header">
                     <h5><i class="bi bi-person-badge-fill"></i> Recent Doctors</h5>
@@ -191,7 +213,7 @@ include('includes/sidebar.php');
                         </thead>
                         <tbody>
                             <?php
-                            $select_doctors = "SELECT * FROM doctors ORDER BY created_at DESC LIMIT 5;";
+                            $select_doctors = "SELECT * FROM doctors where doctor_status=1 ORDER BY created_at DESC LIMIT 5;";
                             $select_doctors_query = mysqli_query($connect, $select_doctors);
                             if (mysqli_num_rows($select_doctors_query) > 0) {
                                 while ($doctors_table_row = mysqli_fetch_assoc($select_doctors_query)) {
@@ -219,16 +241,18 @@ include('includes/sidebar.php');
                                                         <td class="fw-600 text-primary-custom"><?= $doctor_id ?></td>
                                                         <td>
                                                             <div class="user-cell">
-                                                                <div class="user-avatar av1">AK</div>
+                                                                <div class="user-avatar av1">
+                                                                    <?= strtoupper(substr($first_name, 0, 1)); ?>
+                                                                </div>
                                                                 <div>
-                                                                    <div class="user-name"><?= $first_name .$last_name?></div>
+                                                                    <div class="user-name"><?= $first_name . $last_name ?></div>
                                                                     <div class="user-email"><?= $doctor_email ?></div>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td><?= $specialize ?></td>
                                                         <td><?= $city_name ?></td>
-                                                        <td><span class="badge-status badge-active"><?= $doctor_status?></span></td>
+                                                        <td><span class="badge-status badge-active"><?= $doctor_status ?></span></td>
                                                     </tr>
                                                     <?php
                                                 }
@@ -243,8 +267,58 @@ include('includes/sidebar.php');
                 </div>
             </div>
         </div>
-
-
+        <!-- Recent Patients Table -->
+        <div class="col-xl-6 col-lg-6 page-fade-in stagger-3">
+            <div class="section-card">
+                <div class="section-card-header">
+                    <h5><i class="bi bi-people-fill"></i> Recent Patients</h5>
+                    <a href="patients.php" class="btn-view btn-action">
+                        <i class="bi bi-arrow-right-circle"></i> View All
+                    </a>
+                </div>
+                <div class="section-card-body table-responsive-custom">
+                    <table class="admin-table table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Patient</th>
+                                <th>gender</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $select_patients = "select * from patients where status='active'";
+                            $select_patients_query = mysqli_query($connect, $select_patients);
+                            if (mysqli_num_rows($select_patients_query) > 0) {
+                                while ($patients_table_row = mysqli_fetch_assoc($select_patients_query)) {
+                                    $patients_id = $patients_table_row["patient_id"];
+                                    $patients_name = $patients_table_row["name"];
+                                    $patients_gender = $patients_table_row["gender"];
+                                    $patients_status = $patients_table_row["status"];
+                                    ?>
+                                    <tr>
+                                        <td class="fw-600 text-primary-custom"><?= $patients_id ?></td>
+                                        <td>
+                                            <div class="user-cell">
+                                                <div class="user-avatar av2">
+                                                    <?= strtoupper(substr($patients_name, 0, 1)); ?>
+                                                </div>
+                                                <div class="user-name"><?= $patients_name ?></div>
+                                            </div>
+                                        </td>
+                                        <td><?= $patients_gender ?></td>
+                                        <td><span class="badge-status badge-active"><?= $patients_status ?></span></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <!-- Recent Patients Table -->
         <div class="col-xl-12 col-lg-12 page-fade-in stagger-3">
             <div class="section-card">
@@ -259,67 +333,57 @@ include('includes/sidebar.php');
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Patient</th>
-                                <th>Age</th>
-                                <th>Status</th>
+                                <th>name</th>
+                                <th>email</th>
+                                <th>message</th>
+                                <th>status</th>
+                                <th>update/delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="fw-600 text-primary-custom">P001</td>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar av2">MH</div>
-                                        <div class="user-name">Muhammad Hassan</div>
-                                    </div>
-                                </td>
-                                <td>34</td>
-                                <td><span class="badge-status badge-active">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-600 text-primary-custom">P002</td>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar av1">FA</div>
-                                        <div class="user-name">Fatima Ali</div>
-                                    </div>
-                                </td>
-                                <td>27</td>
-                                <td><span class="badge-status badge-active">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-600 text-primary-custom">P003</td>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar av3">BK</div>
-                                        <div class="user-name">Bilal Khan</div>
-                                    </div>
-                                </td>
-                                <td>52</td>
-                                <td><span class="badge-status badge-inactive">Inactive</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-600 text-primary-custom">P004</td>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar av5">ZR</div>
-                                        <div class="user-name">Zara Rehman</div>
-                                    </div>
-                                </td>
-                                <td>19</td>
-                                <td><span class="badge-status badge-pending">Pending</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-600 text-primary-custom">P005</td>
-                                <td>
-                                    <div class="user-cell">
-                                        <div class="user-avatar av4">IQ</div>
-                                        <div class="user-name">Imran Qureshi</div>
-                                    </div>
-                                </td>
-                                <td>45</td>
-                                <td><span class="badge-status badge-active">Active</span></td>
-                            </tr>
+                            <?php
+                            $select_feedback = "select * from feedback";
+                            $select_feedback_query = mysqli_query($connect, $select_feedback);
+                            if (mysqli_num_rows($select_feedback_query) > 0) {
+                                while ($feedback_table_row = mysqli_fetch_assoc($select_feedback_query)) {
+                                    $feedback_id = $feedback_table_row["feedback_id"];
+                                    $feedback_name = $feedback_table_row["full_name"];
+                                    $feedback_email = $feedback_table_row["email"];
+                                    $feedback_message = $feedback_table_row["message"];
+                                    $feedback_status = $feedback_table_row["feedback_status"];
+                                    ?>
+                                    <tr>
+                                        <form method="POST">
+                                        <td class="fw-600 text-primary-custom"><?= $feedback_id ?></td>
+                                        <td>
+                                            <input type="hidden" value="<?= $feedback_id ?>" name="get_feedback_id" id="">
+                                            <div class="user-cell">
+                                                <div class="user-avatar av5">
+                                                    <?= strtoupper(substr($feedback_name, 0, 1)); ?>
+                                                </div>
+                                                <div class="user-name"><?= $feedback_name ?></div>
+                                            </div>
+                                        </td>
+                                        <td><?= $feedback_email ?></td>
+                                        <td><?= $feedback_message ?></td>
+                                        <td><input type="text" class="form-control" name="update_feedback_status" value="<?= $feedback_status ?>"></td>
+                                        <td>
+                                            <div style="display: flex;" class="d-flex flex-wrap">
+                                                <button class="btn-action btn-edit" name="btn-edit-feedback">
+                                                    <i class="bi bi-pencil-fill"></i> Edit
+                                                </button>
+                                                <button onclick="return confirm('are you sure to delete this this row.')"
+                                                    class="btn-action btn-delete btn-delete-row" name="btn-delete-feedback">
+                                                    <i class="bi bi-trash-fill"></i> Del
+                                                </button>
+                                            </div>
+                                        </td>
+                                        </form>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
