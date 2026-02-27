@@ -4,19 +4,19 @@ use PHPMailer\PHPMailer\PHPMailer;
 session_start();
 $page_title = 'Register';
 $message = "";
-function generatePatientID() {
-    return uniqid('PAT_', true); // true ke saath fractional microseconds bhi include
+function generatePatientID()
+{
+  return uniqid('PAT_', true); 
+  // true ke saath fractional microseconds bhi include
 }
 
 function validatePatient()
 {
   global $connect;
-  $check_patient = "select * from patients";
-  $check_patient_query = mysqli_query($connect, $check_patient);
-  $row = mysqli_fetch_assoc($check_patient_query);
-  $check_email = $row['email'];
   $errors = "";
-
+    $check_patient = "SELECT * FROM patients";
+    $check_patient_query = mysqli_query($connect, $check_patient);
+    $row = mysqli_fetch_assoc($check_patient_query);
   if (isset($_POST['submit_patient'])) {
 
     // Sanitize inputs
@@ -28,7 +28,8 @@ function validatePatient()
     $address = trim($_POST['address'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm = $_POST['confirm_password'] ?? '';
-     $patient_id = generatePatientID();
+    $patient_id = generatePatientID();
+    $check_email = $row['email'];
     // Sabse upar, sanitize karne ke baad yeh check lagao
     if (
       $full_name === "" && $email === "" && $phone === "" &&
@@ -98,8 +99,6 @@ function validatePatient()
       ";
       mysqli_query($connect, $insert);
       $_SESSION['patient_email'] = $safe_email;
-      // header("location:index.php");
-
       require 'PHPMailer-master/PHPMailer-master/src/PHPMailer.php';
       require 'PHPMailer-master/PHPMailer-master/src/SMTP.php';
       require 'PHPMailer-master/PHPMailer-master/src/Exception.php';
@@ -128,7 +127,8 @@ function validatePatient()
         echo "Mailer Error: " . $mail->ErrorInfo;
       }
     }
-
+      // header("location: login.php");
+      // exit();
 
   } else {
     $errors = "Form submit nahi hua.";
@@ -168,31 +168,31 @@ include 'includes/head.php';
 
           <!-- PATIENT form -->
           <div class="tab-pane fade show active" id="patientTab">
-            <form method="POST" action="" novalidate class="needs-validation">
+            <form method="POST" id="patientForm" action="" novalidate class="needs-validation">
               <input type="hidden" name="register_type" value="patient" />
               <div class="row g-3">
                 <div class="col-md-6">
 
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="full_name" placeholder="First Name" />
+                    <input type="text" class="form-control" id="full_name" name="full_name" placeholder="First Name" />
                     <label><i class="fas fa-user me-1"></i>full Name</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input type="email" class="form-control" name="email" placeholder="Email" />
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" />
                     <label><i class="fas fa-envelope me-1"></i>Email Address</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input type="tel" class="form-control" name="phone" placeholder="Phone" />
+                    <input type="tel" class="form-control" name="phone" id="phone_number" placeholder="Phone" />
                     <label><i class="fas fa-phone me-1"></i>Phone Number</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <select class="form-select" name="gender">
+                    <select class="form-select" id="gender" name="gender">
                       <option value="" disabled selected>Select</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
@@ -202,7 +202,7 @@ include 'includes/head.php';
                 </div>
                 <div class="col-12">
                   <div class="form-floating">
-                    <select class="form-select" name="city">
+                    <select class="form-select" id="city" name="city">
                       <option value="" disabled selected>Select city</option>
                       <?php
                       $city_query = mysqli_query($connect, "SELECT city_id, city_name FROM cities");
@@ -216,14 +216,16 @@ include 'includes/head.php';
                 </div>
                 <div class="col-12">
                   <div class="form-floating">
-                    <textarea class="form-control" name="address" placeholder="Address" style="height:80px;"></textarea>
+                    <textarea class="form-control" id="full_address" name="address" placeholder="Address"
+                      style="height:80px;"></textarea>
                     <label><i class="fas fa-map-marker-alt me-1"></i>Full Address</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="input-group">
                     <div class="form-floating flex-grow-1">
-                      <input type="password" class="form-control" name="password" placeholder="Password" />
+                      <input type="password" class="form-control" id="password" name="password"
+                        placeholder="Password" />
                       <label><i class="fas fa-lock me-1"></i>Password</label>
                     </div>
                     <span class="input-group-text toggle-password">
@@ -234,7 +236,8 @@ include 'includes/head.php';
                 <div class="col-md-6">
                   <div class="input-group">
                     <div class="form-floating flex-grow-1">
-                      <input type="password" class="form-control" name="confirm_password" placeholder="Confirm" />
+                      <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                        placeholder="Confirm" />
                       <label><i class="fas fa-lock me-1"></i>Confirm Password</label>
                     </div>
                     <span class="input-group-text toggle-password"><i class="fas fa-eye-slash"></i></span>
@@ -258,8 +261,8 @@ include 'includes/head.php';
                 }
                 ?>
                 <div class="col-12">
-                  <button type="submit" name="submit_patient" class="btn-primary-care w-100 justify-content-center"
-                    style="padding:14px;">
+                  <button type="submit" name="submit_patient" id="form_submit"
+                    class="btn-primary-care w-100 justify-content-center" style="padding:14px;">
                     <i class="fas fa-user-plus"></i> Create Patient Account
                   </button>
                 </div>
@@ -274,4 +277,37 @@ include 'includes/head.php';
     </div>
   </div>
 </main>
+<script>
+  const form = document.getElementById("patientForm");
+
+  form.addEventListener("submit", function (e) {
+
+    const fullName = document.getElementById("full_name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone_number").value.trim();
+    const gender = document.getElementById("gender").value;
+    const city = document.getElementById("city").value;
+    const address = document.getElementById("full_address").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const confirmPassword = document.getElementById("confirm_password").value.trim();
+    const agree = document.getElementById("agreePatient").checked;
+
+    if (
+      fullName === "" ||
+      email === "" ||
+      phone === "" ||
+      gender === "" ||
+      city === "" ||
+      address === "" ||
+      password === "" ||
+      confirmPassword === "" ||
+      !agree
+    ) {
+      e.preventDefault();
+      alert("All fields are required!");
+      return false;
+    }
+
+  });
+</script>
 <?php include 'includes/scripts.php'; ?>

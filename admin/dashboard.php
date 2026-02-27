@@ -319,14 +319,17 @@ include('includes/sidebar.php');
                 </div>
             </div>
         </div>
-        <!-- Recent Patients Table -->
+        <!-- feedback Table -->
         <div class="col-xl-12 col-lg-12 page-fade-in stagger-3">
             <div class="section-card">
                 <div class="section-card-header">
-                    <h5><i class="bi bi-people-fill"></i> Recent Patients</h5>
-                    <a href="patients.php" class="btn-view btn-action">
-                        <i class="bi bi-arrow-right-circle"></i> View All
-                    </a>
+                    <h5><i class="bi bi-people-fill"></i> feedback </h5>
+                    <h5 class="btn-view btn-action"><?php
+                    $result_feedback = $connect->query("SELECT COUNT(*) AS total FROM feedback");
+                    $row_feedback = $result_feedback->fetch_assoc();
+                    $total_feedback = $row_feedback['total'];
+                    echo $total_feedback;
+                    ?></h5>
                 </div>
                 <div class="section-card-body table-responsive-custom">
                     <table class="admin-table table">
@@ -358,10 +361,10 @@ include('includes/sidebar.php');
                                         <td>
                                             <input type="hidden" value="<?= $feedback_id ?>" name="get_feedback_id" id="">
                                             <div class="user-cell">
-                                                <div class="user-avatar av5">
-                                                    <?= strtoupper(substr($feedback_name, 0, 1)); ?>
-                                                </div>
-                                                <div class="user-name"><?= $feedback_name ?></div>
+                                                <div class="user-avatar av2">
+    <?= strtoupper(substr($feedback_name, 0, 1)). $feedback_name  ?>
+                                                 </div>
+                                                <div class="user-name"></div>
                                             </div>
                                         </td>
                                         <td><?= $feedback_email ?></td>

@@ -18,31 +18,12 @@ if (isset($_POST["btn-delete-doc"])) {
 }
 //edit city row 
 if (isset($_POST['btn-edit-doc'])) {
-
-    $doctor_id = intval($_POST['doctor_id']);
-
-    $first_name = mysqli_real_escape_string($connect, trim($_POST['doctor_name_update']));
-    $email = mysqli_real_escape_string($connect, trim($_POST['doctor_email_update']));
-    $phone = intval($_POST['doctor_phone_update']);
-    $experience = intval($_POST['doctor_experience']);
+    $get_doctor_id = $_POST['doctor_id'];
     $status = intval($_POST['doctor_status_update']);
-    $city_id = intval($_POST['city_id_update']);
-    $specialize_id = intval($_POST['specialize_id_update']);
-
-    if (empty($first_name) || empty($email)) {
-        echo "Name and Email required.";
-        exit;
-    }
 
     $update_query = "UPDATE doctors SET
-        first_name = '$first_name',
-        email = '$email',
-        phone = $phone,
-        experience = $experience,
-        doctor_status = $status,
-        city_id = $city_id,
-        specialize_id = $specialize_id
-        WHERE doctor_id = $doctor_id";
+        doctor_status =$status
+        WHERE doctor_id = $get_doctor_id";
 
     if (mysqli_query($connect, $update_query)) {
         header("Location: doctors.php");
@@ -312,10 +293,12 @@ include('includes/sidebar.php');
                                 $specialize = $specialize_table_row["specialize"];
                                 ?>
                                 <div class="col-12 col-sm-6 col-xl-3 m-3">
+                                    <form method="POST" action="">
                                     <div class="card">
                                         <div class="card-top">
                                             <div class="avatar"> <?= strtoupper(substr($first_name . $last_name, 0, 1)); ?></div>
                                             <div class="info">
+                                                <input type="hidden" value="<?= $doctor_id ?>" name="doctor_id">
                                                 <h2><?= $first_name . " " . $last_name ?></h2>
                                                 <div class="badge"><?= $specialize ?></div>
                                                 <div class="stars">
@@ -345,9 +328,16 @@ include('includes/sidebar.php');
                                                 <div class="fee-label">Consultation Fee</div>
                                                 <div class="fee-amount"><?= $consultation_fee ?></div>
                                             </div>
-                                            <button class="book-btn">📅 Book</button>
                                         </div>
+                                        <label class="fee-label text-capitalize" style="font-size: 15px;">status</label>
+                                        <input type="text" class="form-control mb-3" 
+                                        name="doctor_status_update" value="<?= $doctor_status?>">
+                                        <button class="btn btn-warning d-inline my-2"
+                                         type="submit" name="btn-edit-doc">update</button>
+                                        <button class="btn btn-danger d-inline my-2"
+                                         type="submit" onclick="return confirm('are you sure to delete this this row.')" name="btn-delete-doc">delete</button>          
                                     </div>
+                                    </form>
                                 </div>
                                 <?php
                             }

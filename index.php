@@ -229,8 +229,7 @@ $specs = [
 
     <div class="row g-4">
       <?php
-      $feedback_query = "SELECT feedback_id, full_name, LEFT(full_name,1) AS initials, message, rating, created_at 
-          FROM feedback where feedback_status=1
+      $feedback_query = "SELECT * FROM feedback where feedback_status=1
           ORDER BY feedback_id DESC 
           LIMIT 5";
       $feedback_result = mysqli_query($connect, $feedback_query);
@@ -249,15 +248,16 @@ $specs = [
         return $output;
       }
       while ($row = mysqli_fetch_assoc($feedback_result)) {
+        $full_name= $row['full_name'];
         ?>
         <div class="col-md-4 animate-on-scroll" style="">
           <div class="testimonial-card">
             <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
             <p style="overflow-x: hidden;"><?= $row['message'] ?></p>
             <div class="testimonial-author">
-              <div class="testimonial-avatar"><?= $row['initials'] ?></div>
-              <div>
-                <strong><?= $row['full_name'] ?></strong>
+              <div class="testimonial-avatar"><?= strtoupper(substr($full_name, 0, 1)); ?></div>
+              <div>  
+              <h3><?= $full_name ?></h3>
                 <i><?= $row['created_at'] ?></i>
                 <div class="stars mt-1 text-warning"><?= showStars($row['rating']) ?></div>
               </div>

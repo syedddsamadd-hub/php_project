@@ -15,9 +15,10 @@ if (isset($_POST["btn-delete-patient"])) {
     $delete_patients = "delete  from patients where patient_id='$patients_update_id'";
     mysqli_query($connect, $delete_patients);
     // header("location:specializations.php");
-} else {
-    echo "<h1>not clxicked</h1>";
 }
+//  else {
+//     echo "<h1>not clxicked</h1>";
+// }
 //edit specialize row 
 if (isset($_POST['btn-edit-patient'])) {
     $patients_update_id = $_POST['patients_update_id'];
@@ -27,9 +28,10 @@ if (isset($_POST['btn-edit-patient'])) {
 WHERE patient_id = '$patients_update_id'";
     $update_patient_query = mysqli_query($connect, $update_status);
     // header("location:specializations.php");
-} else {
-    echo 'not clicked';
-}
+} 
+// else {
+//     echo 'not clicked';
+// }
 $pageTitle = 'Manage Patients';
 include('includes/header.php');
 include('includes/sidebar.php');
