@@ -1,3 +1,7 @@
+<?php
+require "../connect.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,10 +19,10 @@
  ?>
 
 <main class="main-content">
-    <div class="page-header">
+    <header class="page-header">
         <h4><i class="fas fa-user-circle text-primary me-2"></i>My Profile</h4>
         <p>Manage your personal information and account settings</p>
-    </div>
+    </header>
 
     <!-- Profile Hero -->
     <div class="profile-hero">
@@ -39,12 +43,12 @@
     </div>
 
     <!-- Tabs -->
-    <div class="profile-tabs">
+    <!-- <div class="profile-tabs">
         <a href="#" class="profile-tab active"><i class="fas fa-user-edit me-2"></i>Edit Profile</a>
         <a href="#" class="profile-tab"><i class="fas fa-lock me-2"></i>Change Password</a>
         <a href="#" class="profile-tab"><i class="fas fa-bell me-2"></i>Notifications</a>
         <a href="#" class="profile-tab"><i class="fas fa-shield-alt me-2"></i>Privacy</a>
-    </div>
+    </div> -->
 
     <div class="row g-4">
         <!-- Edit Form -->
