@@ -14,33 +14,9 @@
 </head>
 <body>
 
-<nav class="top-navbar">
-    <a href="dashboard.php" class="navbar-brand">
-        <div class="brand-icon"><i class="fas fa-heartbeat"></i></div>
-        <span class="brand-text">MedCare</span>
-    </a>
-    <div class="navbar-right d-flex align-items-center gap-3">
-        <div class="patient-info">
-            <div class="patient-avatar">JD</div>
-            <div class="d-none d-sm-block">
-                <div style="font-weight:700;font-size:0.9rem;">John Doe</div>
-                <div style="font-size:0.75rem;color:#64748b;">Patient</div>
-            </div>
-        </div>
-        <a href="login.php" class="btn-logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
-    </div>
-</nav>
-
-<aside class="sidebar">
-    <div class="sidebar-section-label">Main Menu</div>
-    <a href="dashboard.php" class="sidebar-link"><i class="fas fa-th-large"></i> Dashboard</a>
-    <a href="search_doctor.php" class="sidebar-link active"><i class="fas fa-search"></i> Search Doctor</a>
-    <a href="my_appointments.php" class="sidebar-link"><i class="fas fa-calendar-alt"></i> My Appointments <span class="badge bg-primary ms-auto">3</span></a>
-    <div class="sidebar-section-label">Account</div>
-    <a href="profile.php" class="sidebar-link"><i class="fas fa-user"></i> My Profile</a>
-    <a href="login.php" class="sidebar-link" style="color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Logout</a>
-</aside>
-
+<?php
+require "sidebar_navbar.php";
+?>
 <main class="main-content">
     <div class="page-header">
         <h4><i class="fas fa-search text-primary me-2"></i>Find a Doctor</h4>
@@ -142,7 +118,6 @@
         <?php endforeach; ?>
     </div>
 </main>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

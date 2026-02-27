@@ -154,7 +154,6 @@
 <div class="top-bar">
     <span class="brand"><i class="fas fa-heartbeat"></i>MedCare Patient Portal</span>
 </div>
-
 <div class="register-wrapper">
     <div class="register-card">
         <div class="register-header">

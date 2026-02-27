@@ -8,33 +8,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
      <link rel="stylesheet" href="style.css">
-    <style>
-         
-    </style>
 </head>
 <body>
-
-<nav class="top-navbar">
-    <a href="dashboard.php" class="navbar-brand">
-        <div class="brand-icon"><i class="fas fa-heartbeat"></i></div>
-        <span class="brand-text">MedCare</span>
-    </a>
-    <div class="d-flex align-items-center gap-3">
-        <div class="patient-avatar">JD</div>
-        <a href="login.php" class="btn-logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
-    </div>
-</nav>
-
-<aside class="sidebar">
-    <div class="sidebar-section-label">Main Menu</div>
-    <a href="dashboard.php" class="sidebar-link"><i class="fas fa-th-large"></i> Dashboard</a>
-    <a href="search_doctor.php" class="sidebar-link"><i class="fas fa-search"></i> Search Doctor</a>
-    <a href="my_appointments.php" class="sidebar-link active"><i class="fas fa-calendar-alt"></i> My Appointments <span class="badge bg-primary ms-auto">3</span></a>
-    <div class="sidebar-section-label">Account</div>
-    <a href="profile.php" class="sidebar-link"><i class="fas fa-user"></i> My Profile</a>
-    <a href="login.php" class="sidebar-link" style="color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Logout</a>
-</aside>
-
+     <?Php
+ require "sidebar_navbar.php";
+ ?>
 <main class="main-content">
     <div class="page-header">
         <div class="page-header-left">
@@ -63,7 +41,6 @@
             <div><div class="mini-stat-val">2</div><div class="mini-stat-lbl">Cancelled</div></div>
         </div>
     </div>
-
     <!-- Filters -->
     <div class="filter-tabs">
         <a href="#" class="filter-tab active">All <span class="count">12</span></a>

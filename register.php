@@ -1,24 +1,17 @@
 <?php
+ob_start();
 include "connect.php";
 use PHPMailer\PHPMailer\PHPMailer;
 session_start();
-$page_title = 'Register';
-$message = "";
-function generatePatientID()
-{
-  return uniqid('PAT_', true); 
+function generatePatientID(){
+  return uniqid('PAT_', true);
   // true ke saath fractional microseconds bhi include
 }
-
 function validatePatient()
 {
   global $connect;
   $errors = "";
-    $check_patient = "SELECT * FROM patients";
-    $check_patient_query = mysqli_query($connect, $check_patient);
-    $row = mysqli_fetch_assoc($check_patient_query);
   if (isset($_POST['submit_patient'])) {
-
     // Sanitize inputs
     $full_name = trim($_POST['full_name'] ?? '');
     $email = trim($_POST['email'] ?? '');
@@ -29,7 +22,8 @@ function validatePatient()
     $password = $_POST['password'] ?? '';
     $confirm = $_POST['confirm_password'] ?? '';
     $patient_id = generatePatientID();
-    $check_email = $row['email'];
+    $check_patient = "SELECT * FROM patients WHERE email='$email'";
+    $check_patient_query = mysqli_query($connect, $check_patient);
     // Sabse upar, sanitize karne ke baad yeh check lagao
     if (
       $full_name === "" && $email === "" && $phone === "" &&
@@ -53,8 +47,9 @@ function validatePatient()
       !preg_match("/@yahoo\.com$/", $email)
     ) {
       $errors = "Enter email in ( @gmail.com OR @aptechsite.net OR yahoo.com ).";
-    } elseif ($email === $check_email) {
-      $errors = "this email is alreasdy register try with different one.";
+    }
+    if (mysqli_num_rows($check_patient_query) > 0) {
+      $errors = "This email is already registered. Try with a different one.";
     } elseif ($phone === "") {
       $errors = "Phone number is required.";
     } elseif (!preg_match("/^[0-9]{11}$/", $phone)) {
@@ -127,16 +122,16 @@ function validatePatient()
         echo "Mailer Error: " . $mail->ErrorInfo;
       }
     }
-      // header("location: login.php");
-      // exit();
-
+    $_SESSION["patient_email"] = $email;
+    header("location: login.php");
   } else {
     $errors = "Form submit nahi hua.";
   }
 
   return $errors;
 }
-
+$page_title = 'Register';
+$message = "";
 
 include 'includes/head.php';
 ?>
@@ -162,10 +157,8 @@ include 'includes/head.php';
         <h3>Create Your Account</h3>
         <p class="text-capitalize">register your self to get appointment of doctors according to you disesase</p>
       </div>
-
       <div class="auth-card-body">
         <div class="tab-content">
-
           <!-- PATIENT form -->
           <div class="tab-pane fade show active" id="patientTab">
             <form method="POST" id="patientForm" action="" novalidate class="needs-validation">
@@ -277,7 +270,7 @@ include 'includes/head.php';
     </div>
   </div>
 </main>
-<script>
+<!-- <script>
   const form = document.getElementById("patientForm");
 
   form.addEventListener("submit", function (e) {
@@ -309,5 +302,5 @@ include 'includes/head.php';
     }
 
   });
-</script>
+</script> -->
 <?php include 'includes/scripts.php'; ?>

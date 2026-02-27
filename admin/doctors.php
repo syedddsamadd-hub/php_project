@@ -241,113 +241,114 @@ include('includes/sidebar.php');
         </div>
         <select class="filter-select">
             <option value="">All Cities</option>
-            <option>Karachi</option>
-            <option>Lahore</option>
-            <option>Islamabad</option>
-            <option>Rawalpindi</option>
-            <option>Faisalabad</option>
-            <option>Multan</option>
+            <?php
+            $city_query = mysqli_query($connect, "SELECT city_id, city_name FROM cities");
+            while ($row1 = mysqli_fetch_assoc($city_query)) {
+                echo "<option value='" . $row1['city_id'] . "'>" . $row1['city_name'] . "</option>";
+            }
+            ?>
         </select>
         <select class="filter-select">
             <option value="">All Specializations</option>
-            <option>Cardiologist</option>
-            <option>Neurologist</option>
-            <option>Pediatrician</option>
-            <option>Orthopedic</option>
-            <option>Dermatologist</option>
+            <?php
+            $specialize_query = mysqli_query($connect, "SELECT specialize_id, specialize FROM specialization");
+            while ($row2 = mysqli_fetch_assoc($specialize_query)) {
+                echo "<option value='" . $row2['specialize_id'] . "'>" . $row2['specialize'] . "</option>";
+            }
+            ?>
         </select>
         <select class="filter-select" style="min-width:120px;">
             <option value="">All Status</option>
-            <option>Active</option>
-            <option>Inactive</option>
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
         </select>
     </div>
- <div class="container-fluid">
-    <div class="row">
-        <?php
-        $select_doctors = "select * from doctors";
-        $select_doctors_query = mysqli_query($connect, $select_doctors);
-        if (mysqli_num_rows($select_doctors_query) > 0) {
-            while ($doctors_table_row = mysqli_fetch_assoc($select_doctors_query)) {
-                $doctor_id = $doctors_table_row["doctor_id"];
-                $first_name = $doctors_table_row["first_name"];
-                $last_name = $doctors_table_row["last_name"];
-                $doctor_qualification = $doctors_table_row["qualification"];
-                $doctor_phone = $doctors_table_row["phone"];
-                $consultation_fee = $doctors_table_row["consultation_fee"];
-                $doctor_experience = $doctors_table_row["experience"];
-                $doctor_status = $doctors_table_row["doctor_status"];
-                $doctor_city_id = $doctors_table_row["city_id"];
-                $specialize_id = $doctors_table_row["specialize_id"];
+    <div class="container-fluid">
+        <div class="row">
+            <?php
+            $select_doctors = "select * from doctors";
+            $select_doctors_query = mysqli_query($connect, $select_doctors);
+            if (mysqli_num_rows($select_doctors_query) > 0) {
+                while ($doctors_table_row = mysqli_fetch_assoc($select_doctors_query)) {
+                    $doctor_id = $doctors_table_row["doctor_id"];
+                    $first_name = $doctors_table_row["first_name"];
+                    $last_name = $doctors_table_row["last_name"];
+                    $doctor_qualification = $doctors_table_row["qualification"];
+                    $doctor_phone = $doctors_table_row["phone"];
+                    $consultation_fee = $doctors_table_row["consultation_fee"];
+                    $doctor_experience = $doctors_table_row["experience"];
+                    $doctor_status = $doctors_table_row["doctor_status"];
+                    $doctor_city_id = $doctors_table_row["city_id"];
+                    $specialize_id = $doctors_table_row["specialize_id"];
 
-                $select_city = "select * from cities where city_id='$doctor_city_id'";
-                $select_city_query = mysqli_query($connect, $select_city);
-                if (mysqli_num_rows($select_city_query) > 0) {
-                    while ($city_table_row = mysqli_fetch_assoc($select_city_query)) {
-                        $city_name = $city_table_row["city_name"];
+                    $select_city = "select * from cities where city_id='$doctor_city_id'";
+                    $select_city_query = mysqli_query($connect, $select_city);
+                    if (mysqli_num_rows($select_city_query) > 0) {
+                        while ($city_table_row = mysqli_fetch_assoc($select_city_query)) {
+                            $city_name = $city_table_row["city_name"];
 
-                        $select_specialization = "select * from specialization where specialize_id='$specialize_id'";
-                        $select_specialize_query = mysqli_query($connect, $select_specialization);
-                        if (mysqli_num_rows($select_specialize_query) > 0) {
-                            while ($specialize_table_row = mysqli_fetch_assoc($select_specialize_query)) {
-                                $specialize = $specialize_table_row["specialize"];
-                                ?>
-                                <div class="col-12 col-sm-6 col-xl-3 m-3">
-                                    <form method="POST" action="">
-                                    <div class="card">
-                                        <div class="card-top">
-                                            <div class="avatar"> <?= strtoupper(substr($first_name . $last_name, 0, 1)); ?></div>
-                                            <div class="info">
-                                                <input type="hidden" value="<?= $doctor_id ?>" name="doctor_id">
-                                                <h2><?= $first_name . " " . $last_name ?></h2>
-                                                <div class="badge"><?= $specialize ?></div>
-                                                <div class="stars">
-                                                    <span class="stars-icons">★★★★★</span>
-                                                    <span class="rating-text">4.9 (142)</span>
+                            $select_specialization = "select * from specialization where specialize_id='$specialize_id'";
+                            $select_specialize_query = mysqli_query($connect, $select_specialization);
+                            if (mysqli_num_rows($select_specialize_query) > 0) {
+                                while ($specialize_table_row = mysqli_fetch_assoc($select_specialize_query)) {
+                                    $specialize = $specialize_table_row["specialize"];
+                                    ?>
+                                    <div class="col-12 col-sm-6 col-xl-3 m-3">
+                                        <form method="POST" action="">
+                                            <div class="card">
+                                                <div class="card-top">
+                                                    <div class="avatar"> <?= strtoupper(substr($first_name . $last_name, 0, 1)); ?></div>
+                                                    <div class="info">
+                                                        <input type="hidden" value="<?= $doctor_id ?>" name="doctor_id">
+                                                        <h2><?= $first_name . " " . $last_name ?></h2>
+                                                        <div class="badge"><?= $specialize ?></div>
+                                                        <div class="stars">
+                                                            <span class="stars-icons">★★★★★</span>
+                                                            <span class="rating-text">4.9 (142)</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <hr class="divider">
-                                        <div class="meta">
-                                            <div class="meta-item">
-                                                <div class="meta-icon exp">🩺</div>
-                                                <span><?= $doctor_experience ?> years experience</span>
-                                            </div>
-                                            <div class="meta-item">
-                                                <div class="meta-icon loc">📍</div>
-                                                <span><?= $city_name ?></span>
-                                            </div>
-                                            <div class="meta-item">
-                                                <div class="meta-icon loc">🎓</div>
-                                                <span><?= $doctor_qualification ?></span>
-                                            </div>
-                                        </div>
+                                                <hr class="divider">
+                                                <div class="meta">
+                                                    <div class="meta-item">
+                                                        <div class="meta-icon exp">🩺</div>
+                                                        <span><?= $doctor_experience ?> years experience</span>
+                                                    </div>
+                                                    <div class="meta-item">
+                                                        <div class="meta-icon loc">📍</div>
+                                                        <span><?= $city_name ?></span>
+                                                    </div>
+                                                    <div class="meta-item">
+                                                        <div class="meta-icon loc">🎓</div>
+                                                        <span><?= $doctor_qualification ?></span>
+                                                    </div>
+                                                </div>
 
-                                        <div class="card-bottom">
-                                            <div>
-                                                <div class="fee-label">Consultation Fee</div>
-                                                <div class="fee-amount"><?= $consultation_fee ?></div>
+                                                <div class="card-bottom">
+                                                    <div>
+                                                        <div class="fee-label">Consultation Fee</div>
+                                                        <div class="fee-amount"><?= $consultation_fee ?></div>
+                                                    </div>
+                                                </div>
+                                                <label class="fee-label text-capitalize" style="font-size: 15px;">status</label>
+                                                <input type="text" class="form-control mb-3" name="doctor_status_update"
+                                                    value="<?= $doctor_status ?>">
+                                                <button class="btn btn-warning d-inline my-2" type="submit" name="btn-edit-doc">update</button>
+                                                <button class="btn btn-danger d-inline my-2" type="submit"
+                                                    onclick="return confirm('are you sure to delete this this row.')"
+                                                    name="btn-delete-doc">delete</button>
                                             </div>
-                                        </div>
-                                        <label class="fee-label text-capitalize" style="font-size: 15px;">status</label>
-                                        <input type="text" class="form-control mb-3" 
-                                        name="doctor_status_update" value="<?= $doctor_status?>">
-                                        <button class="btn btn-warning d-inline my-2"
-                                         type="submit" name="btn-edit-doc">update</button>
-                                        <button class="btn btn-danger d-inline my-2"
-                                         type="submit" onclick="return confirm('are you sure to delete this this row.')" name="btn-delete-doc">delete</button>          
+                                        </form>
                                     </div>
-                                    </form>
-                                </div>
-                                <?php
+                                    <?php
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        ?>
-    </div>
+            ?>
+        </div>
     </div>
     <form id="form_id" action="" style="height: auto;" class="m-5 alert alert-primary" method="POST"
         enctype="multipart/form-data">

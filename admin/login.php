@@ -11,10 +11,8 @@ if (isset($_SESSION["admin_email"])) {
 $error_login = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $admin_email = trim($_POST['email'] ?? '');
     $admin_password = trim($_POST['password'] ?? '');
-
     // Email validation
     if (empty($admin_email)) {
         $error_login = "Email is required.";
