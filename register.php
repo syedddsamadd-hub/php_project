@@ -3,6 +3,11 @@ ob_start();
 include "connect.php";
 use PHPMailer\PHPMailer\PHPMailer;
 session_start();
+// Agar already login ho chuka ho
+if (isset($_SESSION["user_email"])) {
+    header("Location: patient_panel/dashboard.php");
+    exit();
+}
 function generatePatientID(){
   return uniqid('PAT_', true);
   // true ke saath fractional microseconds bhi include

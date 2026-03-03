@@ -2,6 +2,37 @@
 // Determine current page for active link highlighting
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+  $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+  session_set_cookie_params([
+    'httponly' => true,
+    'samesite' => 'Lax',
+    'secure' => $secure
+  ]);
+  session_start();
+}
+$current_page = basename($_SERVER['PHP_SELF']);
+$isLoggedIn = isset($_SESSION['user_email']);
+$dashboard_url = null;
+if ($isLoggedIn) {
+  $role = $_SESSION['role'] ?? null;
+  if ($role === 'patient') {
+    $dashboard_url = 'patient_panel/dashboard.php';
+  } elseif ($role === 'doctor') {
+    $candidate = 'doctor/dashboard.php';
+    $candidatePath = __DIR__ . '/../' . $candidate;
+    if (!file_exists($candidatePath)) {
+      $candidate = 'admin/dashboard.php';
+    }
+    $dashboard_url = $candidate;
+  } elseif ($role === 'admin') {
+    $dashboard_url = 'admin/dashboard.php';
+  } else {
+    $dashboard_url = 'index.php';
+  }
+}
+?>
 <nav class="navbar navbar-expand-lg navbar-care">
   <div class="container">
     <a class="navbar-brand" href="index.php">
@@ -29,7 +60,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($current_page == 'medical-news.php') ? 'active' : ''; ?>" href="medical-news.php">
+          <a class="nav-link <?php echo ($current_page == 'medical-news.php') ? 'active' : ''; ?>" href="disease_news.php">
             <i class="fas fa-newspaper me-1"></i>Medical News
           </a>
         </li>
@@ -45,8 +76,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </li>
       </ul>
       <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
-        <a href="login.php" class="nav-link btn-nav-login">Login</a>
-        <a href="register.php" class="nav-link btn-nav-register text-light">Register</a>
+        <?php if ($isLoggedIn && $dashboard_url) { ?>
+          <a href="<?php echo htmlspecialchars($dashboard_url, ENT_QUOTES, 'UTF-8'); ?>" class="nav-link btn-nav-register text-light">Dashboard</a>
+        <?php } else { ?>
+          <a href="login.php" class="nav-link btn-nav-login">Login</a>
+          <a href="register.php" class="nav-link btn-nav-register text-light">Register</a>
+        <?php } ?>
       </div>
     </div>
   </div>

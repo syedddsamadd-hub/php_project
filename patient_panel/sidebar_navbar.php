@@ -20,7 +20,7 @@
                 <div class="patient-role">Patient</div>
             </div>
         </div>
-        <a href="login.php" class="btn-logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
+        <a href="logout.php" class="btn-logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
     </div>
 </nav>
 
@@ -41,7 +41,7 @@
     <a href="profile.php" class="sidebar-link">
         <i class="fas fa-user"></i> My Profile
     </a>
-    <a href="login.php" class="sidebar-link" style="color:#ef4444;">
+    <a href="logout.php" class="sidebar-link" style="color:#ef4444;">
         <i class="fas fa-sign-out-alt"></i> Logout
     </a>
 </aside>

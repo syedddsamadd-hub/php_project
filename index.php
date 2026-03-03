@@ -121,15 +121,11 @@ include 'includes/head.php'; ?>
   </div>
 </section>
 
-<!-- ====== FEATURED DOCTORS ====== -->
+<!-- featured doctors -->
 <?php
-$doctors = [
-  ['name' => 'Dr. Sarah Ahmed', 'spec' => 'Cardiologist', 'spec_icon' => 'heartbeat', 'qual' => 'MBBS, FCPS (Cardiology)', 'exp' => '12', 'city' => 'Karachi', 'fee' => '2,000', 'rating' => '4.9', 'reviews' => '120', 'bg' => 'linear-gradient(135deg,#E3F2FD,#BBDEFB)', 'color' => 'var(--primary)', 'avail' => 'Available', 'avail_style' => ''],
-  ['name' => 'Dr. Imran Malik', 'spec' => 'Neurologist', 'spec_icon' => 'brain', 'qual' => 'MBBS, MD (Neurology)', 'exp' => '9', 'city' => 'Lahore', 'fee' => '2,500', 'rating' => '4.8', 'reviews' => '95', 'bg' => 'linear-gradient(135deg,#E0F7FA,#B2EBF2)', 'color' => 'var(--accent)', 'avail' => 'Available', 'avail_style' => ''],
-  ['name' => 'Dr. Fatima Khan', 'spec' => 'Orthopedic', 'spec_icon' => 'bone', 'qual' => 'MBBS, FRCS', 'exp' => '15', 'city' => 'Islamabad', 'fee' => '3,000', 'rating' => '4.7', 'reviews' => '80', 'bg' => 'linear-gradient(135deg,#FFF3E0,#FFE0B2)', 'color' => '#F57F17', 'avail' => 'Tomorrow', 'avail_style' => ''],
-  ['name' => 'Dr. Ali Hassan', 'spec' => 'Ophthalmologist', 'spec_icon' => 'eye', 'qual' => 'MBBS, DOMS', 'exp' => '8', 'city' => 'Faisalabad', 'fee' => '1,800', 'rating' => '4.9', 'reviews' => '140', 'bg' => 'linear-gradient(135deg,#EDE7F6,#D1C4E9)', 'color' => '#6A1B9A', 'avail' => 'Busy', 'avail_style' => 'background:#FFEBEE;color:var(--danger);border-color:rgba(198,40,40,0.2);'],
-];
+$doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_status = 1 LIMIT 8");
 ?>
+
 <section class="section-padding bg-white">
   <div class="container">
     <div class="d-flex align-items-center justify-content-between mb-5">
@@ -137,45 +133,73 @@ $doctors = [
         <span class="badge-accent">Top Rated</span>
         <h2 class="section-title mt-1">Featured Doctors</h2>
       </div>
-      <a href="search-doctor.php" class="btn-primary-care d-none d-md-flex">View All <i
-          class="fas fa-arrow-right"></i></a>
+      <a href="search-doctor.php" class="btn-primary-care d-none d-md-flex">View All <i class="fas fa-arrow-right"></i></a>
     </div>
+
     <div class="row g-4">
-      <?php foreach ($doctors as $i => $doc): ?>
-        <div class="col-md-6 col-lg-3 animate-on-scroll" style="transition-delay:<?php echo $i * 0.1; ?>s">
+      <?php while($doc = mysqli_fetch_assoc($doctors_result)): ?>
+        <?php
+          // City fetch
+          $city_result = mysqli_query($connect, "SELECT * FROM cities WHERE city_id = ".$doc['city_id']);
+          $city = mysqli_fetch_assoc($city_result);
+
+          // Specialization fetch
+          $spec_result = mysqli_query($connect, "SELECT * FROM specialization WHERE specialize_id = ".$doc['specialize_id']);
+          $spec = mysqli_fetch_assoc($spec_result);
+        ?>
+
+        <div class="col-md-6 col-lg-3">
           <div class="doctor-card">
-            <div class="doctor-card-img" style="background:<?php echo $doc['bg']; ?>">
-              <i class="fas fa-user-md" style="color:<?php echo $doc['color']; ?>"></i>
-              <span class="availability-badge" style="<?php echo $doc['avail_style']; ?>">
-                <i class="fas fa-circle" style="font-size:7px;margin-right:4px;"></i><?php echo $doc['avail']; ?>
-              </span>
+
+            <div class="doctor-card-img">
+              <?php if(!empty($doc['doctor_image'])): ?>
+                <img src="admin/src/<?php echo $doc['doctor_image']; ?>" 
+                     alt="Doctor" 
+                     style="width:100%; height:100%; object-fit:cover;">
+              <?php else: ?>
+                <i class="fas fa-user-md"></i>
+              <?php endif; ?>
             </div>
+
             <div class="doctor-card-body">
-              <h5><?php echo htmlspecialchars($doc['name']); ?></h5>
-              <p class="doctor-spec"><i
-                  class="fas fa-<?php echo $doc['spec_icon']; ?> me-1"></i><?php echo htmlspecialchars($doc['spec']); ?>
+              <h5>Dr. <?php echo $doc['first_name'].' '.$doc['last_name']; ?></h5>
+
+              <p class="doctor-spec">
+                <i class="fas fa-stethoscope me-1"></i>
+                <?php echo $spec['specialize']; ?>
               </p>
-              <p class="doctor-meta"><i class="fas fa-graduation-cap"></i><?php echo htmlspecialchars($doc['qual']); ?>
+
+              <p class="doctor-meta">
+                <i class="fas fa-graduation-cap"></i>
+                <?php echo $doc['qualification']; ?>
               </p>
-              <p class="doctor-meta"><i class="fas fa-briefcase"></i><?php echo htmlspecialchars($doc['exp']); ?> Years
-                Experience</p>
-              <p class="doctor-meta"><i class="fas fa-map-marker-alt"></i><?php echo htmlspecialchars($doc['city']); ?>
+
+              <p class="doctor-meta">
+                <i class="fas fa-briefcase"></i>
+                <?php echo $doc['experience']; ?> Years Experience
               </p>
+
+              <p class="doctor-meta">
+                <i class="fas fa-map-marker-alt"></i>
+                <?php echo $city['city_name']; ?>
+              </p>
+
               <div class="d-flex align-items-center justify-content-between mb-3">
-                <span class="doctor-fees-badge"><i class="fas fa-tag me-1"></i>Rs. <?php echo $doc['fee']; ?></span>
-                <div><span class="stars">★★★★★</span> <span class="rating-text"><?php echo $doc['rating']; ?></span></div>
+                <span class="doctor-fees-badge">
+                  <i class="fas fa-tag me-1"></i>Rs. <?php echo $doc['consultation_fee']; ?>
+                </span>
+                <div><span class="stars">★★★★★</span> <span class="rating-text">5.0</span></div>
               </div>
-              <a href="appointment.php?doctor=<?php echo urlencode($doc['name']); ?>"
-                class="btn-primary-care w-100 justify-content-center">
+
+              <a href="appointment.php?doctor_id=<?= $doc['doctor_id'] ?>" 
+                 class="btn-primary-care w-100 justify-content-center">
                 <i class="fas fa-calendar-plus"></i> Book Now
               </a>
             </div>
+
           </div>
         </div>
-      <?php endforeach; ?>
-    </div>
-    <div class="text-center mt-4 d-md-none">
-      <a href="search-doctor.php" class="btn-primary-care">View All Doctors <i class="fas fa-arrow-right"></i></a>
+      <?php endwhile; ?>
     </div>
   </div>
 </section>
@@ -187,6 +211,7 @@ $specs = [
   ['icon' => 'brain'],
 ];
 ?>
+<!-- testimonial -->
 <section class="spec-section section-padding">
   <div class="container">
     <div class="text-center mb-5">

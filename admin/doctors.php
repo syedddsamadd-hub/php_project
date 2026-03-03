@@ -483,8 +483,8 @@ include('includes/sidebar.php');
             <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <div class="form-group-custom">
                     <label>password</label>
-                    <textarea name="password" class="form-control-custom" rows="3" minlength="" maxlength="500"
-                        placeholder="password" style="resize:vertical;"></textarea>
+                    <input name="password" type="text" class="form-control-custom" rows="3" minlength="10"
+                        maxlength="500" placeholder="password" style="resize:vertical;" />
                 </div>
             </div>
 
@@ -492,8 +492,8 @@ include('includes/sidebar.php');
             <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <div class="form-group-custom">
                     <label>confirm password</label>
-                    <textarea name="confirmPassword" minlength="10" maxlength="300" class="form-control-custom" rows="3"
-                        placeholder="Addres" style="resize:vertical;"></textarea>
+                    <input name="confirmPassword" type="text" minlength="10" maxlength="300" class="form-control-custom"
+                        rows="3" placeholder="Addres" style="resize:vertical;" />
                 </div>
             </div>
 
@@ -536,6 +536,8 @@ include('includes/sidebar.php');
             $qualification = trim($_POST['qualification']);
             $doctor_fees = trim($_POST['fees']);
             $doctor_city = $_POST['cities'];
+            $password = trim($_POST['password']);
+            $confirmPassword = trim($_POST['confirmPassword']);
             $doctor_specialization = trim($_POST['specialization']);
             $profile_photo = $_FILES['profile_photo']['name'];
             $tmp_name = $_FILES['profile_photo']['tmp_name'];
@@ -544,10 +546,6 @@ include('includes/sidebar.php');
             $allowed_types = ['image/jpeg', 'image/png', 'image/webp'];
             $max_size = 2 * 1024 * 1024; // 2MB
     
-            $src = "src/" . $profile_photo;
-
-            move_uploaded_file($tmp_name, $src);
-
             if (empty($first_name)) {
                 $error_message = "Enter your first name.";
             } elseif (!preg_match("/^[a-zA-Z\s]{2,20}$/", $first_name)) {
@@ -605,15 +603,34 @@ include('includes/sidebar.php');
                 $error_message = "File too large";
             } elseif (!in_array($_FILES['profile_photo']['type'], $allowed_types)) {
                 $error_message = "Invalid Image Type";
+            } elseif (empty($password)) {
+                $error_message = "Enter password.";
+            } elseif (strlen($password) < 8) {
+                $error_message = "Password must be at least 8 characters.";
+            } elseif (!preg_match('/[A-Z]/', $password)) {
+                $error_message = "Password must contain at least 1 uppercase letter.";
+            } elseif (!preg_match('/[0-9]/', $password)) {
+                $error_message = "Password must contain at least 1 number.";
+            } elseif (!preg_match('/[!@#$%^&*()\-_=+\[\]{};:\'",.<>?\/\\\\|]/', $password)) {
+                $error_message = "Password must contain at least 1 special character.";
+            } elseif ($password !== $confirmPassword) {
+                $error_message = "Passwords do not match.";
             } else {
+
+                $src = "src/" . $profile_photo;
+
+                move_uploaded_file($tmp_name, $src);
+
+                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
                 $insert_doctor = "INSERT INTO doctors 
 (first_name,last_name,email,phone,address,
 qualification,experience,consultation_fee,
-city_id,specialize_id,doctor_image)
+city_id,specialize_id,doctor_image,password)
 VALUES
 ('$first_name','$last_name','$doctor_email',$phone_number,'$doctor_address',
 '$qualification',$experience,$doctor_fees,
-$doctor_city,$doctor_specialization,'$profile_photo')";
+$doctor_city,$doctor_specialization,'$profile_photo','$hashed_password')";
 
                 $insert_doctor_query = mysqli_query($connect, $insert_doctor);
                 $error_message = "doctor added sucessfully";
@@ -638,7 +655,7 @@ $doctor_city,$doctor_specialization,'$profile_photo')";
                     . "Aapka account successfully create ho gaya hai. "
                     . "Aap ab login karke apni services use kar sakte hain.\n\n"
                     . "Shukriya,\n"
-                    . "Team XYZ";
+                    . "Team XYZ.$password";
 
                 if ($mail->send()) {
                     echo "Message Sent!";

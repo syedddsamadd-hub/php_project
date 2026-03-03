@@ -8,8 +8,8 @@ include 'includes/head.php';
 session_start();
 // Agar already login ho chuka ho
 if (isset($_SESSION["user_email"])) {
-    header("Location: dashboard.php");
-    exit();
+  header("Location: patient_panel/dashboard.php");
+  exit();
 }
 include "connect.php";
 
@@ -57,11 +57,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['role'] = $role;
             $_SESSION['user_email'] = $user['email'];
 
-            // 7️⃣ Redirect based on role
             if ($role == "patient") {
-              header("Location: ../patient_panel/dashboard.php");
+              header("Location: patient_panel/dashboard.php");
             } else {
-              header("Location: ../doctor/dashboard.php");
+              header("Location: doctor_final/doctor_output/dashboard.php");
             }
             exit();
 
@@ -94,7 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </div>
 </nav>
-
 <div class="auth-page">
   <div
     style="position:fixed;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(21,101,192,0.12),transparent);border-radius:50%;pointer-events:none;">
