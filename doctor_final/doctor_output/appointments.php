@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/_auth.php';
+$today = date('Y-m-d');
+echo $today; // delete karna baad mein
 $appointments = [];
 $db_error = '';
 $doc_id = doctor_id();
@@ -47,10 +49,18 @@ $tab_today    = [];
 $tab_upcoming = [];
 $tab_past     = [];
 foreach ($appointments as $a) {
-    $d = $a['appointment_date'];
-    if ($d === $today)       $tab_today[]    = $a;
-    elseif ($d > $today)     $tab_upcoming[] = $a;
-    else                     $tab_past[]     = $a;
+    $d      = $a['appointment_date'];
+    $status = strtolower($a['status'] ?? '');
+
+    if ($status === 'completed' || $status === 'cancelled') {
+        $tab_past[]     = $a;
+    } elseif ($d === $today) {
+        $tab_today[]    = $a;
+    } elseif ($d > $today) {
+        $tab_upcoming[] = $a;
+    } else {
+        $tab_past[]     = $a;
+    }
 }
 ?>
 <!DOCTYPE html>
