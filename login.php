@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="loginUser" name="useremail" placeholder="Username or Email"
               value="" required />
-            <label for="loginUser"><i class="fas fa-envelope me-1"></i>Email or Username</label>
+            <label for="loginUser"><i class="fas fa-envelope me-1"></i>Email</label>
           </div>
 
           <!-- Password -->

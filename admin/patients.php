@@ -116,7 +116,6 @@ include('includes/sidebar.php');
                             $patients_number = $patients_table_row["phone"];
                             $patients_status = $patients_table_row["status"];
                             $city_id = $patients_table_row["city_id"];
-
                             $select_city_patients = "select * from cities where city_id='$city_id'";
                             $select_city_patients_query = mysqli_query($connect, $select_city_patients);
                             if (mysqli_num_rows($select_city_patients_query) > 0) {
