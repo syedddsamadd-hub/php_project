@@ -236,15 +236,14 @@ a { text-decoration: none; transition: var(--transition); }
 /* =============================
    HERO SECTION
    ============================= */
-.hero-section {
+ .hero-section {
   background: linear-gradient(135deg, #0D47A1 0%, #1565C0 40%, #0097A7 100%);
   min-height: 88vh;
-  /* background: url(""); */
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
-  height: 750px;
+  height: 700px;
 }
 .hero-section::before {
   content: '';
@@ -399,7 +398,7 @@ a { text-decoration: none; transition: var(--transition); }
   font-weight: 500;
   margin-top: 12px;
   opacity: 0.7;
-}
+} 
 
 /* =============================
    HOW IT WORKS
@@ -1628,7 +1627,7 @@ a { text-decoration: none; transition: var(--transition); }
 ::-webkit-scrollbar-track { background: var(--light-gray); }
 ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
-.search-hero {
+/* .search-hero {  
   background: 
     linear-gradient(
       135deg, 
@@ -1642,9 +1641,58 @@ a { text-decoration: none; transition: var(--transition); }
   display: flex;
   align-items: center;
   position: relative;
+} */
+  .search-hero .badge-accent {
+    font-size: 1.75rem;
+    padding: 8px 20px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }  
+   .search-hero {
+  position: relative;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  font-family: var(--cg-font-b);
+  padding: 130px 0 80px;
+    background:
+    radial-gradient(ellipse 80% 70% at 80% 50%, rgba(8,145,178,0.50) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 10% 80%, rgba(16,83,160,0.50) 0%, transparent 60%),
+    linear-gradient(145deg, rgba(7,30,61,0.85) 0%, rgba(13,46,94,0.85) 45%, rgba(10,74,110,0.85) 100%),
+    url('https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1600') center/cover no-repeat;
+}
+@media (max-width: 500px){
+ .search-hero {
+  height: 400px;
+ }
+   .search-hero .badge-accent {
+    font-size: 0.75rem;
+  }
+ .search-hero p{
+  font-size: 10px;
+ }
+ .search-hero h1{
+  font-size: 0.2rem;
+ }
+}
+@media (max-width: 768px){
+ .search-hero {
+  height: 400px;
+ }
+    .search-hero .badge-accent {
+    font-size: 1.0rem;
+  }
+ .search-hero p{
+  font-size: 16px;
+ }
+ .search-hero h1{
+  font-size: 30px;
+ }
 }
 
-.hero-section-Disease{
+/* .hero-section-Disease{
   background: 
     linear-gradient(
       135deg, 
@@ -1659,6 +1707,100 @@ a { text-decoration: none; transition: var(--transition); }
   align-items: center;
   position: relative;
 }
+  */
+  .hero-section-Disease .badge-accent {
+    font-size: 1.75rem;
+    padding: 8px 20px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }  
+   .hero-section-Disease {
+  position: relative;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  font-family: var(--cg-font-b);
+  padding: 130px 0 80px;
+    background:
+    radial-gradient(ellipse 80% 70% at 80% 50%, rgba(8,145,178,0.50) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 10% 80%, rgba(16,83,160,0.50) 0%, transparent 60%),
+    linear-gradient(145deg, rgba(7,30,61,0.85) 0%, rgba(13,46,94,0.85) 45%, rgba(10,74,110,0.85) 100%),
+    url('https://cdn1.byjus.com/wp-content/uploads/2018/11/biology/2018/04/10071738/Virus.jpg') center/cover no-repeat;
+}
+@media (max-width: 500px){
+ .hero-section-Disease {
+  height: 400px;
+ }
+   .hero-section-Disease .badge-accent {
+    font-size: 0.75rem;
+  }
+ .hero-section-Disease p{
+  font-size: 10px;
+ }
+ .hero-section-Disease h1{
+  font-size: 0.2rem;
+ }
+}
+@media (max-width: 768px){
+ .hero-section-Disease {
+  height: 250px;
+ }
+ .hero-section-Disease p{
+  font-size: 16px;
+ }
+ .hero-section-Disease h1{
+  font-size: 80px;
+ }
+}
+/* Animated grid */
+.hero-section-Disease::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: cgGridShift 30s linear infinite;
+  z-index: 0;
+}
+
+/* Glow orb */
+.hero-section-Disease::after {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  top: -150px; right: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(6,214,160,0.18), transparent 70%);
+  filter: blur(90px);
+  animation: cgOrbA 16s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+.hero-section-Disease .container {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-section-Disease .hero-title {
+  font-family: var(--cg-font-h);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.15;
+}
+
+@media (max-width: 768px) {
+  .hero-section-Disease { padding: 100px 0 60px; min-height: 45vh; }
+  .hero-section-Disease .hero-title { font-size: 1.9rem !important; }
+}
+
+@media (max-width: 500px) {
+  .hero-section-Disease { padding: 80px 0 40px; }
+  .hero-section-Disease .hero-title { font-size: 1.6rem !important; }
+}
 .about-hero {
     background: 
     linear-gradient(
@@ -1668,8 +1810,8 @@ a { text-decoration: none; transition: var(--transition); }
     ),
     url('https://cdn1.byjus.com/wp-content/uploads/2018/11/biology/2018/04/10071738/Virus.jpg') 
     center center / cover no-repeat;
-  min-height: 400px;
-  height: 600px;
+  /* min-height: 400px; */
+  height: 650px;
   display: flex;
   align-items: center;
   position: relative;

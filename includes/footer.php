@@ -8,11 +8,11 @@
         </div>
         <p class="footer-desc">Connecting patients with the best healthcare professionals. Quality care, trusted doctors, and seamless appointments.</p>
         <div class="footer-social">
-          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.facebook.com/" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://x.com/" class="social-btn"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.instagram.com/" class="social-btn"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/" class="social-btn"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
       <div class="col-lg-2 col-md-4">
@@ -21,7 +21,7 @@
           <li><a href="index.php">Home</a></li>
           <li><a href="search-doctor.php">Find Doctor</a></li>
           <li><a href="diseases.php">Diseases</a></li>
-          <li><a href="medical-news.php">Medical News</a></li>
+          <li><a href="disease_news.php">Medical News</a></li>
           <li><a href="about.php">About Us</a></li>
           <li><a href="contact.php">Contact</a></li>
         </ul>
@@ -31,9 +31,7 @@
         <ul class="footer-links">
           <li><a href="register.php">Register</a></li>
           <li><a href="login.php">Login</a></li>
-          <li><a href="patient-dashboard.php">Dashboard</a></li>
           <li><a href="appointment.php">Book Appointment</a></li>
-          <li><a href="#">My Reports</a></li>
         </ul>
       </div>
       <div class="col-lg-4 col-md-4">

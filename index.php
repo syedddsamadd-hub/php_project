@@ -7,7 +7,7 @@ include 'includes/head.php'; ?>
 <?php include 'includes/navbar.php'; ?>
 
 <!-- ====== HERO SECTION ====== -->
-<section class="hero-section">
+<!-- <section class="hero-section">
   <div class="hero-blob hero-blob-1"></div>
   <div class="hero-blob hero-blob-2"></div>
   <div class="container position-relative" style="z-index:2; ">
@@ -76,8 +76,11 @@ include 'includes/head.php'; ?>
       </div>
     </div>
   </div>
-</section>
+</section>  -->
 
+<?php
+include "home_crousel.php";
+?>
 <!-- ====== HOW IT WORKS ====== -->
 <section class="how-it-works section-padding">
   <div class="container">
@@ -87,7 +90,7 @@ include 'includes/head.php'; ?>
       <p class="section-subtitle mt-2">Book your appointment in just 3 easy steps and get the care you deserve.</p>
     </div>
     <div class="row g-4 align-items-center">
-      <div class="col-md-4 animate-on-scroll">
+      <div class="col-md-5 col-lg-4 animate-on-scroll">
         <div class="step-card">
           <div class="step-number">1</div>
           <i class="fas fa-search step-icon"></i>
@@ -98,7 +101,7 @@ include 'includes/head.php'; ?>
       <div class="col-md-1 d-none d-md-flex step-connector">
         <i class="fas fa-chevron-right"></i>
       </div>
-      <div class="col-md-3 animate-on-scroll" style="transition-delay:0.1s">
+      <div class="col-md-5 col-lg-3 animate-on-scroll" style="transition-delay:0.1s">
         <div class="step-card">
           <div class="step-number">2</div>
           <i class="fas fa-clock step-icon"></i>
@@ -109,7 +112,7 @@ include 'includes/head.php'; ?>
       <div class="col-md-1 d-none d-md-flex step-connector">
         <i class="fas fa-chevron-right"></i>
       </div>
-      <div class="col-md-3 animate-on-scroll" style="transition-delay:0.2s">
+      <div class="col-md-5 col-lg-3  animate-on-scroll" style="transition-delay:0.2s">
         <div class="step-card">
           <div class="step-number">3</div>
           <i class="fas fa-check-circle step-icon"></i>

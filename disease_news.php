@@ -1,14 +1,13 @@
 <?php
 // ============================================================
 //  disease_news.php  —  Hospital Disease News Page
-//  Apne portal ke include files ke saath use karo
 // ============================================================
-include "connect.php";   // apna DB connection
+include "connect.php"; 
 session_start();
 include 'includes/head.php'; 
 include 'includes/navbar.php'; 
 $page_title = "Disease News & Alerts";
-include 'includes/head.php'; // apna existing head.php
+include 'includes/head.php';  
 ?>
 
 <!-- ── Google Font ── -->
@@ -240,7 +239,9 @@ include 'includes/head.php'; // apna existing head.php
   .dn-dsec.full { grid-column: 1; }
 }
 </style>
-
+<?php
+include "crousel.php";
+?>
 <!-- ══════════════════════════════════════════════════════════
      PAGE START
 ════════════════════════════════════════════════════════════ -->

@@ -3,18 +3,8 @@ include "connect.php";
 $page_title = 'Diseases Guide';
 $filter = isset($_GET['cat']) ? $_GET['cat'] : 'all';
 
-$diseases = [
-  ['name' => 'Coronary Artery Disease', 'cat' => 'heart', 'icon' => 'heartbeat', 'ic_color' => '#C62828', 'bg' => 'linear-gradient(135deg,#FFEBEE,#FFCDD2)', 'tags' => ['Heart', 'Cardiovascular'], 'symptoms' => 'Chest pain, shortness of breath, fatigue, irregular heartbeat, dizziness.', 'causes' => 'Plaque buildup in arteries, high cholesterol, hypertension, smoking.', 'prevention' => 'Regular exercise, healthy diet, quit smoking, manage blood pressure.', 'treatment' => 'Medications, lifestyle changes, angioplasty, bypass surgery.', 'spec' => 'Cardiologist'],
-  ['name' => 'Type 2 Diabetes', 'cat' => 'other', 'icon' => 'syringe', 'ic_color' => '#E65100', 'bg' => 'linear-gradient(135deg,#FFF3E0,#FFE0B2)', 'tags' => ['Endocrine', 'Metabolic'], 'symptoms' => 'Frequent urination, excessive thirst, blurred vision, slow healing wounds.', 'causes' => 'Insulin resistance, obesity, sedentary lifestyle, genetics.', 'prevention' => 'Maintain healthy weight, exercise regularly, eat a balanced diet.', 'treatment' => 'Oral medications, insulin therapy, diet control, regular monitoring.', 'spec' => 'Endocrinologist'],
-  ['name' => 'Stroke', 'cat' => 'brain', 'icon' => 'brain', 'ic_color' => '#6A1B9A', 'bg' => 'linear-gradient(135deg,#EDE7F6,#D1C4E9)', 'tags' => ['Brain', 'Neurological'], 'symptoms' => 'Sudden numbness, confusion, trouble speaking, severe headache, vision problems.', 'causes' => 'Blocked artery, bleeding in brain, hypertension, atrial fibrillation.', 'prevention' => 'Control blood pressure, don\'t smoke, manage diabetes, exercise.', 'treatment' => 'Clot-busting drugs, surgery, rehabilitation therapy.', 'spec' => 'Neurologist'],
-  ['name' => 'Asthma', 'cat' => 'respiratory', 'icon' => 'lungs', 'ic_color' => 'var(--primary)', 'bg' => 'linear-gradient(135deg,#E3F2FD,#BBDEFB)', 'tags' => ['Respiratory', 'Lung'], 'symptoms' => 'Wheezing, shortness of breath, chest tightness, coughing (especially at night).', 'causes' => 'Allergens, air pollution, exercise, respiratory infections, genetics.', 'prevention' => 'Avoid triggers, use air purifiers, take prescribed medications.', 'treatment' => 'Inhalers (bronchodilators), corticosteroids, allergy shots.', 'spec' => 'Pulmonologist'],
-  ['name' => 'Rheumatoid Arthritis', 'cat' => 'bone', 'icon' => 'bone', 'ic_color' => 'var(--success)', 'bg' => 'linear-gradient(135deg,#E8F5E9,#C8E6C9)', 'tags' => ['Bone', 'Autoimmune'], 'symptoms' => 'Joint pain, swelling, morning stiffness, fatigue, fever.', 'causes' => 'Autoimmune response, genetics, hormonal factors.', 'prevention' => 'Exercise regularly, healthy weight, avoid smoking, omega-3 diet.', 'treatment' => 'DMARDs, NSAIDs, biologics, physical therapy.', 'spec' => 'Orthopedist'],
-  ['name' => 'Eczema', 'cat' => 'skin', 'icon' => 'hand-paper', 'ic_color' => '#F9A825', 'bg' => 'linear-gradient(135deg,#FFF9C4,#FFF176)', 'tags' => ['Skin', 'Allergic'], 'symptoms' => 'Itchy inflamed patches on skin, blisters, oozing, redness.', 'causes' => 'Immune system dysfunction, genetics, environmental triggers.', 'prevention' => 'Moisturize regularly, avoid harsh soaps, manage stress.', 'treatment' => 'Topical corticosteroids, antihistamines, immunosuppressants.', 'spec' => 'Dermatologist'],
-];
 
 // Filter
-$filtered = ($filter === 'all') ? $diseases : array_filter($diseases, fn($d) => $d['cat'] === $filter);
-$categories = ['all' => 'All Diseases', 'heart' => 'Heart', 'brain' => 'Brain & Neuro', 'respiratory' => 'Respiratory', 'bone' => 'Bone & Joint', 'skin' => 'Skin'];
 include 'includes/head.php';
 ?>
 
@@ -24,26 +14,13 @@ include 'includes/head.php';
   <div  class="container text-center">
     <span class="badge-accent"
       style="background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3);">Health Guide</span>
-    <h1 class="hero-title mt-2" style="font-size:2.4rem;">Disease Information Center</h1>
-    <p style="color:rgba(255,255,255,0.8);max-width:500px;margin:0 auto;">Learn about common diseases – symptoms,
-      causes, prevention, and treatments.</p>
+    <h1 class="hero-title mt-2" style="font-size:2.4rem;">Comprehensive Disease Information Center</h1>
+    <p style="color:rgba(255,255,255,0.8);max-width:500px;margin:0 auto;">
+Find trusted medical information about diseases. 
+Understand symptoms, causes, diagnosis, treatment options, 
+and prevention strategies to protect your health and your family.</p>
   </div>
 </section>
-
-<!-- Filters -->
-<!-- <div style="background:var(--off-white);border-bottom:1px solid rgba(21,101,192,0.1);padding:20px 0;">
-    <div class="container">
-      <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between">
-        <div class="d-flex fle
-        </div>
-        <form method="GET" action="diseases.php" class="d-flex gap-2">
-          <input type="hidden" name="cat" />
-          <input type="text" name="search" class="filter-select" placeholder="🔍  Search disease..." style="max-width:220px;" value="<?php echo htmlspecialchars($_GET['search'] ?? ''); ?>" />
-          <button type="submit" class="btn-primary-care" style="padding:10px 16px;font-size:0.85rem;"><i class="fas fa-search"></i></button>
-        </form>
-      </div>
-    </div>
-  </div> -->
 
 <section class="section-padding">
   <div class="container">
