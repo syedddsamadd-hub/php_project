@@ -1691,23 +1691,6 @@ a { text-decoration: none; transition: var(--transition); }
   font-size: 30px;
  }
 }
-
-/* .hero-section-Disease{
-  background: 
-    linear-gradient(
-      135deg, 
-      rgba(10, 60, 120, 0.85) 0%, 
-      rgba(114, 220, 241, 0.8) 100%
-    ),
-    url('https://cdn1.byjus.com/wp-content/uploads/2018/11/biology/2018/04/10071738/Virus.jpg') 
-    center center / cover no-repeat;
-  min-height: 400px;
-  height: 600px;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-  */
   .hero-section-Disease .badge-accent {
     font-size: 1.75rem;
     padding: 8px 20px;
@@ -1801,7 +1784,7 @@ a { text-decoration: none; transition: var(--transition); }
   .hero-section-Disease { padding: 80px 0 40px; }
   .hero-section-Disease .hero-title { font-size: 1.6rem !important; }
 }
-.about-hero {
+/* .about-hero {
     background: 
     linear-gradient(
       135deg, 
@@ -1811,11 +1794,11 @@ a { text-decoration: none; transition: var(--transition); }
     url('https://cdn1.byjus.com/wp-content/uploads/2018/11/biology/2018/04/10071738/Virus.jpg') 
     center center / cover no-repeat;
   /* min-height: 400px; */
-  height: 650px;
+  /* height: 650px;
   display: flex;
   align-items: center;
-  position: relative;
-}
+  position: relative; */
+/* }  */
 .news-hero-section {
   position: relative;
   background: #0a1628;

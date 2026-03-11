@@ -1,25 +1,59 @@
 <?php $page_title = 'About Us';
-include 'includes/head.php'; ?>
+include 'includes/head.php';
+include "connect.php";
+?>
 <?php include 'includes/navbar.php'; ?>
 <style>
-  .about-hero {
-        background:     linear-gradient(
-      135deg, 
-      rgba(10, 60, 120, 0.85) 0%, 
-      rgba(114, 220, 241, 0.8) 100%
-    ),
-  url('https://img.freepik.com/free-photo/team-doctors-standing-together-hospital-premises_107420-84769.jpg?semt=ais_user_personalization&w=740&q=80') center/cover no-repeat;
-    padding: 80px 0;
-    height: 650px;
-    object-fit: cover;
-  }
-    .about-hero .badge-accent {
-    font-size: 1.05rem;
+/* about banner */
+  .about-hero .badge-accent {
+    font-size: 1.75rem;
     padding: 8px 20px;
     border-radius: 999px;
     letter-spacing: 0.5px;
     font-weight: 600;
+  }  
+   .about-hero {
+  position: relative;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  font-family: var(--cg-font-b);
+  padding: 130px 0 80px;
+    background:
+    radial-gradient(ellipse 80% 70% at 80% 50%, rgba(8,145,178,0.50) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 10% 80%, rgba(16,83,160,0.50) 0%, transparent 60%),
+    linear-gradient(145deg, rgba(7,30,61,0.85) 0%, rgba(13,46,94,0.85) 45%, rgba(10,74,110,0.85) 100%),
+    url('https://www.washingtonpost.com/creativegroup/uploads/2022/01/17220554/hero-1-3.jpg') center/cover no-repeat;
+}
+@media (max-width: 500px){
+ .about-hero {
+  height: 400px;
+ }
+   .about-hero .badge-accent {
+    font-size: 0.10rem;
   }
+ .about-hero p{
+  font-size: 10px;
+ }
+ .about-hero h1{
+  font-size: 0.25rem;
+ }
+}
+@media (max-width: 768px){
+ .about-hero {
+  height: 400px;
+ }
+    .about-hero .badge-accent {
+    font-size: 1.0rem;
+  }
+ .about-hero p{
+  font-size: 16px;
+ }
+ .about-hero h1{
+  font-size: 1.0rem;
+ }
+}
 </style>
 <section class="about-hero">
   <div class="container text-center">
@@ -27,7 +61,7 @@ include 'includes/head.php'; ?>
       style="background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3);">About CARE
       Group</span>
     <h1 class="hero-title mt-2 mb-3" style="font-size:2.6rem;">Transforming Healthcare<br>Across Pakistan</h1>
-    <p style="color:rgba(255,255,255,0.85);max-width:560px;margin:0 auto;font-size:1.05rem;">Founded in 2018, CARE Group
+    <p style="color:rgba(255,255,255,0.85);max-width:560px;margin:0 auto;font-size:1.05rem;">Founded in 2026, CARE Group
       is Pakistan's leading digital health platform connecting patients with verified medical specialists.</p>
   </div>
 </section>
@@ -43,8 +77,23 @@ include 'includes/head.php'; ?>
         <p style="color:var(--text-muted);line-height:1.9;margin-bottom:16px;">CARE Group was established with a single
           mission: to make quality healthcare accessible to every Pakistani. We recognized that finding the right doctor
           shouldn't be a complicated, time-consuming process.</p>
-        <p style="color:var(--text-muted);line-height:1.9;margin-bottom:16px;">Today, we operate across 15 cities with a
-          network of over 500 verified medical specialists, serving more than 50,000 patients. Our platform handles
+        <p style="color:var(--text-muted);line-height:1.9;margin-bottom:16px;">Today, we operate across <?php
+              $result2 = $connect->query("SELECT COUNT(*) AS total FROM cities");
+              $row2 = $result2->fetch_assoc();
+              $totalcities = $row2['total'];
+              echo $totalcities;
+              ?> cities with a
+          network of over <?php
+                    $result_doctor = $connect->query("SELECT COUNT(*) AS total FROM doctors");
+                    $row_doctor = $result_doctor->fetch_assoc();
+                    $total_doctor = $row_doctor['total'];
+                    echo $total_doctor;
+                    ?> verified medical specialists, serving more than <?php
+                    $result_patient = $connect->query("SELECT COUNT(*) AS total FROM patients");
+                    $row_patient = $result_patient->fetch_assoc();
+                    $total_patient = $row_patient['total'];
+                    echo $total_patient;
+                    ?> patients. Our platform handles
           everything from appointment booking to medical record management.</p>
         <p style="color:var(--text-muted);line-height:1.9;">Every doctor on our platform is rigorously verified through
           Pakistan Medical Commission (PMC) records, ensuring you always receive care from qualified professionals.</p>
@@ -60,7 +109,7 @@ include 'includes/head.php'; ?>
               <div style="font-size:2rem;font-weight:800;color:<?php echo $s[1]; ?>">
                 <?php echo $s[0]; ?>
               </div>
-              <div style="font-size:0.85rem;color:var(--text-muted);"><?php echo $s[2]; ?></div>
+              <div style="font-size:0.85rem;color:var(--text- muted);"><?php echo $s[2]; ?></div>
             </div>
           <?php endforeach; ?>
         </div>
@@ -120,9 +169,19 @@ include 'includes/head.php'; ?>
       <p class="section-subtitle mt-2">We go above and beyond to ensure your healthcare experience is exceptional.</p>
     </div>
     <div class="row g-4">
-      <?php $features = [['shield-alt', 'var(--light-blue)', 'var(--primary)', '100% Verified Doctors', 'All doctors are PMC-verified with confirmed qualifications and experience.'], ['clock', '#E0F7FA', 'var(--accent)', 'Instant Booking', 'Book appointments in under 2 minutes, 24/7 from anywhere.'], ['lock', '#E8F5E9', 'var(--success)', 'Privacy First', 'Your medical records are encrypted and fully protected.'], ['star', '#FFF3E0', 'var(--warning)', 'Patient Reviews', 'Verified reviews from real patients to help you choose the best.'], ['mobile-alt', 'var(--light-blue)', 'var(--primary)', 'Mobile Friendly', 'Fully responsive platform works perfectly on all devices.'], ['headset', '#EDE7F6', '#6A1B9A', '24/7 Support', 'Our customer support team is always ready to assist you.'], ['wallet', '#E8F5E9', 'var(--success)', 'Affordable Care', 'Competitive consultation fees with multiple payment options.'], ['city', '#FFEBEE', 'var(--danger)', 'Nationwide Coverage', 'Present in 15 major cities across Pakistan and growing.']];
+      <?php $features = [['shield-alt', 'var(--light-blue)', 
+      'var(--primary)', '100% Verified Doctors', 
+      'All doctors are PMC-verified with confirmed qualifications and experience.'],
+       ['clock', '#E0F7FA', 'var(--accent)', 'Instant Booking',
+        'Book appointments in under 2 minutes, 9/5 from anywhere in pakistan.'],
+         ['lock', '#E8F5E9', 'var(--success)', 'Privacy First', 
+         'Your medical records are encrypted and fully protected.'], 
+         ['headset', '#EDE7F6', '#6A1B9A', '24/7 Support', 'Our customer support team is always ready to assist you.']
+          , ['wallet', '#E8F5E9', 'var(--success)', 
+          'Affordable Care', 'Competitive consultation fees with payment on appointment.'],
+           ['city', '#FFEBEE', 'var(--danger)', 'Nationwide Coverage', 'Present in 15 major cities across Pakistan and growing.']];
       foreach ($features as $i => $f): ?>
-        <div class="col-md-6 col-lg-3 animate-on-scroll" style="transition-delay:<?php echo ($i % 4) * 0.07; ?>s">
+        <div class="col-md-6 col-lg-4 animate-on-scroll" style="transition-delay:<?php echo ($i % 4) * 0.07; ?>s">
           <div class="why-choose-card">
             <div class="why-icon" style="background:<?php echo $f[1]; ?>"><i class="fas fa-<?php echo $f[0]; ?>"
                 style="color:<?php echo $f[2]; ?>"></i></div>

@@ -130,7 +130,7 @@ function validatePatient()
     $_SESSION["patient_email"] = $email;
     header("location: login.php");
   } else {
-    $errors = "Form submit nahi hua.";
+    $errors = "all fields are mandatory to filled";
   }
 
   return $errors;
@@ -153,14 +153,13 @@ include 'includes/head.php';
     </div>
   </div>
 </nav>
-
 <main class="auth-page register-page py-5">
   <div class="container">
     <div class="auth-card mx-auto" style="max-width:680px;">
       <div class="auth-card-header">
         <div class="auth-icon"><i class="fas fa-user-plus"></i></div>
         <h3>Create Your Account</h3>
-        <p class="text-capitalize">register your self to get appointment of doctors according to you disesase</p>
+        <p class="text-capitalize">Register your self to get appointment of doctors Related to your disesase</p>
       </div>
       <div class="auth-card-body">
         <div class="tab-content">

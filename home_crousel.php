@@ -400,7 +400,7 @@
         </h1>
 
         <p class="cg-hero__desc">
-          Book appointments with top-rated specialists, track your medical history,
+          Book appointments with top specialists, track your medical history,
           and access quality healthcare – all in one place.
         </p>
 

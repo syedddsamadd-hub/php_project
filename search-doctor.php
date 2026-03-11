@@ -12,7 +12,12 @@ include 'includes/head.php';
 <section class="search-hero">
   <div class="container text-center">
     <span class="badge-accent"
-      style="background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3);">500+ Verified
+      style="background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3);"><?php
+                    $result_doctor = $connect->query("SELECT COUNT(*) AS total FROM doctors");
+                    $row_doctor = $result_doctor->fetch_assoc();
+                    $total_doctor = $row_doctor['total'];
+                    echo $total_doctor;
+                    ?>+ Verified
       Doctors</span>
     <h1 class="hero-title mt-2 mb-2" style="font-size:2.4rem;">Find the Right Doctor</h1>
     <p style="color:rgba(255,255,255,0.8);">Search from our network of specialists across Pakistan</p>

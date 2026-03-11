@@ -252,7 +252,7 @@ $specs = [
     <div class="text-center mb-5">
       <span class="badge-accent">What Patients Say</span>
       <h2 class="section-title">Patient Testimonials</h2>
-      <p class="section-subtitle mt-2">Hear from thousands of patients who found the right care through CARE Group.</p>
+      <p class="section-subtitle mt-2">Hear from patients who found the right care through CARE Group.</p>
     </div>
 
     <div class="row g-4">
@@ -308,7 +308,12 @@ $specs = [
       style="background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3);">Get Started
       Today</span>
     <h2 class="mb-3">Ready to Take Control of Your Health?</h2>
-    <p class="mb-5 mx-auto" style="max-width:500px;">Join over 50,000 patients who have found the right doctor and
+    <p class="mb-5 mx-auto" style="max-width:500px;">Join over <?php
+                    $result_patient = $connect->query("SELECT COUNT(*) AS total FROM patients");
+                    $row_patient = $result_patient->fetch_assoc();
+                    $total_patient = $row_patient['total'];
+                    echo $total_patient;
+                    ?>+ patients who have found the right doctor and
       managed their health with CARE Group.</p>
     <div class="d-flex flex-wrap gap-3 justify-content-center">
       <a href="register.php" class="btn-primary-care"

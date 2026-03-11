@@ -147,7 +147,7 @@ unset($row);
         <div class="section-head"><i class="fas fa-bolt text-warning me-1" aria-hidden="true"></i> Quick Actions</div>
         <div class="row g-3">
           <div class="col-6">
-            <a href="search_doctor.php" class="quick-action-btn">
+            <a href="../search-doctor.php" class="quick-action-btn">
               <i class="fas fa-search" aria-hidden="true"></i> Find Doctor
             </a>
           </div>

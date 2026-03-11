@@ -102,7 +102,7 @@ $colors = ['#0b3e8a','#059669','#d97706','#7c3aed','#dc2626','#06b6d4','#ea580c'
       <h1>My Appointments</h1>
       <p style="color:var(--muted);font-size:.88rem;margin:0;">Manage and track all your medical appointments</p>
     </div>
-    <a href="search_doctor.php" class="btn-new-appt" aria-label="Book a new appointment">
+    <a href="../search-doctor.php" class="btn-new-appt" aria-label="Book a new appointment">
       <i class="fas fa-plus" aria-hidden="true"></i> Book New
     </a>
   </div>

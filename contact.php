@@ -35,23 +35,55 @@ include 'includes/head.php';
 <?php include 'includes/navbar.php'; ?>
 
 <style>
-  .contact-hero {
-    background: linear-gradient(135deg,
-        rgba(10, 60, 120, 0.85) 0%,
-        rgba(114, 220, 241, 0.8) 100%),
-      url('https://thumbs.dreamstime.com/b/contact-us-treatment-prevention-disease-syringe-vaccine-medical-concept-selective-focus-89250989.jpg') center/cover no-repeat;
-    padding: 80px 0;
-    height: 550px;
-    object-fit: cover;
-  }
-
-  .contact-hero .badge-accent {
-    font-size: 1.05rem;
+    .contact-hero .badge-accent {
+    font-size: 1.75rem;
     padding: 8px 20px;
     border-radius: 999px;
     letter-spacing: 0.5px;
     font-weight: 600;
+  }  
+   .contact-hero {
+  position: relative;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  font-family: var(--cg-font-b);
+  padding: 130px 0 80px;
+    background:
+    radial-gradient(ellipse 80% 70% at 80% 50%, rgba(8,145,178,0.50) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 10% 80%, rgba(16,83,160,0.50) 0%, transparent 60%),
+    linear-gradient(145deg, rgba(7,30,61,0.85) 0%, rgba(13,46,94,0.85) 45%, rgba(10,74,110,0.85) 100%),
+    url('https://www.washingtonpost.com/creativegroup/uploads/2022/01/17220554/hero-1-3.jpg') center/cover no-repeat;
+}
+@media (max-width: 500px){
+ .contact-hero {
+  height: 400px;
+ }
+   .contact-hero .badge-accent {
+    font-size: 0.10rem;
   }
+ .contact-hero p{
+  font-size: 10px;
+ }
+ .contact-hero h1{
+  font-size: 0.25rem;
+ }
+}
+@media (max-width: 768px){
+ .contact-hero {
+  height: 400px;
+ }
+    .contact-hero .badge-accent {
+    font-size: 1.0rem;
+  }
+ .contact-hero p{
+  font-size: 16px;
+ }
+ .contact-hero h1{
+  font-size: 1.0rem;
+ }
+}
 </style>
 <section class="contact-hero">
   <div class="container text-center">

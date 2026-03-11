@@ -42,15 +42,15 @@
         </div>
         <div class="footer-contact-item">
           <i class="fas fa-phone"></i>
-          <span>+92 21 1234 5678</span>
+          <span>+92 03160260319</span>
         </div>
         <div class="footer-contact-item">
           <i class="fas fa-envelope"></i>
-          <span>info@caregroup.pk</span>
+          <span>CareGroup@gmail.com</span>
         </div>
         <div class="footer-contact-item">
           <i class="fas fa-clock"></i>
-          <span>Mon &ndash; Fri: 8:00 AM &ndash; 8:00 PM</span>
+          <span>Mon&ndash; Fri: 9:00 AM &ndash; 5:00 PM</span>
         </div>
       </div>
     </div>
