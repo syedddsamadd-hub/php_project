@@ -17,17 +17,10 @@ $isLoggedIn = isset($_SESSION['user_email']);
 $dashboard_url = null;
 if ($isLoggedIn) {
   $role = $_SESSION['role'] ?? null;
-  if ($role === 'patient') {
+if ($role === 'patient') {
     $dashboard_url = 'patient_panel/dashboard.php';
   } elseif ($role === 'doctor') {
-    $candidate = 'doctor/dashboard.php';
-    $candidatePath = __DIR__ . '/../' . $candidate;
-    if (!file_exists($candidatePath)) {
-      $candidate = 'admin/dashboard.php';
-    }
-    $dashboard_url = $candidate;
-  } elseif ($role === 'admin') {
-    $dashboard_url = 'admin/dashboard.php';
+    $dashboard_url = 'doctor_final/doctor_output/dashboard.php';
   } else {
     $dashboard_url = 'index.php';
   }
@@ -80,7 +73,7 @@ if ($isLoggedIn) {
           <a href="<?php echo htmlspecialchars($dashboard_url, ENT_QUOTES, 'UTF-8'); ?>" class="nav-link btn-nav-register text-light">Dashboard</a>
         <?php } else { ?>
           <a href="login.php" class="nav-link btn-nav-login">Login</a>
-          <a href="register.php" class="nav-link btn-nav-register text-light">Register</a>
+          <a href="register.php" class="nav-link btn-nav-login">Register</a>
         <?php } ?>
       </div>
     </div>

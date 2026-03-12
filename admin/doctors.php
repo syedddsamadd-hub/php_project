@@ -263,8 +263,8 @@ include('includes/sidebar.php');
             <option value="0">Inactive</option>
         </select>
     </div>
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid p-0">
+        <div class="row p-0">
             <?php
             $select_doctors = "select * from doctors";
             $select_doctors_query = mysqli_query($connect, $select_doctors);
@@ -302,10 +302,6 @@ include('includes/sidebar.php');
                                                         <input type="hidden" value="<?= $doctor_id ?>" name="doctor_id">
                                                         <h2><?= $first_name . " " . $last_name ?></h2>
                                                         <div class="badge"><?= $specialize ?></div>
-                                                        <div class="stars">
-                                                            <span class="stars-icons">★★★★★</span>
-                                                            <span class="rating-text">4.9 (142)</span>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <hr class="divider">
@@ -583,8 +579,6 @@ include('includes/sidebar.php');
                 $error_message = "Enter your City.";
             } elseif (empty($doctor_specialization)) {
                 $error_message = "Enter specialization.";
-            } elseif (empty($profile_photo)) {
-                $error_message = "choose profile pic";
             } elseif (empty($qualification)) {
                 $error_message = "Qualification is required";
             } elseif (strlen($qualification) > 100) {
@@ -599,11 +593,14 @@ include('includes/sidebar.php');
                 $error_message = "enter your address.";
             } elseif (strlen($doctor_address) < 10 || strlen($doctor_address) > 300) {
                 $error_message = "Address must be between 10 and 300 characters";
-            } elseif ($_FILES['profile_photo']['size'] > $max_size) {
+            } 
+            elseif(!empty($profile_photo)){ 
+                if($_FILES['profile_photo']['size'] > $max_size) {
                 $error_message = "File too large";
             } elseif (!in_array($_FILES['profile_photo']['type'], $allowed_types)) {
                 $error_message = "Invalid Image Type";
-            } elseif (empty($password)) {
+            } 
+            }elseif (empty($password)) {
                 $error_message = "Enter password.";
             } elseif (strlen($password) < 8) {
                 $error_message = "Password must be at least 8 characters.";
@@ -633,8 +630,7 @@ VALUES
 $doctor_city,$doctor_specialization,'$profile_photo','$hashed_password')";
 
                 $insert_doctor_query = mysqli_query($connect, $insert_doctor);
-                $error_message = "doctor added sucessfully";
-
+                $error_message = "<h4 class='alert alert-success text-center'>Doctor added sucessfully<h4>";
                 require '../PHPMailer-master/PHPMailer-master/src/PHPMailer.php';
                 require '../PHPMailer-master/PHPMailer-master/src/SMTP.php';
                 require '../PHPMailer-master/PHPMailer-master/src/Exception.php';

@@ -424,11 +424,8 @@ include "connect.php";
         }
     </style>
 </head>
-
 <body>
-
     <main class="card">
-
         <!-- Success Screen -->
         <div class="success-card" id="successCard">
             <div class="success-icon">
@@ -448,7 +445,7 @@ include "connect.php";
             <p class="card-sub">All fields marked are required unless noted as optional.</p>
             <div class="divider"></div>
 
-            <form id="feedbackForm" method="POST" novalidate>
+            <form id="feedbackForm" method="POST">
 
                 <div class="form-row">
                     <div class="field">
@@ -513,9 +510,9 @@ include "connect.php";
         if (isset($_POST['submit_feedback'])) {
 
             // Trim & sanitize
-            $full_name = trim($_POST['fullName'] ?? '');
-            $email = trim($_POST['email'] ?? '');
-            $message = trim($_POST['feedback_message'] ?? '');
+            $full_name = trim($_POST['fullName']);
+            $email = trim($_POST['email']);
+            $message = trim($_POST['feedback_message']);
             $rating = intval($_POST['rating'] ?? 0);
 
             /* ---------------- VALIDATION ---------------- */
@@ -580,111 +577,6 @@ if (!ratingInput.value) {
     showError('ratingError', null);
 }
     </script>
-    <!-- <script>
-        /* ── Star Rating ── */
-        const stars = document.querySelectorAll('.stars label');
-        const ratingHint = document.getElementById('ratingHint');
-        const labels = ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
-        let selectedRating = 0;
-
-        stars.forEach((star, i) => {
-            star.addEventListener('mouseenter', () => {
-                highlightStars(i + 1);
-                ratingHint.textContent = labels[i];
-            });
-            star.addEventListener('mouseleave', () => {
-                highlightStars(selectedRating);
-                ratingHint.textContent = selectedRating ? labels[selectedRating - 1] : 'Tap a star to rate your experience';
-            });
-            star.addEventListener('click', () => {
-                selectedRating = i + 1;
-                highlightStars(selectedRating);
-                ratingHint.textContent = labels[i];
-                ratingHint.style.color = '#f6c90e';
-                clearError('ratingError', null);
-            });
-        });
-
-        function highlightStars(n) {
-            stars.forEach((s, i) => {
-                s.classList.toggle('active', i < n);
-            });
-        }
-
-        /* ── Validation helpers ── */
-        function showError(errId, fieldId) {
-            document.getElementById(errId).classList.add('visible');
-            if (fieldId) document.getElementById(fieldId).classList.add('error-field');
-        }
-        function clearError(errId, fieldId) {
-            document.getElementById(errId).classList.remove('visible');
-            if (fieldId) document.getElementById(fieldId).classList.remove('error-field');
-        }
-
-        // Live clear on input
-        ['fullName', 'email', 'message'].forEach(id => {
-            document.getElementById(id).addEventListener('input', () => {
-                document.getElementById(id).classList.remove('error-field');
-            });
-        });
-
-        /* ── Form submission ── */
-        document.getElementById('feedbackForm').addEventListener('submit', function (e) {
-            // e.preventDefault();
-            let valid = true;
-
-            const name = document.getElementById('fullName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const message = document.getElementById('message').value.trim();
-            const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const phoneRe = /^[\+]?[\d\s\-().]{7,20}$/;
-
-            // Name
-            if (!name) { showError('nameError', 'fullName'); valid = false; }
-            else clearError('nameError', 'fullName');
-
-            // Email
-            if (!email || !emailRe.test(email)) { showError('emailError', 'email'); valid = false; }
-            else clearError('emailError', 'email');
-
-            // Phone (optional but validate format if entered)
-            if (phone && !phoneRe.test(phone)) { showError('phoneError', 'phone'); valid = false; }
-            else clearError('phoneError', 'phone');
-
-            // Rating
-            if (!selectedRating) { showError('ratingError', null); valid = false; }
-            else clearError('ratingError', null);
-
-            // Message
-            if (message.length < 20) { showError('messageError', 'message'); valid = false; }
-            else clearError('messageError', 'message');
-
-            if (!valid) return;
-
-            // Simulate submission
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.textContent = 'Submitting…';
-
-            setTimeout(() => {
-                document.getElementById('formWrapper').style.display = 'none';
-                document.getElementById('successCard').classList.add('visible');
-            }, 900);
-        });
-
-        function resetForm() {
-            document.getElementById('feedbackForm').reset();
-            selectedRating = 0;
-            highlightStars(0);
-            ratingHint.textContent = 'Tap a star to rate your experience';
-            ratingHint.style.color = '';
-            document.getElementById('successCard').classList.remove('visible');
-            document.getElementById('formWrapper').style.display = 'block';
-            document.getElementById('submitBtn').disabled = false;
-            document.getElementById('submitBtn').textContent = 'Submit Feedback';
-        }
-    </script> -->
 </body>
 
 </html>

@@ -150,7 +150,6 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
           $spec_result = mysqli_query($connect, "SELECT * FROM specialization WHERE specialize_id = ".$doc['specialize_id']);
           $spec = mysqli_fetch_assoc($spec_result);
         ?>
-
         <div class="col-md-6 col-lg-3">
           <div class="doctor-card">
 
@@ -158,7 +157,7 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
               <?php if(!empty($doc['doctor_image'])): ?>
                 <img src="admin/src/<?php echo $doc['doctor_image']; ?>" 
                      alt="Doctor" 
-                     style="width:100%; height:100%; object-fit:cover;">
+                     style="width:100%; height:100%;">
               <?php else: ?>
                 <i class="fas fa-user-md"></i>
               <?php endif; ?>
@@ -206,21 +205,16 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
     </div>
   </div>
 </section>
-
-<!-- ====== SPECIALIZATIONS ====== -->
-<?php
-$specs = [
-  ['icon' => 'heartbeat'],
-  ['icon' => 'brain'],
-];
-?>
-<!-- testimonial -->
+<!-- specialization -->
 <section class="spec-section section-padding">
   <div class="container">
     <div class="text-center mb-5">
       <span class="badge-accent">Our Expertise</span>
       <h2 class="section-title">Browse Specializations</h2>
-      <p class="section-subtitle mt-2">Find specialists across 30+ medical disciplines, ready to help you.</p>
+      <p class="section-subtitle mt-2">Find specialists across <?php
+              $r = $connect->query('SELECT COUNT(*) AS total FROM cities');
+              echo $r->fetch_assoc()['total'];
+            ?>+ medical disciplines, ready to help you.</p>
     </div>
     <div class="row g-3">
       <?php
@@ -246,7 +240,7 @@ $specs = [
     </div>
   </div>
 </section>
-
+<!-- testimonials -->
 <section class="section-padding bg-white">
   <div class="container">
     <div class="text-center mb-5">
@@ -276,18 +270,18 @@ $specs = [
         return $output;
       }
       while ($row = mysqli_fetch_assoc($feedback_result)) {
-        $full_name= $row['full_name'];
         ?>
-        <div class="col-md-4 animate-on-scroll" style="">
+        <div class="col-md-4 animate-on-scroll" style="transition-delay:0.1s">
           <div class="testimonial-card">
             <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-            <p style="overflow-x: hidden;"><?= $row['message'] ?></p>
+            <p>"<?=$row['message']?>"</p>
             <div class="testimonial-author">
-              <div class="testimonial-avatar"><?= strtoupper(substr($full_name, 0, 1)); ?></div>
-              <div>  
-              <h3><?= $full_name ?></h3>
-                <i><?= $row['created_at'] ?></i>
-                <div class="stars mt-1 text-warning"><?= showStars($row['rating']) ?></div>
+              <div class="testimonial-avatar" 
+              style="background:linear-gradient(135deg,var(--accent),var(--accent-light));"></div>
+              <div>
+                <strong><?= $row['full_name']?></strong>
+                <span><?=$row['created_at']?></span>
+                <div class="stars mt-1">★★★★★</div>
               </div>
             </div>
           </div>
@@ -300,7 +294,6 @@ $specs = [
   </div>
   </div>
 </section>
-
 <!-- ====== CTA BANNER ====== -->
 <section class="cta-banner">
   <div class="container text-center position-relative" style="z-index:1;">

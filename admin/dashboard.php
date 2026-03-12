@@ -23,8 +23,7 @@ if (isset($_POST['btn-edit-feedback'])) {
     $get_feedback_id = $_POST['get_feedback_id'];
     $update_feedback_Status = $_POST['update_feedback_status'];
     $update_feedback = "UPDATE feedback
-SET full_name = '$update_feedback_name',
-    feedback_status =$update_feedback_Status
+SET feedback_status =$update_feedback_Status
 WHERE feedback_id = '$get_feedback_id'";
     $update_query = mysqli_query($connect, $update_feedback);
     header("location:dashboard.php");
@@ -189,7 +188,6 @@ include('includes/sidebar.php');
 
     <!-- ── RECENT TABLES ROW ────────────────────────────── -->
     <div class="row g-3">
-
         <!-- Recent Doctors Table -->
         <div class="col-xl-6 col-lg-6 page-fade-in stagger-2">
             <div class="section-card">
@@ -357,30 +355,33 @@ include('includes/sidebar.php');
                                     ?>
                                     <tr>
                                         <form method="POST">
-                                        <td class="fw-600 text-primary-custom"><?= $feedback_id ?></td>
-                                        <td>
-                                            <input type="hidden" value="<?= $feedback_id ?>" name="get_feedback_id" id="">
-                                            <div class="user-cell">
-                                                <div class="user-avatar av2">
-    <?= strtoupper(substr($feedback_name, 0, 1)). $feedback_name  ?>
-                                                 </div>
-                                                <div class="user-name"></div>
-                                            </div>
-                                        </td>
-                                        <td><?= $feedback_email ?></td>
-                                        <td><?= $feedback_message ?></td>
-                                        <td><input type="text" class="form-control" name="update_feedback_status" value="<?= $feedback_status ?>"></td>
-                                        <td>
-                                            <div style="display: flex;" class="d-flex flex-wrap">
-                                                <button class="btn-action btn-edit" name="btn-edit-feedback">
-                                                    <i class="bi bi-pencil-fill"></i> Edit
-                                                </button>
-                                                <button onclick="return confirm('are you sure to delete this this row.')"
-                                                    class="btn-action btn-delete btn-delete-row" name="btn-delete-feedback">
-                                                    <i class="bi bi-trash-fill"></i> Del
-                                                </button>
-                                            </div>
-                                        </td>
+                                            <td class="fw-600 text-primary-custom"><?= $feedback_id ?></td>
+                                            <td>
+                                                <input type="hidden" value="<?= $feedback_id ?>" name="get_feedback_id" id="">
+                                                <div class="user-cell">
+                                                    <div class="user-avatar av2">
+                                                        <?= strtoupper(substr($feedback_name, 0, 1)) ?>
+                                                    </div>
+                                                    <div class="user-name" >
+                                                        <?= $feedback_name ?>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><?= $feedback_email ?></td>
+                                            <td><?= $feedback_message ?></td>
+                                            <td><input type="text" class="form-control" name="update_feedback_status"
+                                                    value="<?= $feedback_status ?>"></td>
+                                            <td>
+                                                <div style="display: flex;" class="d-flex flex-wrap">
+                                                    <button class="btn-action btn-edit" name="btn-edit-feedback">
+                                                        <i class="bi bi-pencil-fill"></i> Edit
+                                                    </button>
+                                                    <button onclick="return confirm('are you sure to delete this this row.')"
+                                                        class="btn-action btn-delete btn-delete-row" name="btn-delete-feedback">
+                                                        <i class="bi bi-trash-fill"></i> Del
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </form>
                                     </tr>
                                     <?php
