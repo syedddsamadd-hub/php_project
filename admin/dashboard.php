@@ -49,23 +49,13 @@ include('includes/sidebar.php');
                 <li>Dashboard</li>
             </ul>
         </div>
-        <div class="d-flex gap-2">
-            <button class="btn-outline-custom"
-                onclick="window.showToast && showToast('info','Refreshed','Data has been refreshed.')">
-                <i class="bi bi-arrow-clockwise"></i> Refresh
-            </button>
-            <button class="btn-primary-custom">
-                <i class="bi bi-download"></i> Export Report
-            </button>
-        </div>
     </div>
 
     <!-- ── STATS CARDS ──────────────────────────────────── -->
-    <div class="row row-g4 g-3 mb-4">
-
+    <div class="row row-g4 mb-4">
         <!-- Cities -->
-        <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 page-fade-in stagger-1">
-            <div class="stat-card blue">
+        <div class="col-lg-4 col-md-6 col-12 page-fade-in stagger-1">
+            <div class="stat-card blue w-100">
                 <div class="stat-icon blue">
                     <i class="bi bi-geo-alt-fill"></i>
                 </div>
@@ -84,8 +74,8 @@ include('includes/sidebar.php');
         </div>
 
         <!-- Doctors -->
-        <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 page-fade-in stagger-2">
-            <div class="stat-card green">
+        <div class="col-lg-4 col-md-6 col-12 page-fade-in stagger-2">
+            <div class="stat-card gree w-100n">
                 <div class="stat-icon green">
                     <i class="bi bi-person-badge-fill"></i>
                 </div>
@@ -104,8 +94,8 @@ include('includes/sidebar.php');
         </div>
 
         <!-- Patients -->
-        <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 page-fade-in stagger-3">
-            <div class="stat-card red">
+        <div class="col-lg-4 col-md-6 col-12 page-fade-in stagger-3">
+            <div class="stat-card red" w-100>
                 <div class="stat-icon red">
                     <i class="bi bi-people-fill"></i>
                 </div>
@@ -124,8 +114,8 @@ include('includes/sidebar.php');
         </div>
 
         <!-- Specializations -->
-        <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 page-fade-in stagger-4">
-            <div class="stat-card purple">
+        <div class="col-lg-4 col-md-6 col-12 page-fade-in stagger-4">
+            <div class="stat-card purp w-100le">
                 <div class="stat-icon purple">
                     <i class="bi bi-award-fill"></i>
                 </div>
@@ -144,8 +134,8 @@ include('includes/sidebar.php');
         </div>
 
         <!-- Diseases -->
-        <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 page-fade-in stagger-5">
-            <div class="stat-card orange">
+        <div class="col-lg-4 col-md-6 col-12 page-fade-in stagger-5">
+            <div class="stat-card oran w-100ge">
                 <div class="stat-icon orange">
                     <i class="bi bi-virus2"></i>
                 </div>
@@ -164,21 +154,21 @@ include('includes/sidebar.php');
         </div>
 
         <!-- News Posts -->
-        <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 page-fade-in stagger-6">
-            <div class="stat-card teal">
+        <div class="col-lg-4 col-md-6 col-12 page-fade-in stagger-6">
+            <div class="stat-card teal w-100">
                 <div class="stat-icon teal">
                     <i class="bi bi-newspaper"></i>
                 </div>
                 <div class="stat-info">
                     <div class="number">
                         <?php
-                        $result_news = $connect->query("SELECT COUNT(*) AS total FROM news");
-                        $row_news = $result_news->fetch_assoc();
-                        $total_news = $row_news['total'];
-                        echo $total_news;
+                        $result_appointments = $connect->query("SELECT COUNT(*) AS total FROM appointments");
+                        $row_appointments = $result_appointments->fetch_assoc();
+                        $total_appointments = $row_appointments['total'];
+                        echo $total_appointments;
                         ?>
                     </div>
-                    <div class="label">News Posts</div>
+                    <div class="label">Total Appointment</div>
                 </div>
             </div>
         </div>

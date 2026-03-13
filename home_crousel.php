@@ -1,9 +1,4 @@
-<!-- ====================================================
-     CARE GROUP — HERO v2  (Single File)
-     Sirf is file ko include karo, kuch aur nahi chahiye
-     ==================================================== -->
 
-<!-- CSS -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
 
@@ -448,8 +443,6 @@
     </div>
   </div>
 </section>
-
-
 <!-- JS -->
 <script>
 (function () {

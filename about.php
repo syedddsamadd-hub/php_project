@@ -55,6 +55,7 @@ include "connect.php";
  }
 }
 </style>
+<!-- about-hero-section -->
 <section class="about-hero">
   <div class="container text-center">
     <span class="badge-accent"
@@ -67,7 +68,7 @@ include "connect.php";
 </section>
 
 
-<!-- About Section -->
+<!--our Story -->
 <section class="section-padding">
   <div class="container">
     <div class="row g-5 align-items-center">
@@ -194,7 +195,7 @@ include "connect.php";
   </div>
 </section>
 
-<!-- Team -->
+<!-- Our Team -->
 <section class="section-padding" style="background:var(--off-white);">
   <div class="container">
     <div class="text-center mb-5">
@@ -227,6 +228,7 @@ include "connect.php";
   </div>
 </section>
 
+<!-- banner how you can join care-group Family -->
 <section class="cta-banner">
   <div class="container text-center position-relative" style="z-index:1;">
     <h2 class="mb-3">Join the CARE Group Family</h2>

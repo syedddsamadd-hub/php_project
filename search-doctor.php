@@ -13,11 +13,11 @@ include 'includes/head.php';
   <div class="container text-center">
     <span class="badge-accent"
       style="background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.3);"><?php
-                    $result_doctor = $connect->query("SELECT COUNT(*) AS total FROM doctors");
-                    $row_doctor = $result_doctor->fetch_assoc();
-                    $total_doctor = $row_doctor['total'];
-                    echo $total_doctor;
-                    ?>+ Verified
+      $result_doctor = $connect->query("SELECT COUNT(*) AS total FROM doctors");
+      $row_doctor = $result_doctor->fetch_assoc();
+      $total_doctor = $row_doctor['total'];
+      echo $total_doctor;
+      ?>+ Verified
       Doctors</span>
     <h1 class="hero-title mt-2 mb-2" style="font-size:2.4rem;">Find the Right Doctor</h1>
     <p style="color:rgba(255,255,255,0.8);">Search from our network of specialists across Pakistan</p>
@@ -29,7 +29,7 @@ include 'includes/head.php';
   <div class="search-filter-box">
     <?php
     // ✅ WHERE conditions build karo
-    $where_conditions = ["doctor_status = 1"]; 
+    $where_conditions = ["doctor_status = 1"];
 
     if (!empty($_GET['city'])) {
       $city_id = intval($_GET['city']);
@@ -46,8 +46,8 @@ include 'includes/head.php';
     // ✅ Pehle 9 doctors fetch karo, search par filter hoga
     $limit = (!empty($_GET['city']) || !empty($_GET['spec'])) ? "" : "LIMIT 9";
 
-    $doctors_result = 
-    mysqli_query($connect, "SELECT * FROM doctors $where_sql ORDER BY doctor_id ASC $limit");
+    $doctors_result =
+      mysqli_query($connect, "SELECT * FROM doctors $where_sql ORDER BY doctor_id ASC $limit");
     ?>
 
     <!-- ✅ Search Form -->
@@ -136,9 +136,9 @@ include 'includes/head.php';
             <div class="doctor-card">
 
               <!-- Image ya Avatar -->
-              <div class="doctor-card-img" style="height: 220px;">
+              <div class="doctor-card-img" style="height: 260px; overflow:hidden;">
                 <?php if ($show_img): ?>
-                  <img src="<?= $img_path ?>" alt="<?= $full_name ?>"
+                  <img src="<?= $img_path ?>" width="100%" height="100%" alt="<?= $full_name ?>"
                     style="width:100%; height:100%; object-position:top center; object-fit:cover;">
                 <?php else: ?>
                   <div class="doctor-avatar-letter">

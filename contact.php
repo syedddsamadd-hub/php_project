@@ -241,7 +241,9 @@ include 'includes/head.php';
     </div>
   </div>
 </section>
-
+<?php
+include "feedback.php";
+?>
 <!-- FAQ Section -->
 <section class="section-padding" style="background:var(--off-white);">
   <div class="container">

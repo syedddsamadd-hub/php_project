@@ -73,14 +73,6 @@
                 <span>Manage Diseases</span>
             </a>
         </li>
-
-        <li class="nav-item">
-            <a href="news.php" class="nav-link">
-                <i class="bi bi-newspaper"></i>
-                <span>Manage News</span>
-            </a>
-        </li>
-
                 <li class="nav-item">
             <a href="admin_register.php" class="nav-link">
                 <i class="bi bi-newspaper"></i>

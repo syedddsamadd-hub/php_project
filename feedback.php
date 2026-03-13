@@ -12,14 +12,6 @@ include "connect.php";
         href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
     <style>
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         :root {
             --blue-deep: #0a3d6b;
             --blue-mid: #1565c0;
@@ -39,44 +31,7 @@ include "connect.php";
             --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: linear-gradient(145deg, #deeaf7 0%, #eef4fb 40%, #f0f8ff 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 16px 60px;
-        }
-
-        /* ── Header ─────────────────────────────────── */
-        .portal-header {
-            width: 100%;
-            background: linear-gradient(120deg, var(--blue-deep) 0%, var(--blue-mid) 60%, var(--teal) 100%);
-            padding: 28px 40px 72px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .portal-header::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-
-        .portal-header::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 56px;
-            background: linear-gradient(145deg, #deeaf7 0%, #eef4fb 40%, #f0f8ff 100%);
-            clip-path: ellipse(58% 100% at 50% 100%);
-        }
-
+        
         .header-badge {
             display: inline-flex;
             align-items: center;
@@ -425,23 +380,10 @@ include "connect.php";
     </style>
 </head>
 <body>
-    <main class="card">
-        <!-- Success Screen -->
-        <div class="success-card" id="successCard">
-            <div class="success-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                </svg>
-            </div>
-            <h2>Thank You!</h2>
-            <p>Your feedback has been received.<br>Our care team will review it shortly.</p>
-            <button class="reset-link" onclick="resetForm()">Submit another response →</button>
-        </div>
-
-        <!-- Feedback Form -->
+    <!-- Feedback Form -->
+    <main class="card mt-5 d-block mx-auto col-lg-12">
         <div id="formWrapper">
-            <p class="card-title">Patient Feedback Form</p>
+            <p class="card-title">Patients Feedback</p>
             <p class="card-sub">All fields marked are required unless noted as optional.</p>
             <div class="divider"></div>
 
@@ -578,5 +520,4 @@ if (!ratingInput.value) {
 }
     </script>
 </body>
-
 </html>

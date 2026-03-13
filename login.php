@@ -150,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
           <!-- Submit -->
           <button type="submit" class="btn-primary-care w-100 justify-content-center mb-3" style="padding:14px;">
-            <i class="fas fa-sign-in-alt"></i> Sign In
+            <i class="fas fa-sign-in-alt"></i> log In
           </button>
           <?php if (!empty($error)) { ?>
             <div class="alert alert-danger d-flex align-items-center gap-2 mb-3"

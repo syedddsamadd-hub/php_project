@@ -3,81 +3,30 @@ include "connect.php";
 ?>
 <?php $page_title = 'Home';
 include 'includes/head.php'; ?>
+<?php
+function getIcon($name)
+{
+  $name = strtolower(trim($name));
 
+  $map = [
+    'cardiologist' => 'heart',
+    'neurologist' => 'brain',
+    'general physician' => 'stethoscope',
+    'gynecologist' => 'venus',
+    'endocrinologist' => 'kidneys',
+    'pulmonologist' => 'lungs',
+    'orthopedist' => 'bone',
+    'dermatologist' => 'allergies',
+    'gastroenterologist' => 'stomach',
+    'pediatrician' => 'baby',
+    'ophthalmologist' => 'eye',
+  ];
+
+  return $map[$name] ?? 'user-md'; // default icon
+}
+
+?>
 <?php include 'includes/navbar.php'; ?>
-
-<!-- ====== HERO SECTION ====== -->
-<!-- <section class="hero-section">
-  <div class="hero-blob hero-blob-1"></div>
-  <div class="hero-blob hero-blob-2"></div>
-  <div class="container position-relative" style="z-index:2; ">
-    <div class="row align-items-center">
-      <div class="col-lg-6 hero-content">
-        <div class="hero-badge">
-          <i class="fas fa-shield-alt"></i> Trusted Healthcare Platform
-        </div>
-        <h1 class="hero-title">Your Health, Our <span>Priority</span> &amp; Care</h1>
-        <p class="hero-desc">Book appointments with top-rated specialists, track your medical history, and access
-          quality healthcare – all in one place.</p>
-        <div class="hero-buttons d-flex flex-wrap gap-3">
-          <a href="search-doctor.php" class="btn-primary-care">
-            <i class="fas fa-search"></i> Find a Doctor
-          </a>
-          <a href="register.php" class="btn-outline-care">
-            <i class="fas fa-user-plus"></i> Get Started
-          </a>
-        </div>
-        <div class="hero-stats">
-          <div class="hero-stat">
-            <div class="hero-stat-num" data-suffix="+">
-              <?php
-              $result = $connect->query("SELECT COUNT(*) AS total FROM specialization");
-              $row = $result->fetch_assoc();
-              $totalSpecialists = $row['total'];
-              echo $totalSpecialists;
-              ?>
-            </div>
-            <div class="hero-stat-label">Specialists</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-num" data-suffix="+">
-              <?php
-              $result_patient = $connect->query("SELECT COUNT(*) AS total FROM patients");
-              $row_patient = $result_patient->fetch_assoc();
-              $total_patient = $row_patient['total'];
-              echo $total_patient;
-              ?>
-            </div>
-            <div class="hero-stat-label">Patients Served</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-num" data-suffix="+">
-              <?php
-              $result = $connect->query("SELECT COUNT(*) AS total FROM specialization");
-              $row = $result->fetch_assoc();
-              $totalSpecialists = $row['total'];
-              echo $totalSpecialists;
-              ?>
-            </div>
-            <div class="hero-stat-label">Specializations</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-num" data-suffix="">
-              <?php
-              $result2 = $connect->query("SELECT COUNT(*) AS total FROM cities");
-              $row2 = $result2->fetch_assoc();
-              $totalcities = $row2['total'];
-              echo $totalcities;
-              ?>
-            </div>
-            <div class="hero-stat-label">Cities</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>  -->
-
 <?php
 include "home_crousel.php";
 ?>
@@ -123,8 +72,6 @@ include "home_crousel.php";
     </div>
   </div>
 </section>
-
-<!-- featured doctors -->
 <?php
 $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_status = 1 LIMIT 8");
 ?>
@@ -136,35 +83,34 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
         <span class="badge-accent">Top Rated</span>
         <h2 class="section-title mt-1">Featured Doctors</h2>
       </div>
-      <a href="search-doctor.php" class="btn-primary-care d-none d-md-flex">View All <i class="fas fa-arrow-right"></i></a>
+      <a href="search-doctor.php" class="btn-primary-care d-none d-md-flex">View All <i
+          class="fas fa-arrow-right"></i></a>
     </div>
 
     <div class="row g-4">
-      <?php while($doc = mysqli_fetch_assoc($doctors_result)): ?>
+      <?php while ($doc = mysqli_fetch_assoc($doctors_result)): ?>
         <?php
-          // City fetch
-          $city_result = mysqli_query($connect, "SELECT * FROM cities WHERE city_id = ".$doc['city_id']);
-          $city = mysqli_fetch_assoc($city_result);
+        // City fetch
+        $city_result = mysqli_query($connect, "SELECT * FROM cities WHERE city_id = " . $doc['city_id']);
+        $city = mysqli_fetch_assoc($city_result);
 
-          // Specialization fetch
-          $spec_result = mysqli_query($connect, "SELECT * FROM specialization WHERE specialize_id = ".$doc['specialize_id']);
-          $spec = mysqli_fetch_assoc($spec_result);
+        // Specialization fetch
+        $spec_result = mysqli_query($connect, "SELECT * FROM specialization WHERE specialize_id = " . $doc['specialize_id']);
+        $spec = mysqli_fetch_assoc($spec_result);
         ?>
         <div class="col-md-6 col-lg-3">
           <div class="doctor-card">
 
             <div class="doctor-card-img">
-              <?php if(!empty($doc['doctor_image'])): ?>
-                <img src="admin/src/<?php echo $doc['doctor_image']; ?>" 
-                     alt="Doctor" 
-                     style="width:100%; height:100%;">
+              <?php if (!empty($doc['doctor_image'])): ?>
+                <img src="admin/src/<?php echo $doc['doctor_image']; ?>" alt="Doctor" style="width:100%; height:100%;">
               <?php else: ?>
                 <i class="fas fa-user-md"></i>
               <?php endif; ?>
             </div>
 
             <div class="doctor-card-body">
-              <h5>Dr. <?php echo $doc['first_name'].' '.$doc['last_name']; ?></h5>
+              <h5>Dr. <?php echo $doc['first_name'] . ' ' . $doc['last_name']; ?></h5>
 
               <p class="doctor-spec">
                 <i class="fas fa-stethoscope me-1"></i>
@@ -190,11 +136,10 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
                 <span class="doctor-fees-badge">
                   <i class="fas fa-tag me-1"></i>Rs. <?php echo $doc['consultation_fee']; ?>
                 </span>
-                <div><span class="stars">★★★★★</span> <span class="rating-text">5.0</span></div>
               </div>
 
-              <a href="appointment.php?doctor_id=<?= $doc['doctor_id'] ?>" 
-                 class="btn-primary-care w-100 justify-content-center">
+              <a href="appointment.php?doctor_id=<?= $doc['doctor_id'] ?>"
+                class="btn-primary-care w-100 justify-content-center">
                 <i class="fas fa-calendar-plus"></i> Book Now
               </a>
             </div>
@@ -212,9 +157,9 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
       <span class="badge-accent">Our Expertise</span>
       <h2 class="section-title">Browse Specializations</h2>
       <p class="section-subtitle mt-2">Find specialists across <?php
-              $r = $connect->query('SELECT COUNT(*) AS total FROM cities');
-              echo $r->fetch_assoc()['total'];
-            ?>+ medical disciplines, ready to help you.</p>
+      $r = $connect->query('SELECT COUNT(*) AS total FROM cities');
+      echo $r->fetch_assoc()['total'];
+      ?>+ medical disciplines, ready to help you.</p>
     </div>
     <div class="row g-3">
       <?php
@@ -222,25 +167,29 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
       $select_specialize_query = mysqli_query($connect, $select_specialization);
       if (mysqli_num_rows($select_specialize_query) > 0) {
         while (
-          $specialize_table_row = mysqli_fetch_assoc($select_specialize_query)) {
+          $specialize_table_row = mysqli_fetch_assoc($select_specialize_query)
+        ) {
           $specialize_id = $specialize_table_row["specialize_id"];
           $specialize = $specialize_table_row["specialize"];
-            ?>
-            <div class="col-6 col-md-4 col-lg-2 animate-on-scroll" style="transition-delay:<?php echo $i * 0.05; ?>s">
-              <a href="search-doctor.php" class="spec-card d-block text-decoration-none">
-                <div class="spec-icon"><i class="fas fa-<?php echo $space['icon']; ?>"></i></div>
-                <h6><?= $specialize ?></h6>
-                <span>Doctors</span>
-              </a>
-            </div>
-            <?php
+          ?>
+          <div class="col-6 col-md-4 col-lg-2 animate-on-scroll" style="transition-delay:<?php echo $i * 0.05; ?>s">
+            <a href="search-doctor.php" class="spec-card d-block text-decoration-none">
+              <div class="spec-icon">
+                <i class="fas fa-<?= getIcon($specialize) ?>"></i>
+              </div>
+              <h6><?= $specialize ?></h6>
+              <span>Doctors</span>
+            </a>
+          </div>
+          <?php
         }
       }
       ?>
     </div>
   </div>
-</section>
+</section> 
 <!-- testimonials -->
+
 <section class="section-padding bg-white">
   <div class="container">
     <div class="text-center mb-5">
@@ -248,12 +197,11 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
       <h2 class="section-title">Patient Testimonials</h2>
       <p class="section-subtitle mt-2">Hear from patients who found the right care through CARE Group.</p>
     </div>
-
     <div class="row g-4">
       <?php
       $feedback_query = "SELECT * FROM feedback where feedback_status=1
           ORDER BY feedback_id DESC 
-          LIMIT 5";
+          LIMIT 6";
       $feedback_result = mysqli_query($connect, $feedback_query);
 
       // -------------------------- STARS FUNCTION --------------------------
@@ -271,16 +219,16 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
       }
       while ($row = mysqli_fetch_assoc($feedback_result)) {
         ?>
-        <div class="col-md-4 animate-on-scroll" style="transition-delay:0.1s">
+        <div class="col-md-6 col-lg-4 col-12 animate-on-scroll" style="transition-delay:0.1s">
           <div class="testimonial-card">
             <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-            <p>"<?=$row['message']?>"</p>
+            <p style="word-break: break-word; overflow-wrap: break-word;">"<?= $row['message'] ?>"</p>
             <div class="testimonial-author">
-              <div class="testimonial-avatar" 
-              style="background:linear-gradient(135deg,var(--accent),var(--accent-light));"></div>
+              <div class="testimonial-avatar"
+                style="background:linear-gradient(135deg,var(--accent),var(--accent-light));"></div>
               <div>
-                <strong><?= $row['full_name']?></strong>
-                <span><?=$row['created_at']?></span>
+                <strong><?= $row['full_name'] ?></strong>
+                <span><?= $row['created_at'] ?></span>
                 <div class="stars mt-1">★★★★★</div>
               </div>
             </div>
@@ -302,11 +250,11 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
       Today</span>
     <h2 class="mb-3">Ready to Take Control of Your Health?</h2>
     <p class="mb-5 mx-auto" style="max-width:500px;">Join over <?php
-                    $result_patient = $connect->query("SELECT COUNT(*) AS total FROM patients");
-                    $row_patient = $result_patient->fetch_assoc();
-                    $total_patient = $row_patient['total'];
-                    echo $total_patient;
-                    ?>+ patients who have found the right doctor and
+    $result_patient = $connect->query("SELECT COUNT(*) AS total FROM patients");
+    $row_patient = $result_patient->fetch_assoc();
+    $total_patient = $row_patient['total'];
+    echo $total_patient;
+    ?>+ patients who have found the right doctor and
       managed their health with CARE Group.</p>
     <div class="d-flex flex-wrap gap-3 justify-content-center">
       <a href="register.php" class="btn-primary-care"

@@ -73,7 +73,7 @@ if ($role === 'patient') {
           <a href="<?php echo htmlspecialchars($dashboard_url, ENT_QUOTES, 'UTF-8'); ?>" class="nav-link btn-nav-register text-light">Dashboard</a>
         <?php } else { ?>
           <a href="login.php" class="nav-link btn-nav-login">Login</a>
-          <a href="register.php" class="nav-link btn-nav-login">Register</a>
+          <a href="register.php" class="nav-link btn-nav-login">sign up</a>
         <?php } ?>
       </div>
     </div>
