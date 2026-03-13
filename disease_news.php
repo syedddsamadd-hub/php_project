@@ -1,18 +1,12 @@
 <?php
-// ============================================================
-//  disease_news.php  —  Hospital Disease News Page
-// ============================================================
 include "connect.php"; 
-session_start();
 include 'includes/head.php'; 
 include 'includes/navbar.php'; 
 $page_title = "Disease News & Alerts";
 include 'includes/head.php';  
 ?>
-
 <!-- ── Google Font ── -->
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
 <style>
 /* ── CSS Variables — portal ke blue/white theme ke saath match ── */
 :root {

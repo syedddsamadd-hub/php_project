@@ -241,11 +241,12 @@ body {
 .stat-card {
     background: var(--card-bg);
     border-radius: var(--radius);
+    padding: 22px 20px;
     box-shadow: var(--shadow-sm);
+    display: flex !important; align-items: center!important; gap: 18px !important;
     transition: var(--transition);
-    margin: 20px;
     border-left: 4px solid var(--primary);
-    
+    height: 100%;
 }
 .stat-card:hover {
     box-shadow: var(--shadow-md);
@@ -272,8 +273,11 @@ body {
 .stat-icon.teal   { background: linear-gradient(135deg,#20c997,#67e9c6); }
 
 .stat-info .number {
-    font-size: 28px; font-weight: 700; line-height: 1;
-    color: #1a2535; margin-bottom: 4px;
+    font-size: 28px;
+     font-weight: 700;
+      line-height: 1;
+    color: #1a2535;
+     margin-bottom: 4px;
 }
 .stat-info .label {
     font-size: 12.5px; color: #7f8fa6; font-weight: 500;

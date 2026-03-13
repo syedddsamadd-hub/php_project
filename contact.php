@@ -223,9 +223,17 @@ include 'includes/head.php';
         <div class="card-care p-4">
           <h6 style="font-weight:700;color:var(--text-dark);margin-bottom:8px;"><i class="fas fa-map-marker-alt me-2"
               style="color:var(--primary);"></i>Find Us on Map</h6>
-          <div class="map-placeholder">
-            <i class="fas fa-map"></i>
-            <p>PECHS, Karachi &ndash; Interactive map coming soon</p>
+          <div style="border-radius:12px;overflow:hidden;border:2px solid rgba(21,101,192,0.12);margin-bottom:0;">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.576!2d67.0280672!3d24.9104471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33fb94eb66db5%3A0x6e383e3adce4746a!2sAptech%20Computer%20Education%20Site%20Center!5e0!3m2!1sen!2spk!4v1700000000000!5m2!1sen!2spk"
+              width="100%"
+              height="220"
+              style="border:0;display:block;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Aptech Site Center - Nazimabad, Karachi">
+            </iframe>
           </div>
           <div class="d-flex gap-2 flex-wrap">
             <a href="https://maps.google.com/?q=PECHS+Karachi" target="_blank" class="btn-primary-care"

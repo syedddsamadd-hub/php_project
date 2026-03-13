@@ -1,9 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION["admin_email"])) {
-    header("Location: index.php");
-    exit();
-}
 include 'includes/head.php';
 ?>
 <?php
@@ -101,8 +96,8 @@ $news = [
     </div>
   </div>
 </section>
+
 <script>
-// Sync thumbnails with carousel
 (function() {
   const carousel = document.getElementById('newsHeroCarousel');
   if (!carousel) return;

@@ -75,7 +75,7 @@ include('includes/sidebar.php');
 
         <!-- Doctors -->
         <div class="col-lg-4 col-md-6 col-12 page-fade-in stagger-2">
-            <div class="stat-card gree w-100n">
+            <div class="stat-card gree w-100">
                 <div class="stat-icon green">
                     <i class="bi bi-person-badge-fill"></i>
                 </div>
@@ -95,7 +95,7 @@ include('includes/sidebar.php');
 
         <!-- Patients -->
         <div class="col-lg-4 col-md-6 col-12 page-fade-in stagger-3">
-            <div class="stat-card red" w-100>
+            <div class="stat-card red">
                 <div class="stat-icon red">
                     <i class="bi bi-people-fill"></i>
                 </div>
@@ -115,7 +115,7 @@ include('includes/sidebar.php');
 
         <!-- Specializations -->
         <div class="col-lg-4 col-md-6 col-12 page-fade-in stagger-4">
-            <div class="stat-card purp w-100le">
+            <div class="stat-card purp w-100">
                 <div class="stat-icon purple">
                     <i class="bi bi-award-fill"></i>
                 </div>
@@ -135,7 +135,7 @@ include('includes/sidebar.php');
 
         <!-- Diseases -->
         <div class="col-lg-4 col-md-6 col-12 page-fade-in stagger-5">
-            <div class="stat-card oran w-100ge">
+            <div class="stat-card oran w-100">
                 <div class="stat-icon orange">
                     <i class="bi bi-virus2"></i>
                 </div>
