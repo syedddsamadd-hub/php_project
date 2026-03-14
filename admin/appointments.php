@@ -77,177 +77,191 @@ include('includes/sidebar.php');
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blue-deep:   #0a3d8f;
-    --blue-mid:    #1565c0;
-    --blue-bright: #1e88e5;
-    --blue-light:  #e3f0ff;
-    --blue-pale:   #f0f7ff;
-    --white:       #ffffff;
-    --text-dark:   #0d1b3e;
-    --text-muted:  #5c7a9e;
-    --border:      #c8dff8;
-  }
-
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    background: #f0f7ff;
-    color: var(--text-dark);
+    background: #f4f6f9;
+    color: #1a1a2e;
     min-height: 100vh;
-    padding: 36px 0 60px;
+    padding: 32px 0 60px;
   }
 
   /* ── PAGE TITLE ── */
+  .page-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
   .page-title {
-    font-size: 1.45rem;
+    font-size: 1.5rem;
     font-weight: 800;
-    color: var(--blue-deep);
-    margin-bottom: 4px;
+    color: #1a1a2e;
   }
-  .page-sub {
-    font-size: 0.83rem;
-    color: var(--text-muted);
-    font-weight: 500;
+  .page-title i { color: #3b6fd4; margin-right: 8px; }
+  .breadcrumb-text {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 3px;
   }
+  .breadcrumb-text a { color: #3b6fd4; text-decoration: none; }
 
   /* ── STAT CARDS ── */
   .stat-card {
-    background: var(--white);
-    border-radius: 14px;
-    padding: 20px 22px;
-    border: 1.5px solid var(--border);
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 20px;
+    border: 1px solid #e8ecf3;
     display: flex;
     align-items: center;
-    gap: 16px;
-    box-shadow: 0 2px 12px rgba(13,101,253,0.07);
-    transition: transform 0.15s;
+    gap: 14px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+    transition: transform 0.15s, box-shadow 0.15s;
   }
-  .stat-card:hover { transform: translateY(-2px); }
-
+  .stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.09); }
   .stat-icon {
-    width: 46px; height: 46px;
-    border-radius: 12px;
+    width: 44px; height: 44px;
+    border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
+    font-size: 18px;
     flex-shrink: 0;
   }
   .stat-label {
-    font-size: 0.75rem;
+    font-size: 0.73rem;
     font-weight: 600;
-    color: var(--text-muted);
+    color: #888;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 2px;
   }
   .stat-value {
-    font-size: 1.6rem;
+    font-size: 1.55rem;
     font-weight: 800;
-    color: var(--text-dark);
+    color: #1a1a2e;
     line-height: 1;
   }
 
-  /* ── SECTION CARD ── */
-  .section-card {
-    background: var(--white);
-    border-radius: 16px;
-    border: 1.5px solid var(--border);
-    box-shadow: 0 4px 18px rgba(13,101,253,0.07);
+  /* ── MAIN CARD ── */
+  .main-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e8ecf3;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.05);
     overflow: hidden;
   }
 
-  .section-card-header {
-    background: linear-gradient(90deg, var(--blue-deep), var(--blue-bright));
+  .main-card-header {
     padding: 18px 24px;
+    border-bottom: 1px solid #e8ecf3;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 10px;
-  }
-  .section-card-header h5 {
-    color: var(--white);
-    font-size: 0.97rem;
-    font-weight: 700;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    gap: 12px;
+    background: #fff;
   }
 
-  .info-chip {
-    background: rgba(255,255,255,0.22);
-    color: white;
-    font-size: 0.75rem;
+  .main-card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .main-card-header-left i {
+    color: #3b6fd4;
+    font-size: 1.1rem;
+  }
+  .main-card-header-left h5 {
+    font-size: 0.97rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+  }
+  .count-badge {
+    background: #eef2ff;
+    color: #3b6fd4;
+    font-size: 0.73rem;
     font-weight: 700;
     padding: 3px 10px;
     border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid #d0d9f5;
   }
 
-  /* Filter buttons */
-  .filter-btns { display: flex; gap: 6px; flex-wrap: wrap; }
-  .filter-btn {
-    padding: 5px 14px;
+  /* Filter tabs */
+  .filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filter-tab {
+    padding: 5px 16px;
     border-radius: 20px;
-    border: 1.5px solid rgba(255,255,255,0.4);
+    border: 1.5px solid #dde3f0;
     background: transparent;
-    color: rgba(255,255,255,0.8);
+    color: #666;
     font-size: 0.76rem;
     font-weight: 600;
     font-family: 'Plus Jakarta Sans', sans-serif;
     cursor: pointer;
     text-decoration: none;
-    transition: background 0.15s;
+    transition: all 0.15s;
   }
-  .filter-btn:hover,
-  .filter-btn.active {
-    background: rgba(255,255,255,0.25);
-    color: white;
-    border-color: white;
-  }
+  .filter-tab:hover { border-color: #3b6fd4; color: #3b6fd4; background: #eef2ff; }
+  .filter-tab.active { background: #3b6fd4; color: #fff; border-color: #3b6fd4; }
 
   /* ── TABLE ── */
-  .table-responsive-custom { overflow-x: auto; }
-
-  .admin-table { width: 100%; border-collapse: collapse; margin: 0; }
-  .admin-table thead tr { background: var(--blue-pale); }
-  .admin-table th {
-    padding: 12px 18px;
+  .appt-table { width: 100%; border-collapse: collapse; }
+  .appt-table thead tr { background: #f8f9fc; }
+  .appt-table th {
+    padding: 11px 18px;
     font-size: 0.72rem;
     font-weight: 700;
-    color: var(--blue-deep);
+    color: #555;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    border-bottom: 1.5px solid var(--border);
+    border-bottom: 1.5px solid #e8ecf3;
     white-space: nowrap;
   }
-  .admin-table td {
-    padding: 14px 18px;
+  .appt-table td {
+    padding: 13px 18px;
     font-size: 0.84rem;
-    color: var(--text-dark);
-    border-bottom: 1px solid #edf4ff;
+    color: #1a1a2e;
+    border-bottom: 1px solid #f0f2f7;
     vertical-align: middle;
   }
-  .admin-table tbody tr:last-child td { border-bottom: none; }
-  .admin-table tbody tr:hover { background: var(--blue-pale); }
+  .appt-table tbody tr:last-child td { border-bottom: none; }
+  .appt-table tbody tr:hover { background: #f8f9fc; }
 
-  .fw-600 { font-weight: 700; }
-  .text-primary-custom { color: var(--blue-bright); }
+  /* Appointment ID */
+  .appt-id {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #3b6fd4;
+    font-family: monospace;
+    background: #eef2ff;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+  }
 
-  /* user cell */
+  /* User cell */
   .user-cell { display: flex; align-items: center; gap: 10px; }
-  .user-avatar {
+  .avatar {
     width: 34px; height: 34px;
-    border-radius: 9px;
+    border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    color: white;
-    font-size: 14px;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
     flex-shrink: 0;
   }
-  .user-name { font-weight: 600; font-size: 0.85rem; }
-  .user-sub  { font-size: 0.75rem; color: var(--text-muted); }
+  .user-name { font-weight: 600; font-size: 0.85rem; color: #1a1a2e; }
+  .user-sub  { font-size: 0.74rem; color: #888; margin-top: 1px; }
+
+  /* Date/Time */
+  .date-val { font-weight: 600; font-size: 0.84rem; }
+  .time-val { font-size: 0.76rem; color: #888; margin-top: 2px; }
+
+  /* Fee */
+  .fee-val { font-weight: 700; color: #1a1a2e; font-size: 0.85rem; }
 
   /* Status badges */
   .badge-status {
@@ -264,64 +278,100 @@ include('includes/sidebar.php');
   .badge-completed { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
   .badge-cancelled { background: #fce4ec; color: #c62828; border: 1px solid #f48fb1; }
 
-  /* Action buttons */
-  .btn-action {
-    display: inline-flex;
+  /* Status select — like the "active" input box in screenshot */
+  .status-select-wrap {
+    display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 5px 12px;
-    border-radius: 8px;
-    font-size: 0.77rem;
-    font-weight: 600;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    border: none;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
-    margin: 0;
+    gap: 6px;
   }
-  .btn-action:hover { opacity: 0.85; transform: translateY(-1px); }
-
-  /* Status select */
   .status-select {
-    padding: 5px 10px;
-    border: 1.5px solid var(--border);
+    padding: 6px 10px;
+    border: 1.5px solid #dde3f0;
     border-radius: 8px;
     font-size: 0.78rem;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    color: var(--text-dark);
-    background: var(--blue-pale);
+    color: #1a1a2e;
+    background: #fff;
     outline: none;
     cursor: pointer;
+    min-width: 110px;
+    transition: border-color 0.15s;
   }
-  .status-select:focus { border-color: var(--blue-bright); }
+  .status-select:focus { border-color: #3b6fd4; }
+
+  /* Action buttons — Edit & Del style like screenshot */
+  .btn-edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    border-radius: 7px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    border: 1px solid #f5c842;
+    background: #fffbea;
+    color: #b07d00;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+  }
+  .btn-edit:hover { background: #fef3c7; transform: translateY(-1px); }
+
+  .btn-del {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    border-radius: 7px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    border: 1px solid #fca5a5;
+    background: #fff1f1;
+    color: #c62828;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+  }
+  .btn-del:hover { background: #fee2e2; transform: translateY(-1px); }
 
   .no-data {
     text-align: center;
-    padding: 40px;
-    color: var(--text-muted);
+    padding: 50px 20px;
+    color: #999;
     font-size: 0.9rem;
   }
+  .no-data i { font-size: 2.2rem; display: block; margin-bottom: 10px; color: #ccc; }
+
+  /* Scrollable table on small screens */
+  .table-scroll { overflow-x: auto; }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid px-4">
   <div class="row justify-content-center">
-    <div class="col-10">
+    <div class="col-12 col-xl-11">
 
       <!-- Page Title -->
-      <div class="mb-4">
-        <div class="page-title"><i class="bi bi-calendar2-heart-fill me-2"></i>Appointments</div>
-        <div class="page-sub">Manage all patient appointments from here</div>
+      <div class="page-title-row">
+        <div>
+          <div class="page-title">
+            <i class="bi bi-calendar2-heart-fill"></i> Appointments
+          </div>
+          <div class="breadcrumb-text">
+            <a href="dashboard.php">Home</a> / Appointments
+          </div>
+        </div>
       </div>
 
       <!-- ── STAT CARDS ── -->
       <div class="row g-3 mb-4">
-
         <div class="col-6 col-md-3">
           <div class="stat-card">
-            <div class="stat-icon" style="background:#e3f0ff;">
-              <i class="bi bi-calendar2-check" style="color:#1e88e5;"></i>
+            <div class="stat-icon" style="background:#eef2ff;">
+              <i class="bi bi-calendar2-check" style="color:#3b6fd4;"></i>
             </div>
             <div>
               <div class="stat-label">Total</div>
@@ -329,7 +379,6 @@ include('includes/sidebar.php');
             </div>
           </div>
         </div>
-
         <div class="col-6 col-md-3">
           <div class="stat-card">
             <div class="stat-icon" style="background:#fff8e1;">
@@ -341,7 +390,6 @@ include('includes/sidebar.php');
             </div>
           </div>
         </div>
-
         <div class="col-6 col-md-3">
           <div class="stat-card">
             <div class="stat-icon" style="background:#e8f5e9;">
@@ -353,7 +401,6 @@ include('includes/sidebar.php');
             </div>
           </div>
         </div>
-
         <div class="col-6 col-md-3">
           <div class="stat-card">
             <div class="stat-icon" style="background:#fce4ec;">
@@ -365,55 +412,59 @@ include('includes/sidebar.php');
             </div>
           </div>
         </div>
-
       </div>
 
-      <!-- ── APPOINTMENTS TABLE ── -->
-      <div class="section-card">
+      <!-- ── APPOINTMENTS TABLE CARD ── -->
+      <div class="main-card">
 
-        <div class="section-card-header">
-          <h5>
-            <i class="bi bi-table"></i> Appointments List
-            <span class="info-chip"><?= $total_appts ?></span>
-          </h5>
-          <!-- Filter Buttons -->
-          <div class="filter-btns">
-            <a href="appointments.php?status=all"       class="filter-btn <?= $filter=='all'       ? 'active':'' ?>">All</a>
-            <a href="appointments.php?status=pending"   class="filter-btn <?= $filter=='pending'   ? 'active':'' ?>">Pending</a>
-            <a href="appointments.php?status=confirmed" class="filter-btn <?= $filter=='confirmed' ? 'active':'' ?>">Confirmed</a>
-            <a href="appointments.php?status=completed" class="filter-btn <?= $filter=='completed' ? 'active':'' ?>">Completed</a>
-            <a href="appointments.php?status=cancelled" class="filter-btn <?= $filter=='cancelled' ? 'active':'' ?>">Cancelled</a>
+        <div class="main-card-header">
+          <div class="main-card-header-left">
+            <i class="bi bi-table"></i>
+            <h5>Appointments List</h5>
+            <span class="count-badge"><?= $total_appts ?></span>
+          </div>
+          <!-- Filter Tabs -->
+          <div class="filter-tabs">
+            <a href="appointments.php?status=all"       class="filter-tab <?= $filter=='all'       ? 'active':'' ?>">All</a>
+            <a href="appointments.php?status=pending"   class="filter-tab <?= $filter=='pending'   ? 'active':'' ?>">Pending</a>
+            <a href="appointments.php?status=confirmed" class="filter-tab <?= $filter=='confirmed' ? 'active':'' ?>">Confirmed</a>
+            <a href="appointments.php?status=completed" class="filter-tab <?= $filter=='completed' ? 'active':'' ?>">Completed</a>
+            <a href="appointments.php?status=cancelled" class="filter-tab <?= $filter=='cancelled' ? 'active':'' ?>">Cancelled</a>
           </div>
         </div>
 
-        <div class="table-responsive-custom">
-          <table class="admin-table table">
+        <div class="table-scroll">
+          <table class="appt-table">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>Appointment ID</th>
                 <th>Patient</th>
                 <th>Doctor</th>
-                <th>Date</th>
-                <th>Time</th>
+                <th>Date &amp; Time</th>
                 <th>Fee</th>
                 <th>Status</th>
                 <th>Update Status</th>
-                <th>Delete</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               <?php if (mysqli_num_rows($result) > 0): ?>
-                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                <?php while ($row = mysqli_fetch_assoc($result)): 
+                  $initials = strtoupper(substr($row['patient_name'], 0, 1));
+                  $doc_initials = strtoupper(substr($row['doctor_name'], 0, 1));
+                ?>
                 <tr>
 
-                  <!-- ID -->
-                  <td class="fw-600 text-primary-custom">#<?= $row['appointment_id'] ?></td>
+                  <!-- Appointment ID -->
+                  <td>
+                    <span class="appt-id">#<?= $row['appointment_id'] ?></span>
+                  </td>
 
                   <!-- Patient -->
                   <td>
                     <div class="user-cell">
-                      <div class="user-avatar" style="background:linear-gradient(135deg,#0d6efd,#6610f2);">
-                        <i class="bi bi-person-fill"></i>
+                      <div class="avatar" style="background: linear-gradient(135deg,#3b6fd4,#6610f2);">
+                        <?= $initials ?>
                       </div>
                       <div>
                         <div class="user-name"><?= htmlspecialchars($row['patient_name']) ?></div>
@@ -426,57 +477,56 @@ include('includes/sidebar.php');
                   <!-- Doctor -->
                   <td>
                     <div class="user-cell">
-                      <div class="user-avatar" style="background:linear-gradient(135deg,#0dcaf0,#0d6efd);">
-                        <i class="bi bi-heart-pulse-fill"></i>
+                      <div class="avatar" style="background: linear-gradient(135deg,#0dcaf0,#0d6efd);">
+                        <?= $doc_initials ?>
                       </div>
                       <div class="user-name">Dr. <?= htmlspecialchars($row['doctor_name']) ?></div>
                     </div>
                   </td>
 
-                  <!-- Date -->
+                  <!-- Date & Time -->
                   <td>
-                    <div class="fw-600"><?= date('d M Y', strtotime($row['appointment_date'])) ?></div>
+                    <div class="date-val"><?= date('d M Y', strtotime($row['appointment_date'])) ?></div>
+                    <div class="time-val"><?= date('h:i A', strtotime($row['appointment_time'])) ?></div>
                   </td>
 
-                  <!-- Time -->
-                  <td><?= date('h:i A', strtotime($row['appointment_time'])) ?></td>
-
                   <!-- Fee -->
-                  <td class="fw-600">Rs. <?= number_format($row['consultation_fee']) ?></td>
+                  <td>
+                    <span class="fee-val">Rs. <?= number_format($row['consultation_fee']) ?></span>
+                  </td>
 
-                  <!-- Status Badge -->
+                  <!-- Current Status Badge -->
                   <td>
                     <span class="badge-status badge-<?= $row['status'] ?>">
                       <?= ucfirst($row['status']) ?>
                     </span>
                   </td>
 
-                  <!-- Update Status -->
+                  <!-- Update Status — select + save btn (like "active" box in screenshot) -->
                   <td>
                     <form method="POST" action="">
                       <input type="hidden" name="appointment_id" value="<?= $row['appointment_id'] ?>">
-                      <div class="d-flex gap-2 align-items-center">
+                      <div class="status-select-wrap">
                         <select name="new_status" class="status-select">
                           <option value="pending"   <?= $row['status']=='pending'   ? 'selected':'' ?>>Pending</option>
                           <option value="confirmed" <?= $row['status']=='confirmed' ? 'selected':'' ?>>Confirmed</option>
                           <option value="completed" <?= $row['status']=='completed' ? 'selected':'' ?>>Completed</option>
                           <option value="cancelled" <?= $row['status']=='cancelled' ? 'selected':'' ?>>Cancelled</option>
                         </select>
-                        <button type="submit" name="btn_update_status" class="btn-action alert alert-warning mb-0 py-1">
-                          <i class="bi bi-check2"></i>
+                        <button type="submit" name="btn_update_status" class="btn-edit">
+                          <i class="bi bi-check2"></i> Save
                         </button>
                       </div>
                     </form>
                   </td>
 
-                  <!-- Delete -->
+                  <!-- Delete Action -->
                   <td>
-                    <form method="POST" action="">
+                    <form method="POST" action=""
+                      onsubmit="return confirm('Are you sure you want to delete this appointment?')">
                       <input type="hidden" name="appointment_id" value="<?= $row['appointment_id'] ?>">
-                      <button type="submit" name="btn_delete_appt"
-                        class="btn-action alert alert-danger mb-0"
-                        onclick="return confirm('Are you sure you want to delete this appointment?')">
-                        <i class="bi bi-trash-fill"></i> Delete
+                      <button type="submit" name="btn_delete_appt" class="btn-del">
+                        <i class="bi bi-trash-fill"></i> Del
                       </button>
                     </form>
                   </td>
@@ -485,8 +535,8 @@ include('includes/sidebar.php');
                 <?php endwhile; ?>
               <?php else: ?>
                 <tr>
-                  <td colspan="9" class="no-data">
-                    <i class="bi bi-calendar-x" style="font-size:2rem;display:block;margin-bottom:8px;"></i>
+                  <td colspan="8" class="no-data">
+                    <i class="bi bi-calendar-x"></i>
                     No appointments found.
                   </td>
                 </tr>
@@ -494,12 +544,12 @@ include('includes/sidebar.php');
             </tbody>
           </table>
         </div>
-      </div>
+      </div><!-- end main-card -->
+
     </div>
   </div>
 </div>
-<?php
-include('includes/script.php');
-?>
+
+<?php include('includes/script.php'); ?>
 </body>
 </html>

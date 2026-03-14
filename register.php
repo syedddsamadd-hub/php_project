@@ -149,7 +149,7 @@ include 'includes/head.php';
     </a>
     <div class="d-flex align-items-center gap-2">
       <a href="login.php" class="nav-link btn-nav-login">Login</a>
-      <a href="register.php" class="nav-link btn-nav-login">Register</a>
+      <a href="register.php" class="nav-link btn-nav-login">sign up</a>
     </div>
   </div>
 </nav>

@@ -85,6 +85,12 @@
                 <span>admin register</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="../index.php" class="nav-link">
+                <i class="bi bi-newspaper"></i>
+                <span>Go to Website</span>
+            </a>
+        </li>
 
     </ul>
 

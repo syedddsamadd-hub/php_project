@@ -6,7 +6,27 @@ if (!isset($_SESSION["admin_email"])) {
     header("Location: dashboard.php");
     exit();
 }
-
+// DELETE ADMIN
+if (isset($_POST['delete_admin'])) {
+    $del_id = intval($_POST['admin_id']);
+    
+    // Apne aap ko delete hone se rokna
+    $current_admin = $connect->query("SELECT admin_id FROM admin WHERE admin_email = '{$_SESSION['admin_email']}'");
+    $current_row = $current_admin->fetch_assoc();
+    
+    if ($del_id == $current_row['admin_id']) {
+        $error_admin = "Aap apna khud ka account delete nahi kar sakte!";
+    } else {
+        $del_stmt = $connect->prepare("DELETE FROM admin WHERE admin_id = ?");
+        $del_stmt->bind_param("i", $del_id);
+        if ($del_stmt->execute()) {
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        } else {
+            $error_admin = "Delete failed.";
+        }
+    }
+}
 $error_admin = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -60,6 +80,7 @@ include('includes/sidebar.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -404,6 +425,7 @@ include('includes/sidebar.php');
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -498,6 +520,7 @@ include('includes/sidebar.php');
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -529,6 +552,17 @@ include('includes/sidebar.php');
                                                     <td>
                                                         <?= htmlspecialchars($a_email) ?>
                                                     </td>
+                                                    <td>
+                                                        <form method="POST"
+                                                            onsubmit="return confirm('Kya aap sure hain delete karna chahte hain?')">
+                                                            <input type="hidden" name="admin_id" value="<?= $a_id ?>">
+                                                            <button type="submit" name="delete_admin"
+                                                                class="btn btn-sm btn-danger">
+                                                                🗑️ Delete
+                                                            </button>
+                                                        </form>
+                                                    </td>
+
                                                 </form>
                                             </tr>
                                             <?php
@@ -544,8 +578,9 @@ include('includes/sidebar.php');
             </div><!-- end col-10 -->
         </div><!-- end row -->
     </div><!-- end container -->
-<?php
-include('includes/script.php');
-?>
+    <?php
+    include('includes/script.php');
+    ?>
 </body>
+
 </html>

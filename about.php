@@ -66,8 +66,6 @@ include "connect.php";
       is Pakistan's leading digital health platform connecting patients with verified medical specialists.</p>
   </div>
 </section>
-
-
 <!--our Story -->
 <section class="section-padding">
   <div class="container">
@@ -98,22 +96,6 @@ include "connect.php";
           everything from appointment booking to medical record management.</p>
         <p style="color:var(--text-muted);line-height:1.9;">Every doctor on our platform is rigorously verified through
           Pakistan Medical Commission (PMC) records, ensuring you always receive care from qualified professionals.</p>
-        <div class="d-flex flex-wrap gap-4 mt-4">
-          <?php $stats = [
-            ['500+', 'var(--primary)', 'Verified Doctors'],
-            ['50K+', 'var(--accent)', 'Patients Served'],
-            ['15', 'var(--success)', 'Cities'],
-            ['4.9★', 'var(--warning)', 'Avg Rating']
-          ]; ?>
-          <?php foreach ($stats as $s): ?>
-            <div>
-              <div style="font-size:2rem;font-weight:800;color:<?php echo $s[1]; ?>">
-                <?php echo $s[0]; ?>
-              </div>
-              <div style="font-size:0.85rem;color:var(--text- muted);"><?php echo $s[2]; ?></div>
-            </div>
-          <?php endforeach; ?>
-        </div>
       </div>
       <div class="col-lg-6 animate-on-scroll" style="transition-delay:.15s;">
         <div
@@ -136,7 +118,6 @@ include "connect.php";
     </div>
   </div>
 </section>
-
 <!-- Mission & Vision -->
 <section class="section-padding" style="background:var(--off-white);">
   <div class="container">
@@ -160,7 +141,6 @@ include "connect.php";
     </div>
   </div>
 </section>
-
 <!-- Why Choose Us -->
 <section class="section-padding">
   <div class="container">
@@ -194,7 +174,6 @@ include "connect.php";
     </div>
   </div>
 </section>
-
 <!-- Our Team -->
 <section class="section-padding" style="background:var(--off-white);">
   <div class="container">
@@ -227,7 +206,6 @@ include "connect.php";
     </div>
   </div>
 </section>
-
 <!-- banner how you can join care-group Family -->
 <section class="cta-banner">
   <div class="container text-center position-relative" style="z-index:1;">
