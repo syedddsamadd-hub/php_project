@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($role == "patient") {
               header("Location: patient_panel/dashboard.php");
             } else {
-              header("Location: doctor_final/doctor_output/dashboard.php");
+              header("Location: doctor/doctor_panel/dashboard.php");
             }
             exit();
 

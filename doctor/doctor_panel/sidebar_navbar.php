@@ -116,7 +116,9 @@
   <a href="logout.php" class="sidebar-link logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
 </aside>
 
-<div id="sidebarOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:1039;" onclick="closeSidebar()"></div>
+<div id="sidebarOverlay" 
+style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:1039;"
+ onclick="closeSidebar()"></div>
 
 <script>
 (function(){

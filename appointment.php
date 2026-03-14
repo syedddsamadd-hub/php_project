@@ -1,5 +1,6 @@
 <?php
 // ── Auth & DB ──────────────────────────────────────────────
+use PHPMailer\PHPMailer\PHPMailer;
 if (session_status() === PHP_SESSION_NONE) session_start();
 require_once __DIR__ . '/connect.php';
 
@@ -122,6 +123,17 @@ if ($selected_date) {
 }
 
 /* ============================================================
+   Patient name  (POST block se pehle chahiye email ke liye)
+   ============================================================ */
+$pat_stmt = mysqli_prepare($connect,
+    "SELECT name FROM patients WHERE patient_id=? LIMIT 1");
+mysqli_stmt_bind_param($pat_stmt, 's', $patient_id);
+mysqli_stmt_execute($pat_stmt);
+$pat_row  = mysqli_fetch_assoc(mysqli_stmt_get_result($pat_stmt));
+$pat_name = $pat_row['name'] ?? 'Patient';
+mysqli_stmt_close($pat_stmt);
+
+/* ============================================================
    POST — Book Appointment
    ============================================================ */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_btn'])) {
@@ -152,7 +164,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_btn'])) {
                  VALUES (?, ?, ?, ?, 'pending')");
             mysqli_stmt_bind_param($ins, 'isss',
                 $selected_doc_id, $patient_id, $date, $time);
+
             if (mysqli_stmt_execute($ins)) {
+
+                // ── Patient ki email fetch karo ──
+                $email_stmt = mysqli_prepare($connect,
+                    "SELECT email FROM patients WHERE patient_id=? LIMIT 1");
+                mysqli_stmt_bind_param($email_stmt, 'i', $patient_id);
+                mysqli_stmt_execute($email_stmt);
+                $email_row = mysqli_fetch_assoc(mysqli_stmt_get_result($email_stmt));
+                mysqli_stmt_close($email_stmt);
+                $patient_email = $email_row['email'] ?? '';
+
+                // ── Confirmation Email bhejo ──
+                if ($patient_email) {
+                    require 'PHPMailer-master/PHPMailer-master/src/PHPMailer.php';
+                    require 'PHPMailer-master/PHPMailer-master/src/SMTP.php';
+                    require 'PHPMailer-master/PHPMailer-master/src/Exception.php';
+
+                    $mail = new PHPMailer();
+                    $mail->isSMTP();
+                    $mail->Host       = 'smtp.gmail.com';
+                    $mail->SMTPAuth   = true;
+                    $mail->Username   = 'syedddsamadd@gmail.com';
+                    $mail->Password   = 'jjpc paeo hwqu dkzn';
+                    $mail->SMTPSecure = 'tls';
+                    $mail->Port       = 587;
+
+                    $mail->setFrom("syedddsamadd@gmail.com", "CARE Group");
+                    $mail->addAddress($patient_email);
+                    $mail->Subject = "Appointment Booking Confirmation – CARE Group";
+                    $mail->Body =
+                        "Dear " . $pat_name . ",\n\n"
+                      . "Your appointment has been successfully booked. Below are your appointment details:\n\n"
+                      . "  Doctor  : Dr. " . $doctor['first_name'] . " " . $doctor['last_name'] . "\n"
+                      . "  Date    : " . date('l, d M Y', strtotime($date)) . "\n"
+                      . "  Time    : " . date('h:i A', strtotime($time)) . "\n"
+                      . "  Fee     : Rs. " . number_format($doctor['consultation_fee']) . "\n\n"
+                      . "Please note that your appointment status is currently PENDING and will be confirmed once the doctor approves it.\n\n"
+                      . "If you need to cancel or reschedule, please contact us as soon as possible.\n\n"
+                      . "Thank you for choosing CARE Group.\n\n"
+                      . "Best Regards,\n"
+                      . "Team CARE Group";
+
+                    $mail->send();
+                }
+
                 $msg = 'Appointment booked successfully! Pending confirmation from doctor.';
                 $selected_date = '';
                 $slots = [];
@@ -164,16 +221,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_btn'])) {
     }
 }
 
-/* ============================================================
-   Patient name
-   ============================================================ */
-$pat_stmt = mysqli_prepare($connect,
-    "SELECT name FROM patients WHERE patient_id=? LIMIT 1");
-mysqli_stmt_bind_param($pat_stmt, 's', $patient_id);
-mysqli_stmt_execute($pat_stmt);
-$pat_row  = mysqli_fetch_assoc(mysqli_stmt_get_result($pat_stmt));
-$pat_name = $pat_row['name'] ?? 'Patient';
-mysqli_stmt_close($pat_stmt);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -288,7 +335,6 @@ mysqli_stmt_close($pat_stmt);
   </style>
 </head>
 <body>
-
 <nav class="top-nav">
   <a href="index.php" class="nav-brand">
     <div class="nav-brand-icon"><i class="fas fa-heartbeat"></i></div>
@@ -303,9 +349,7 @@ mysqli_stmt_close($pat_stmt);
     </a>
   </div>
 </nav>
-
 <div class="page-wrap">
-
   <div class="mb-4">
     <h2 class="page-title">
       <i class="fas fa-calendar-plus me-2" style="color:var(--accent)"></i>Book Appointment

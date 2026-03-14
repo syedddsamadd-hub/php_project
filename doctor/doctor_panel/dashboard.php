@@ -191,7 +191,6 @@ mysqli_stmt_close($stmt);
       <div class="date-day"><?= date('l') ?></div>
     </div>
   </div>
-
   <!-- Stats -->
   <div class="row g-3 mb-4">
     <div class="col-6 col-xl-3">
@@ -234,7 +233,7 @@ mysqli_stmt_close($stmt);
 
   <!-- Quick Nav Tiles -->
   <div class="row g-3 mb-4">
-    <div class="col-6 col-md-3">
+    <div class="col-12 col-md-6 col-lg-4">
       <a class="text-decoration-none" href="profile.php">
         <div class="card-tile">
           <div class="tile-icon i-blue"><i class="fas fa-user-md"></i></div>
@@ -245,7 +244,7 @@ mysqli_stmt_close($stmt);
         </div>
       </a>
     </div>
-    <div class="col-6 col-md-3">
+    <div class="col-12 col-md-6 col-lg-4">
       <a class="text-decoration-none" href="appointments.php">
         <div class="card-tile">
           <div class="tile-icon i-green"><i class="fas fa-calendar-check"></i></div>
@@ -256,24 +255,13 @@ mysqli_stmt_close($stmt);
         </div>
       </a>
     </div>
-    <div class="col-6 col-md-3">
+    <div class="col-12 col-md-6 col-lg-4">
       <a class="text-decoration-none" href="availability.php">
         <div class="card-tile">
           <div class="tile-icon i-orange"><i class="fas fa-clock"></i></div>
           <div>
             <div style="font-weight:700;color:#0b3e8a;font-size:.88rem;">Availability</div>
             <div class="text-muted" style="font-size:.76rem;">Set schedule</div>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-6 col-md-3">
-      <a class="text-decoration-none" href="dashboard.php?logout=1">
-        <div class="card-tile">
-          <div class="tile-icon i-purple"><i class="fas fa-sign-out-alt"></i></div>
-          <div>
-            <div style="font-weight:700;color:#0b3e8a;font-size:.88rem;">Logout</div>
-            <div class="text-muted" style="font-size:.76rem;">Return to home</div>
           </div>
         </div>
       </a>

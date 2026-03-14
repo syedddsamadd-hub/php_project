@@ -98,7 +98,6 @@ function validatePatient()
          '$safe_gender', '$city', '$safe_address', '$hashed_password');
       ";
       mysqli_query($connect, $insert);
-      $_SESSION['patient_email'] = $safe_email;
       require 'PHPMailer-master/PHPMailer-master/src/PHPMailer.php';
       require 'PHPMailer-master/PHPMailer-master/src/SMTP.php';
       require 'PHPMailer-master/PHPMailer-master/src/Exception.php';
@@ -115,11 +114,13 @@ function validatePatient()
       $mail->setFrom("syedddsamadd@gmail.com", "CARE Group");
       $mail->addAddress($email);
       $mail->Subject = "Welcome to Our Service";
-      $mail->Body = "Assalamualaikum,\n\n"
-        . "Aapka account successfully create ho gaya hai. "
-        . "Aap ab login karke apni services use kar sakte hain.\n\n"
-        . "Shukriya,\n"
-        . "Team XYZ";
+      $mail->Body = "Dear User,\n\n"
+        . "Welcome to CARE Group! We are pleased to inform you that your account has been successfully created.\n\n"
+        . "You can now log in and start using our services at your convenience.\n\n"
+        . "If you have any questions or need assistance, feel free to reach out to our support team.\n\n"
+        . "Thank you for choosing us.\n\n"
+        . "Best Regards,\n"
+        . "Team CARE Group";
 
       if ($mail->send()) {
         echo "Message Sent!";
@@ -127,8 +128,7 @@ function validatePatient()
         echo "Mailer Error: " . $mail->ErrorInfo;
       }
     }
-    $_SESSION["patient_email"] = $email;
-    header("location: login.php");
+    // header("location: login.php");
   } else {
     $errors = "all fields are mandatory to filled";
   }

@@ -262,7 +262,13 @@ include "feedback.php";
     <div class="row justify-content-center">
       <div class="col-lg-8">
         <div class="accordion" id="faqAccordion">
-          <?php $faqs = [['How do I book an appointment?', 'Simply search for a doctor by city and specialization, select an available time slot, and confirm your booking. You\'ll receive an instant confirmation by email.'], ['Are the doctors on CARE Group verified?', 'Yes! Every doctor is verified through the Pakistan Medical Commission (PMC). We also manually verify qualifications, experience, and clinic details before approval.'], ['Can I cancel or reschedule an appointment?', 'Yes, appointments can be cancelled or rescheduled up to 4 hours before the scheduled time through your patient dashboard.'], ['Is my personal health information secure?', 'Absolutely. We use enterprise-grade 256-bit SSL encryption for all data transmission. Your data is never shared with third parties.']];
+          <?php $faqs = [['How do I book an appointment?', 'Simply search for a doctor by city and specialization,
+           select an available time slot, and confirm your booking. You\'ll receive an instant confirmation by email.'], 
+           ['Are the doctors on CARE Group verified?', 'Yes! Every doctor is verified through the Pakistan Medical Commission (PMC).
+            We also manually verify qualifications, experience, and clinic details before approval.'], 
+            ['Can I cancel an appointment?', 'Yes, appointments can be cancelled time through 
+            your patient dashboard.'], 
+             ['Is my personal health information secure?', 'Absolutely. We use enterprise-grade 256-bit SSL encryption for all data transmission. Your data is never shared with third parties.']];
           foreach ($faqs as $i => $faq): ?>
             <div class="accordion-item mb-2"
               style="border-radius:var(--radius-sm);border:1px solid rgba(21,101,192,0.1);overflow:hidden;">

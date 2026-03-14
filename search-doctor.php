@@ -131,10 +131,8 @@ include 'includes/head.php';
           $img_path = "admin/src/" . $img;
           $show_img = !empty($img);
           ?>
-
           <div class="col-md-6 col-lg-4">
             <div class="doctor-card">
-
               <!-- Image ya Avatar -->
               <div class="doctor-card-img" style="height: 260px; overflow:hidden;">
                 <?php if ($show_img): ?>
@@ -183,8 +181,8 @@ include 'includes/head.php';
         <!-- No Results -->
         <div class="col-12 text-center py-5">
           <i class="fas fa-user-slash fa-3x mb-3" style="color:#ccc;"></i>
-          <h5 style="color:#aaa;">Koi doctor nahi mila.</h5>
-          <p style="color:#bbb; font-size:0.9rem;">City ya Specialization change karke dobara try karo.</p>
+          <h5 style="color:#aaa;">no doctor found</h5>
+          <p style="color:#bbb; font-size:0.9rem;">try different city or specialization</p>
         </div>
       <?php endif; ?>
     </div>
