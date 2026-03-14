@@ -193,6 +193,6 @@ WHERE specialize_id = '$get_specialization_id'";
         </div>
     </div>
 </div>
-
-
-<?php include('includes/footer.php'); ?>
+<?php
+include('includes/script.php');
+?>

@@ -14,11 +14,11 @@
     <!-- Brand -->
     <a href="dashboard.php" class="sidebar-brand">
         <div class="sidebar-brand-icon">
-            <i class="bi bi-hospital"></i>
+            <i class="fas fa-heartbeat"></i>
         </div>
         <div class="sidebar-brand-text">
-            MediAdmin
-            <span>Healthcare Portal</span>
+            Admin
+            <span>Care-Group</span>
         </div>
     </a>
 
@@ -51,6 +51,12 @@
             <a href="patients.php" class="nav-link">
                 <i class="bi bi-people"></i>
                 <span>Manage Patients</span>
+            </a>
+        </li>
+                <li class="nav-item">
+            <a href="appointments.php" class="nav-link">
+                <i class="bi bi-people"></i>
+                <span>Appointments</span>
             </a>
         </li>
 

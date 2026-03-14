@@ -186,4 +186,6 @@ if (isset($_POST['save_city_btn'])) {
             </form>
         </div>
     </div>
-    <?php include('includes/footer.php'); ?>
+    <?php
+include('includes/script.php');
+?>

@@ -42,6 +42,7 @@ and prevention strategies to protect your health and your family.</p>
           $causes = $disease_table_row["causes"];
           $prevention = $disease_table_row["prevention"];
           $treatment = $disease_table_row["treatment"];
+          $disease_image = $disease_table_row["disease_image"];
           $status = $disease_table_row["status"];
           $specialize_id = $disease_table_row["specialize_id"];
 
@@ -54,7 +55,7 @@ and prevention strategies to protect your health and your family.</p>
               <div class="col-md-6 col-lg-4 animate-on-scroll" style="transition-delay:<?php echo (($i - 1) % 3) * 0.07; ?>s">
                 <div class="disease-card">
                   <img
-                    src="https://media.istockphoto.com/id/1435498034/photo/heart-attack-and-heart-disease-3d-illustration.jpg?s=612x612&w=0&k=20&c=peIJNOEj2YYzbLVEcgesNYpty4X51oI0Q1V1WqdWja8="
+                    src="admin/src/<?=$disease_image?>"
                     width="100%" height="200px" alt="">
                   <div class="disease-card-body">
                     <h5><?= $disease_name ?></h5>

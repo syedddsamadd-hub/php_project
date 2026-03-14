@@ -213,11 +213,7 @@ include('includes/sidebar.php');
         transform: scale(0.98);
     }
 </style>
-<!-- ╔══════════════════════════════════════════════════════╗
-     ║  MANAGE DOCTORS PAGE                                 ║
-     ╚══════════════════════════════════════════════════════╝ -->
 <div class="page-wrapper">
-
     <!-- Page Header -->
     <div class="page-header">
         <div class="page-header-left">
@@ -234,7 +230,7 @@ include('includes/sidebar.php');
     </div>
 
     <!-- Search & Filter Bar -->
-    <div class="search-filter-bar page-fade-in">
+    <!-- <div class="search-filter-bar page-fade-in">
         <div class="search-input-wrap">
             <i class="bi bi-search"></i>
             <input type="text" id="tableSearch" placeholder="Search doctors by name, email, city…" />
@@ -262,7 +258,7 @@ include('includes/sidebar.php');
             <option value="1">Active</option>
             <option value="0">Inactive</option>
         </select>
-    </div>
+    </div> -->
     <div class="container-fluid p-0">
         <div class="row p-0">
             <?php
@@ -274,7 +270,7 @@ include('includes/sidebar.php');
                     $first_name = $doctors_table_row["first_name"];
                     $last_name = $doctors_table_row["last_name"];
                     $doctor_qualification = $doctors_table_row["qualification"];
-                    $doctor_phone = $doctors_table_row["phone"];
+                    $doctor_email = $doctors_table_row["email"];
                     $consultation_fee = $doctors_table_row["consultation_fee"];
                     $doctor_experience = $doctors_table_row["experience"];
                     $doctor_status = $doctors_table_row["doctor_status"];
@@ -306,6 +302,10 @@ include('includes/sidebar.php');
                                                 </div>
                                                 <hr class="divider">
                                                 <div class="meta">
+                                                    <div class="meta-item">
+                                                        <div class="meta-icon exp">📩</div>
+                                                        <span><?= $doctor_email ?></span>
+                                                    </div>
                                                     <div class="meta-item">
                                                         <div class="meta-icon exp">🩺</div>
                                                         <span><?= $doctor_experience ?> years experience</span>
@@ -593,14 +593,13 @@ include('includes/sidebar.php');
                 $error_message = "enter your address.";
             } elseif (strlen($doctor_address) < 10 || strlen($doctor_address) > 300) {
                 $error_message = "Address must be between 10 and 300 characters";
-            } 
-            elseif(!empty($profile_photo)){ 
-                if($_FILES['profile_photo']['size'] > $max_size) {
-                $error_message = "File too large";
-            } elseif (!in_array($_FILES['profile_photo']['type'], $allowed_types)) {
-                $error_message = "Invalid Image Type";
-            } 
-            }elseif (empty($password)) {
+            } elseif (!empty($profile_photo)) {
+                if ($_FILES['profile_photo']['size'] > $max_size) {
+                    $error_message = "File too large";
+                } elseif (!in_array($_FILES['profile_photo']['type'], $allowed_types)) {
+                    $error_message = "Invalid Image Type";
+                }
+            } elseif (empty($password)) {
                 $error_message = "Enter password.";
             } elseif (strlen($password) < 8) {
                 $error_message = "Password must be at least 8 characters.";
@@ -667,4 +666,6 @@ $doctor_city,$doctor_specialization,'$profile_photo','$hashed_password')";
     }
 
     ?>
-    <?php include('includes/footer.php'); ?>
+    <?php
+    include('includes/script.php');
+    ?>

@@ -153,7 +153,7 @@ include('includes/sidebar.php');
             </div>
         </div>
 
-        <!-- News Posts -->
+        <!-- total Appointment -->
         <div class="col-lg-4 col-md-6 col-12 page-fade-in stagger-6">
             <div class="stat-card teal w-100">
                 <div class="stat-icon teal">
@@ -389,5 +389,7 @@ include('includes/sidebar.php');
 
 </div>
 <!-- END DASHBOARD PAGE -->
-
+<?php
+include('includes/script.php');
+?>
 <?php include('includes/footer.php'); ?>

@@ -13,11 +13,9 @@ function getIcon($name)
     'neurologist' => 'brain',
     'general physician' => 'stethoscope',
     'gynecologist' => 'venus',
-    'endocrinologist' => 'kidneys',
     'pulmonologist' => 'lungs',
     'orthopedist' => 'bone',
     'dermatologist' => 'allergies',
-    'gastroenterologist' => 'stomach',
     'pediatrician' => 'baby',
     'ophthalmologist' => 'eye',
   ];
@@ -189,7 +187,6 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
   </div>
 </section> 
 <!-- testimonials -->
-
 <section class="section-padding bg-white">
   <div class="container">
     <div class="text-center mb-5">
@@ -217,6 +214,7 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
         }
         return $output;
       }
+      if(mysqli_num_rows($feedback_result)>0){
       while ($row = mysqli_fetch_assoc($feedback_result)) {
         ?>
         <div class="col-md-6 col-lg-4 col-12 animate-on-scroll" style="transition-delay:0.1s">
@@ -235,6 +233,9 @@ $doctors_result = mysqli_query($connect, "SELECT * FROM doctors WHERE doctor_sta
           </div>
         </div>
         <?php
+      }
+      }else{
+        echo "<h4 class='text-center text-capitalize'>no feedback found</h4>";
       }
       ?>
     </div>

@@ -52,27 +52,6 @@ include('includes/sidebar.php');
             <i class="bi bi-plus-lg"></i> Add New Patient
         </button>
     </div>
-
-    <!-- Search & Filter Bar -->
-    <div class="search-filter-bar page-fade-in">
-        <div class="search-input-wrap">
-            <i class="bi bi-search"></i>
-            <input type="text" id="tableSearch" placeholder="Search patients by name, phone, city…" />
-        </div>
-        <select class="filter-select">
-            <option value="">All Cities</option>
-            <option>Karachi</option>
-            <option>Lahore</option>
-            <option>Islamabad</option>
-            <option>Rawalpindi</option>
-        </select>
-        <select class="filter-select" style="min-width:120px;">
-            <option value="">All Status</option>
-            <option>Active</option>
-            <option>Inactive</option>
-        </select>
-    </div>
-
     <!-- Patients Table -->
     <div class="section-card page-fade-in stagger-2">
         <div class="section-card-header">
@@ -86,10 +65,6 @@ include('includes/sidebar.php');
                     ?>
                 </span>
             </h5>
-            <button class="btn-outline-custom" onclick="showToast('success','Exported','Patients list exported.')">
-                <i class="bi bi-file-earmark-excel"></i> Export
-            </button>
-        </div>
         <div class="section-card-body table-responsive-custom">
             <table class="admin-table table">
                 <thead>
@@ -165,4 +140,6 @@ include('includes/sidebar.php');
         </div>
     </div>
 </div>
-<?php include('includes/footer.php'); ?>
+<?php
+include('includes/script.php');
+?>
