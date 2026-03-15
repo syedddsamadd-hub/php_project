@@ -6,7 +6,8 @@
           <div class="brand-logo-icon"><i class="fas fa-heartbeat"></i></div>
           <span class="brand-name">CARE <span>Group</span></span>
         </div>
-        <p class="footer-desc">Connecting patients with the best healthcare professionals. Quality care, trusted doctors, and seamless appointments.</p>
+        <p class="footer-desc">Connecting patients with the best healthcare professionals. Quality care, trusted
+          doctors, and seamless appointments.</p>
         <div class="footer-social">
           <a href="https://www.facebook.com/" class="social-btn"><i class="fab fa-facebook-f"></i></a>
           <a href="https://x.com/" class="social-btn"><i class="fab fa-twitter"></i></a>
@@ -31,6 +32,7 @@
         <ul class="footer-links">
           <li><a href="register.php">Register</a></li>
           <li><a href="login.php">Login</a></li>
+          <li><a href="admin/login.php">Admin-Login</a></li>
           <li><a href="appointment.php">Book Appointment</a></li>
         </ul>
       </div>

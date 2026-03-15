@@ -1,8 +1,4 @@
 <?php
-/**
- * dashboard.php — Main Dashboard Page
- * Healthcare Admin Panel — UI Only
- */
 include "..//connect.php";
 session_start();
 if (!isset($_SESSION["admin_email"])) {
@@ -34,12 +30,7 @@ $pageTitle = 'Dashboard';
 include('includes/header.php');
 include('includes/sidebar.php');
 ?>
-
-<!-- ╔══════════════════════════════════════════════════════╗
-     ║  DASHBOARD PAGE CONTENT                              ║
-     ╚══════════════════════════════════════════════════════╝ -->
 <div class="page-wrapper" id="dashboardPage">
-
     <!-- Page Header -->
     <div class="page-header">
         <div class="page-header-left">
@@ -50,7 +41,6 @@ include('includes/sidebar.php');
             </ul>
         </div>
     </div>
-
     <!-- ── STATS CARDS ──────────────────────────────────── -->
     <div class="row row-g4 mb-4">
         <!-- Cities -->
@@ -174,8 +164,6 @@ include('includes/sidebar.php');
         </div>
 
     </div>
-    <!-- END STATS CARDS -->
-
     <!-- ── RECENT TABLES ROW ────────────────────────────── -->
     <div class="row g-3">
         <!-- Recent Doctors Table -->
@@ -386,7 +374,6 @@ include('includes/sidebar.php');
 
     </div>
     <!-- END TABLES ROW -->
-
 </div>
 <!-- END DASHBOARD PAGE -->
 <?php

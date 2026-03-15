@@ -1,15 +1,5 @@
 <?php
-// session_start();
-/**
- * header.php — Top Navbar + CSS includes
- * Include at the top of every admin page.
- *
- * Usage: <?php include('includes/header.php'); ?>
- *
- * Set $pageTitle before including this file, e.g.:
- *   $pageTitle = "Manage Doctors";
- */
-
+include "../connect.php";
 $pageTitle = isset($pageTitle) ? $pageTitle : 'Dashboard';
 ?>
 <!DOCTYPE html>
@@ -51,27 +41,15 @@ $pageTitle = isset($pageTitle) ? $pageTitle : 'Dashboard';
     <div class="navbar-page-title">
         <?= htmlspecialchars($pageTitle) ?>
     </div>
-    <!-- php echo karna hai yaha -->
-<!-- <small> //date('l, d M Y') //</small> -->
-    <!-- Notification bell -->
-    <!-- <a href="#" class="nav-icon-btn" title="Notifications">
-        <i class="bi bi-bell"></i>
-        <span class="badge-dot"></span> -->
-    <!-- </a> -->
-
-    <!-- Messages icon -->
-    <!-- <a href="#" class="nav-icon-btn" title="Messages">
-        <i class="bi bi-chat-dots"></i>
-    </a> -->
-
+<?php
+?>
     <!-- Admin profile dropdown -->
     <div class="navbar-admin dropdown" data-bs-toggle="dropdown" role="button">
         <div class="navbar-admin-avatar">A</div>
         <div class="navbar-admin-info d-none d-md-block">
-            <div class="name">Abdul samad</div>
-            <div class="role"><?=$_SESSION['admin_email']?></div>
+            <div class="name"><?=$_SESSION['admin_email']?></div>
+            <!-- <div class="role"></div> -->
         </div>
-        <iz class="bi bi-chevron-down ms-1" style="font-size:11px;color:#7f8fa6;"></iz>
     </div>
     <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius:12px;padding:8px;min-width:200px;">
         <li><hr class="dropdown-divider my-1" /></li>

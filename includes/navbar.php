@@ -17,7 +17,7 @@ $isLoggedIn = isset($_SESSION['user_email']);
 $dashboard_url = null;
 if ($isLoggedIn) {
   $role = $_SESSION['role'] ?? null;
-if ($role === 'patient') {
+  if ($role === 'patient') {
     $dashboard_url = 'patient_panel/dashboard.php';
   } elseif ($role === 'doctor') {
     $dashboard_url = 'doctor_final/doctor_output/dashboard.php';
@@ -32,7 +32,8 @@ if ($role === 'patient') {
       <div class="brand-logo-icon"><i class="fas fa-heartbeat"></i></div>
       <span class="brand-name">CARE <span>Group</span></span>
     </a>
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mainNav">
@@ -43,7 +44,8 @@ if ($role === 'patient') {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($current_page == 'search-doctor.php') ? 'active' : ''; ?>" href="search-doctor.php">
+          <a class="nav-link <?php echo ($current_page == 'search-doctor.php') ? 'active' : ''; ?>"
+            href="search-doctor.php">
             <i class="fas fa-user-md me-1"></i>Search Doctor
           </a>
         </li>
@@ -53,7 +55,8 @@ if ($role === 'patient') {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($current_page == 'medical-news.php') ? 'active' : ''; ?>" href="disease_news.php">
+          <a class="nav-link <?php echo ($current_page == 'medical-news.php') ? 'active' : ''; ?>"
+            href="disease_news.php">
             <i class="fas fa-newspaper me-1"></i>Medical News
           </a>
         </li>
@@ -70,10 +73,12 @@ if ($role === 'patient') {
       </ul>
       <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
         <?php if ($isLoggedIn && $dashboard_url) { ?>
-          <a href="<?php echo htmlspecialchars($dashboard_url, ENT_QUOTES, 'UTF-8'); ?>" class="nav-link btn-nav-register text-light">Dashboard</a>
+          <a href="<?php echo htmlspecialchars($dashboard_url, ENT_QUOTES, 'UTF-8'); ?>"
+            class="nav-link btn-nav-register text-light">Dashboard</a>
         <?php } else { ?>
           <a href="login.php" class="nav-link btn-nav-login">Login</a>
           <a href="register.php" class="nav-link btn-nav-login">sign up</a>
+          <a href="admin/login.php" class="nav-link btn-nav-login">Admin-Login</a>
         <?php } ?>
       </div>
     </div>

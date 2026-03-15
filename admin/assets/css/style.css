@@ -288,7 +288,7 @@ body {
     background: var(--card-bg);
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
-    overflow: hidden;
+    overflow: visible !important; /* overflow:hidden hata diya — scroll block karta tha */
 }
 .section-card-header {
     padding: 18px 22px;
@@ -303,9 +303,29 @@ body {
 .section-card-header h5 i { color: var(--primary); }
 .section-card-body { padding: 0; }
 
+/* ── TABLE RESPONSIVE WRAPPER ────────────────────────────── */
+/* Har jagah jo bhi admin-table use ho, usse is wrapper mein wrap karo */
+/* Ya directly .admin-table ke parent par ye classes lagao               */
+
+.table-responsive-custom {
+    width: 100%;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #c0cfe0 #f4f6f9;
+}
+.table-responsive-custom::-webkit-scrollbar { height: 5px; }
+.table-responsive-custom::-webkit-scrollbar-track { background: #f4f6f9; }
+.table-responsive-custom::-webkit-scrollbar-thumb { background: #c0cfe0; border-radius: 3px; }
+
 /* ── Tables ──────────────────────────────────────────────── */
 .admin-table {
-    width: 100%; margin: 0;
+    width: 100%;
+    margin: 0;
+    min-width: 650px;          /* columns squish hone ki jagah scroll hoga */
+    border-collapse: separate;
+    border-spacing: 0;
 }
 .admin-table thead th {
     background: #f7f9fc;
@@ -325,6 +345,9 @@ body {
 }
 .admin-table tbody tr:last-child td { border-bottom: none; }
 .admin-table tbody tr:hover { background: #f7f9fc; }
+
+/* Action buttons wrap na ho */
+.admin-table td .d-flex { flex-wrap: nowrap; }
 
 /* Avatar cell */
 .user-cell { display: flex; align-items: center; gap: 10px; }
@@ -564,54 +587,9 @@ body.sidebar-collapsed .sidebar-nav .nav-link.active::before { display: none; }
 }
 @media (max-width: 767.98px) {
     .page-wrapper { padding: 18px 14px 30px; }
-    /* .stat-info .number { font-size: 22px; } */
 }
 
-/* ── Misc helpers ────────────────────────────────────────── */
-.text-primary-custom { color: var(--primary); }
-.fw-600 { font-weight: 600; }
-.table-responsive-custom { overflow-x: auto; }
-.row-g4 { --bs-gutter-x: 1.5rem; --bs-gutter-y: 1.5rem; }
-
-/* Info chip (specializations page, etc.) */
-.info-chip {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--primary-light);
-    color: var(--primary);
-    font-size: 12px; font-weight: 600;
-    padding: 4px 12px; border-radius: 20px;
-}
-/* ════════════════════════════════════════════════════════════
-   TABLE RESPONSIVE FIX
-   ════════════════════════════════════════════════════════════ */
-
-/* 1. Scrollable wrapper */
-.table-responsive-custom {
-    width: 100%;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    scrollbar-width: thin;
-    scrollbar-color: #c0cfe0 #f4f6f9;
-}
-.table-responsive-custom::-webkit-scrollbar { height: 5px; }
-.table-responsive-custom::-webkit-scrollbar-track { background: #f4f6f9; }
-.table-responsive-custom::-webkit-scrollbar-thumb { background: #c0cfe0; border-radius: 3px; }
-
-/* 2. section-card ka overflow:hidden hatao — yahi scroll block karta tha */
-.section-card { overflow: visible !important; }
-
-/* 3. Table ko min-width do — columns squish hone ki jagah scroll ho */
-.admin-table {
-    min-width: 650px;
-    border-collapse: separate;
-    border-spacing: 0;
-}
-
-/* 4. Action buttons wrap na ho */
-.admin-table td .d-flex { flex-wrap: nowrap; }
-
-/* 5. Mobile — sticky first column */
+/* ── Mobile — sticky first column ───────────────────────── */
 @media (max-width: 575.98px) {
     .admin-table thead th:first-child,
     .admin-table tbody td:first-child {
@@ -624,7 +602,7 @@ body.sidebar-collapsed .sidebar-nav .nav-link.active::before { display: none; }
     .admin-table thead th:first-child { background: #f7f9fc; }
 }
 
-/* 6. Mobile — compact padding & font */
+/* ── Mobile — compact padding & font ────────────────────── */
 @media (max-width: 767.98px) {
     .admin-table thead th { padding: 10px 12px; font-size: 11px; }
     .admin-table tbody td { padding: 11px 12px; font-size: 12.5px; }
@@ -636,14 +614,14 @@ body.sidebar-collapsed .sidebar-nav .nav-link.active::before { display: none; }
     .section-card-header { flex-direction: column; align-items: flex-start; }
 }
 
-/* 7. Mobile — search bar stack */
+/* ── Mobile — search bar stack ──────────────────────────── */
 @media (max-width: 575.98px) {
     .search-filter-bar { flex-direction: column; align-items: stretch; }
     .search-input-wrap { min-width: 100%; }
     .filter-select { min-width: 100% !important; }
 }
 
-/* 8. Mobile — pagination stack */
+/* ── Mobile — pagination stack ──────────────────────────── */
 @media (max-width: 575.98px) {
     .section-card .d-flex.justify-content-between {
         flex-direction: column;
@@ -651,16 +629,23 @@ body.sidebar-collapsed .sidebar-nav .nav-link.active::before { display: none; }
         align-items: flex-start !important;
     }
 }
-/* .city_form{
-    display: flex;
-    justify-content: center;
-    min-height:40vh; 
-    margin: 40px;
+
+/* ── Misc helpers ────────────────────────────────────────── */
+.text-primary-custom { color: var(--primary); }
+.fw-600 { font-weight: 600; }
+.row-g4 { --bs-gutter-x: 1.5rem; --bs-gutter-y: 1.5rem; }
+
+/* Info chip (specializations page, etc.) */
+.info-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 12px; font-weight: 600;
+    padding: 4px 12px; border-radius: 20px;
 }
-.city-form-content{
-    width: 1000px;
-} */
- .form-wrapper{
+
+/* ── Form Wrapper ────────────────────────────────────────── */
+.form-wrapper{
     background:#fff;
     padding:40px;
     border-radius:15px;
@@ -677,7 +662,6 @@ body.sidebar-collapsed .sidebar-nav .nav-link.active::before { display: none; }
     gap:18px;
 }
 
-/* Select Styling */
 .city-select{
     padding:12px 15px;
     border-radius:8px;
@@ -695,7 +679,6 @@ body.sidebar-collapsed .sidebar-nav .nav-link.active::before { display: none; }
     box-shadow:0 0 8px rgba(102,126,234,0.3);
 }
 
-/* Button Styling */
 .city-btn{
     padding:12px;
     border:none;
@@ -717,7 +700,6 @@ body.sidebar-collapsed .sidebar-nav .nav-link.active::before { display: none; }
     box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
-/* Message Styling */
 .city-message{
     padding:10px;
     border-radius:6px;
@@ -725,19 +707,17 @@ body.sidebar-collapsed .sidebar-nav .nav-link.active::before { display: none; }
     text-align:center;
 }
 
-/* Animation */
 @keyframes fadeIn{
     from{opacity:0; transform:translateY(20px);}
     to{opacity:1; transform:translateY(0);}
 }
 
-/* Responsive */
 @media(max-width:480px){
     .form-wrapper{
         padding:25px;
     }
 }
- 
+
 .form-card {
     background: #ffffff;
     padding: 30px 25px;

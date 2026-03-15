@@ -17,7 +17,7 @@
             <i class="fas fa-heartbeat"></i>
         </div>
         <div class="sidebar-brand-text">
-            Admin
+            Admin Pnael
             <span>Care-Group</span>
         </div>
     </a>
